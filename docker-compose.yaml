@@ -1,0 +1,35 @@
+version: "3.8"
+
+networks:
+  matchaid-network:
+    driver: bridge
+
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb_container
+    env_file:
+      - ./.env
+      - ./.env.local
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb://root:rootpassword@mongodb_container:27017/matchAid?authSource=admin
+    networks:
+      - matchaid-network
+
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - matchaid-network
+
+volumes:
+  mongodb_data_container:
