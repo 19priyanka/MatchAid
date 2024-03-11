@@ -8,8 +8,17 @@ type Data = {
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
-) {
-  await getMongoClient();
-  console.log("Hello from the backend! Connected to MongoDB.");
-  res.status(200).json({ name: "John Doe" });
+)
+{
+  try
+  {
+    getMongoClient();
+    console.log("Connected to MongoDB");
+
+    res.status(200).json({ name: "John Doe" });
+  }
+  catch (error)
+  {
+    console.error("Error connecting to MongoDB:", error);
+  }
 }

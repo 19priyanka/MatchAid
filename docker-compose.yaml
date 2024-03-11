@@ -13,9 +13,8 @@ services:
       - mongodb_container
     env_file:
       - ./.env
-      - ./.env.local
     environment:
-      - MONGO_CONNECTION_STRING=mongodb://root:rootpassword@mongodb_container:27017/matchAid?authSource=admin
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
     networks:
       - matchaid-network
 
