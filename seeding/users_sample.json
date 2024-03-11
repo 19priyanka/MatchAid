@@ -1,0 +1,27 @@
+[
+    {
+    "email": "user1@example.com",
+    "password": "hashed-password-1",
+    "userType": "Volunteer",
+    "phoneNumber": "123-456-7890",
+    "fullName": "John Doe",
+    "noOfTimesVolunteered": 3,
+    "createdAt": "2023-01-15T12:00:00Z"
+    },
+    {
+    "email": "user2@example.com",
+    "password": "hashed-password-2",
+    "userType": "Organization",
+    "fullName": "Charity Foundation",
+    "createdAt": "2023-02-20T10:30:00Z"
+    },
+    {
+    "email": "user3@example.com",
+    "password": "hashed-password-3",
+    "userType": "Volunteer",
+    "phoneNumber": "987-654-3210",
+    "fullName": "Alice Smith",
+    "noOfTimesVolunteered": 1,
+    "createdAt": "2023-03-10T08:45:00Z"
+    }
+]
