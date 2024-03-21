@@ -1,42 +1,41 @@
 [
-    {
-        "organization": {
-        "id": "65ea3a9ca520d21a8d9439b1",
-        "name": "Charity Foundation"
-        },
-        "name": "Food Drive",
-        "time": "2023-01-25T09:00:00Z",
-        "description": "Collecting and distributing food to families in need.",
-        "volunteersNeeded": 5,
-        "duration": 4,
-        "location": "123 Main Street",
-        "status": "Pending"
+  {
+    "organization": {
+      "id": "65ea3a9ca520d21a8d9439b1",
+      "name": "Charity Foundation"
     },
-    {
-        "organization": {
-        "id": "65ea3a9ca520d21a8d9439b2",
-        "name": "Community Outreach"
-        },
-        "name": "Tutoring Program",
-        "time": "2023-02-10T14:00:00Z",
-        "description": "Providing tutoring services for students in underserved communities.",
-        "volunteersNeeded": 3,
-        "duration": 2,
-        "location": "456 Elm Avenue",
-        "status": "Accepted"
+    "name": "Food Drive",
+    "time": "2023-01-25T09:00:00Z",
+    "description": "Collecting and distributing food to families in need.",
+    "volunteersNeeded": 5,
+    "duration": 4,
+    "location": "123 Main Street",
+    "status": "Pending"
+  },
+  {
+    "organization": {
+      "id": "65ea3a9ca520d21a8d9439b2",
+      "name": "Community Outreach"
     },
-    {
-        "organization": {
-        "id": "65ea3a9ca520d21a8d9439b3",
-        "name": "Animal Rescue Society"
-        },
-        "name": "Pet Adoption Event",
-        "time": "2023-03-15T11:00:00Z",
-        "description": "Finding forever homes for rescued animals.",
-        "volunteersNeeded": 8,
-        "duration": 6,
-        "location": "789 Oak Lane",
-        "status": "Pending"
-    }
+    "name": "Tutoring Program",
+    "time": "2023-02-10T14:00:00Z",
+    "description": "Providing tutoring services for students in underserved communities.",
+    "volunteersNeeded": 3,
+    "duration": 2,
+    "location": "456 Elm Avenue",
+    "status": "Accepted"
+  },
+  {
+    "organization": {
+      "id": "65ea3a9ca520d21a8d9439b3",
+      "name": "Animal Rescue Society"
+    },
+    "name": "Pet Adoption Event",
+    "time": "2023-03-15T11:00:00Z",
+    "description": "Finding forever homes for rescued animals.",
+    "volunteersNeeded": 8,
+    "duration": 6,
+    "location": "789 Oak Lane",
+    "status": "Pending"
+  }
 ]
-  
