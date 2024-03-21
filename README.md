@@ -14,7 +14,14 @@ don't need to be ran - they are used as templates for new data.
 Create a .env file in the root directory if it does not exist and define the MongoDB connection string:
 
 ```
-MONGO_CONNECTION_STRING=mongodb://localhost:27017/matchAid
+MONGO_CONNECTION_STRING=mongodb://localhost:27017/your-database
+# Replace your-database with the name of your MongoDB database.
+```
+
+Create a .env.local file as well and include the connection string once again:
+
+```
+MONGO_CONNECTION_STRING=mongodb://localhost:27017/your-database
 # Replace your-database with the name of your MongoDB database.
 ```
 
