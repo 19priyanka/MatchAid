@@ -1,0 +1,19 @@
+version: "3.8"
+
+networks:
+  matchaid-network:
+    driver: bridge
+
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.env
+      - ./.env.local
+    networks:
+      - matchaid-network
+
+volumes:
+  mongodb_data_container:

@@ -1,0 +1,17 @@
+# Use a node base image
+FROM node:latest
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the container
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the seeding script into the container
+COPY ./seeding .
+
+# Command to run the seeding script after the Next.js app is running
+CMD ["node", "seed-script.mjs"]
