@@ -1,13 +1,11 @@
 export interface User {
   fullName: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string | null;
   password: string;
-  role: string;
-  status: string;
   createdAt: Date;
   userType: string;
-  noOfTimesVolunteered: number;
+  noOfTimesVolunteered?: number | null;
 }
 
 export type SafeUser = Omit<User, "password">;
