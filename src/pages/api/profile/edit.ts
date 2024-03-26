@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connectMongooseClient } from "../../../../backend/middleware/mongodb";
-import { editProfile, signup } from "../../../../backend/models/user.model";
+import { editProfile } from "../../../../backend/models/user.model";
 import { SafeUser, User } from "../../../../backend/types/User";
 import { DefaultResponse } from "../login";
 

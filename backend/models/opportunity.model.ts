@@ -4,7 +4,7 @@ import { UserType } from "../types/User";
 
 const getOpportunities = async (
   email: string,
-  userType: string
+  userType: UserType
 ): Promise<Opportunity[]> => {
   let opportunities: Opportunity[] = [];
   if (userType === UserType.Volunteer) {
