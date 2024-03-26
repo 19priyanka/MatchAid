@@ -15,7 +15,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
-  const [user, setUser] = useState('admin' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
+  const [user, setUser] = useState('volunteer' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
   
   const renderNavBar = () => {
     switch (user) {
@@ -42,8 +42,8 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
     >
       <AppShell.Header>
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <Image src={logo} alt="logo" width={72}
-      height={72}/>
+        <Image src={logo} alt="logo" width={70}
+      height={70}/>
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
