@@ -54,6 +54,10 @@ const opportunitySignUp = async (
     if (!user) {
       throw new Error("User not found");
     }
+
+    if (user.userType !== UserType.Volunteer) {
+      throw new Error("User is not a volunteer");
+    }
   } catch (error) {
     throw new Error("opportunitySignUp - error getting user");
   }
