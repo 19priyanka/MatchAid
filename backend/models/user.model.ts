@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 import { UserModel } from "../../src/models/users";
-import { SafeUser, User } from "../types/User";
+import { SafeUser, User, UserType } from "../types/User";
 
 const saltRounds = 10;
 const login = async (email: string, password: string): Promise<SafeUser> => {
@@ -26,7 +26,7 @@ const login = async (email: string, password: string): Promise<SafeUser> => {
     email: user.email,
     phoneNumber: user?.phoneNumber,
     createdAt: user.createdAt,
-    userType: user.userType,
+    userType: UserType[user.userType],
     noOfTimesVolunteered: user.noOfTimesVolunteered,
   };
 };
@@ -50,7 +50,7 @@ const signup = async (user: User): Promise<SafeUser> => {
     email: newUser.email,
     phoneNumber: newUser?.phoneNumber,
     createdAt: newUser.createdAt,
-    userType: newUser.userType,
+    userType: UserType[user.userType],
     noOfTimesVolunteered: newUser.noOfTimesVolunteered,
   };
 };
@@ -77,6 +77,7 @@ const editProfile = async (user: Partial<User>): Promise<User> => {
 
   return {
     ...updatedUser,
+    userType: UserType[updatedUser.userType],
     ...(user.password ? { password: user.password } : undefined),
   };
 };

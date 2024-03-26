@@ -4,8 +4,14 @@ export interface User {
   phoneNumber?: string | null;
   password: string;
   createdAt: Date;
-  userType: string;
+  userType: UserType;
   noOfTimesVolunteered: number;
 }
 
 export type SafeUser = Omit<User, "password">;
+
+export enum UserType {
+  Admin = "Admin",
+  Volunteer = "Volunteer",
+  Organization = "Organization",
+}

@@ -12,6 +12,10 @@ const opportunitySchema = new Schema(
         type: String,
         required: true,
       },
+      email: {
+        type: String,
+        required: true,
+      },
       required: true,
     },
     name: {

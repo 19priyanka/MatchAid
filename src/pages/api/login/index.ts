@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { SafeUser } from "../../../../backend/types/User";
+import { SafeUser, UserType } from "../../../../backend/types/User";
 import { connectMongooseClient } from "../../../../backend/middleware/mongodb";
 import { login } from "../../../../backend/models/user.model";
 
@@ -13,7 +13,7 @@ type Data =
       email: string;
       phoneNumber?: string | null;
       createdAt: Date;
-      userType: string;
+      userType: UserType;
       noOfTimesVolunteered: number;
     }
   | DefaultResponse;
