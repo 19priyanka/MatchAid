@@ -1,6 +1,8 @@
-import { AppShell, Burger } from "@mantine/core";
+import { AppShell, Burger} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import NavBar from "./navbar";
+import VolunteerNavBar from "./VolunteerNavBar";
+import logo from '../../../logo.png';
+import Image from 'next/image'
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,11 +23,12 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
     >
       <AppShell.Header>
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <div>Logo</div>
+        <Image src={logo} alt="logo" width={72}
+      height={72}/>
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <NavBar />
+        <VolunteerNavBar />
       </AppShell.Navbar>
 
       <AppShell.Main>{children}</AppShell.Main>
