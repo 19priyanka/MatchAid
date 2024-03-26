@@ -4,10 +4,6 @@ const { Schema } = mongoose;
 const opportunitySchema = new Schema(
   {
     organization: {
-      id: {
-        type: mongoose.Types.ObjectId,
-        required: true,
-      },
       name: {
         type: String,
         required: true,

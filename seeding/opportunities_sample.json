@@ -1,7 +1,6 @@
 [
   {
     "organization": {
-      "id": "65ea3a9ca520d21a8d9439b1",
       "name": "Charity Foundation",
       "email": "charity@gmail.com"
     },
@@ -15,7 +14,6 @@
   },
   {
     "organization": {
-      "id": "65ea3a9ca520d21a8d9439b2",
       "name": "Community Outreach",
       "email": "community@gmail.com"
     },
@@ -29,7 +27,6 @@
   },
   {
     "organization": {
-      "id": "65ea3a9ca520d21a8d9439b3",
       "name": "Animal Rescue Society",
       "email": "animal_rescue@gmail.com"
     },
