@@ -5,7 +5,7 @@ export interface User {
   password: string;
   createdAt: Date;
   userType: string;
-  noOfTimesVolunteered?: number | null;
+  noOfTimesVolunteered: number;
 }
 
 export type SafeUser = Omit<User, "password">;
