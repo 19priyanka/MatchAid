@@ -52,6 +52,14 @@ const opportunitySchema = new Schema(
           type: String,
           required: true,
         },
+        reason: {
+          type: String,
+          required: true,
+        },
+        hoursOfAvailability: {
+          type: Number,
+          required: true,
+        },
       },
     ],
     status: {

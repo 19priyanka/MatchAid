@@ -82,4 +82,21 @@ const editProfile = async (user: Partial<User>): Promise<User> => {
   };
 };
 
-export { login, signup, editProfile };
+const getUser = async (email: string): Promise<SafeUser> => {
+  const user = await UserModel.findOne({ email }).exec();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return {
+    fullName: user.fullName,
+    email: user.email,
+    phoneNumber: user?.phoneNumber,
+    createdAt: user.createdAt,
+    userType: UserType[user.userType],
+    noOfTimesVolunteered: user.noOfTimesVolunteered,
+  };
+};
+
+export { login, signup, editProfile, getUser };

@@ -1,6 +1,15 @@
+import { ObjectId } from "mongodb";
 import { OpportunityModel } from "../../src/models/opportunities";
 import { Opportunity, Status } from "../types/Opportunity";
 import { UserType } from "../types/User";
+import { getUser } from "./user.model";
+
+export interface OpportunitySignUp {
+  opportunityId: string;
+  email: string;
+  reason: string;
+  hoursOfAvailability: number;
+}
 
 const getOpportunities = async (
   email: string,
@@ -35,4 +44,41 @@ const getVolunteerOpportunities = async (
   }).exec()) as Opportunity[];
 };
 
-export { getOpportunities, getVolunteerOpportunities };
+const opportunitySignUp = async (
+  signUpData: OpportunitySignUp
+): Promise<Opportunity> => {
+  let user;
+  try {
+    user = await getUser(signUpData.email);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    throw new Error("opportunitySignUp - error getting user");
+  }
+
+  const opportunity = (await OpportunityModel.findOneAndUpdate(
+    { _id: new ObjectId(signUpData.opportunityId) },
+    {
+      $push: {
+        signedUpUsers: {
+          fullName: user.fullName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          reason: signUpData.reason,
+          hoursOfAvailability: signUpData.hoursOfAvailability,
+        },
+      },
+    },
+    { new: true }
+  )) as Opportunity;
+
+  if (!opportunity) {
+    throw new Error("Opportunity not found");
+  }
+
+  return opportunity;
+};
+
+export { getOpportunities, getVolunteerOpportunities, opportunitySignUp };
