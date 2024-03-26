@@ -11,6 +11,16 @@ export interface OpportunitySignUp {
   hoursOfAvailability: number;
 }
 
+export interface PostOpportunity {
+  name: string;
+  time: Date;
+  description: string;
+  volunteersNeeded: number;
+  duration: number;
+  location: string;
+  email: string;
+}
+
 const getOpportunities = async (
   email: string,
   userType: UserType
@@ -85,4 +95,46 @@ const opportunitySignUp = async (
   return opportunity;
 };
 
-export { getOpportunities, getVolunteerOpportunities, opportunitySignUp };
+const postOpportunity = async (
+  opportunity: PostOpportunity
+): Promise<Opportunity> => {
+  let user;
+  try {
+    user = await getUser(opportunity.email);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (user.userType !== UserType.Organization) {
+      throw new Error("User is not an organization");
+    }
+  } catch (error) {
+    throw new Error("postOpportunity - error getting user");
+  }
+
+  const newOpportunityModel = new OpportunityModel({
+    organization: {
+      name: user.fullName,
+      email: user.email,
+    },
+    name: opportunity.name,
+    time: new Date(opportunity.time),
+    description: opportunity.description,
+    volunteersNeeded: opportunity.volunteersNeeded,
+    duration: opportunity.duration,
+    location: opportunity.location,
+    status: Status.Pending,
+  });
+
+  const newOpportunity = (await newOpportunityModel.save()) as Opportunity;
+
+  return newOpportunity;
+};
+
+export {
+  getOpportunities,
+  getVolunteerOpportunities,
+  opportunitySignUp,
+  postOpportunity,
+};
