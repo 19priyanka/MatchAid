@@ -11,14 +11,8 @@ const getOpportunities = async (
     opportunities = (await OpportunityModel.find({
       status: Status.Accepted, // Cast the status to the correct type
       time: { $gte: new Date() },
-    })
-      .exec()
-      .then((opportunities) => {
-        return opportunities.filter(
-          (opportunity) =>
-            !opportunity.signedUpUsers.find((user) => user.email === email)
-        );
-      })) as Opportunity[];
+      "signedUpUsers.email": { $ne: email },
+    }).exec()) as Opportunity[];
   } else if (userType === UserType.Organization) {
     opportunities = (await OpportunityModel.find({
       "organization.email": email,
@@ -32,4 +26,13 @@ const getOpportunities = async (
   return opportunities;
 };
 
-export { getOpportunities };
+const getVolunteerOpportunities = async (
+  email: string
+): Promise<Opportunity[]> => {
+  return (await OpportunityModel.find({
+    status: Status.Accepted,
+    "signedUpUsers.email": email,
+  }).exec()) as Opportunity[];
+};
+
+export { getOpportunities, getVolunteerOpportunities };
