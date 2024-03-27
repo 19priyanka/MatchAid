@@ -1,8 +1,9 @@
 import { ObjectId } from "mongodb";
 import { OpportunityModel } from "../../src/models/opportunities";
 import { Opportunity, Status } from "../types/Opportunity";
-import { UserType } from "../types/User";
+import { User, UserType } from "../types/User";
 import { getUser } from "./user.model";
+import { UserModel } from "../../src/models/users";
 
 export interface OpportunitySignUp {
   opportunityId: string;
@@ -132,9 +133,31 @@ const postOpportunity = async (
   return newOpportunity;
 };
 
+const getAllUsersForOpportunity = async (opportunityId: string): Promise<User[]> =>
+{
+  try
+  {
+    const opportunity = await OpportunityModel.findById(opportunityId);
+
+    if (!opportunity)
+    {
+      throw new Error("Opportunity not found");
+    }
+
+    const userEmails = opportunity.signedUpUsers.map(user => user.email);
+    const users = await UserModel.find({ email: { $in: userEmails } }) as User[];
+    return users;
+  }
+  catch (error)
+  {
+    throw new Error("Error retrieving users for opportunity");
+  }
+};
+
 export {
   getOpportunities,
   getVolunteerOpportunities,
   opportunitySignUp,
   postOpportunity,
+  getAllUsersForOpportunity,
 };
