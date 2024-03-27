@@ -26,7 +26,7 @@ export default async function handler
       !reviewee ||
       !reviewer ||
       !description ||
-      !rating ||
+      !rating
     )
     {
       res.status(400).json({ message: "Missing field" });

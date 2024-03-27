@@ -16,8 +16,8 @@ const postReview = async(
 {
   const newReviewModel = new ReviewModel
   ({
-    revieweeId: review.reviewee._id,
-    reviewerId: review.reviewer._id,
+    revieweeId: review.reviewee,
+    reviewerId: review.reviewer,
     description: review.description,
     rating: review.rating,
     revieweeType: review.reviewee.userType,
