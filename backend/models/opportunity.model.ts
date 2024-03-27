@@ -154,10 +154,32 @@ const getAllUsersForOpportunity = async (opportunityId: string): Promise<User[]>
   }
 };
 
+const updateOpportunity = async (opportunity: Partial<Opportunity>): Promise<Opportunity> =>
+{
+  const updatedOpportunity = await OpportunityModel.findOneAndUpdate(
+    { _id: opportunity._id },
+    {
+      ...(opportunity.status ? { status: opportunity.status } : undefined),
+    },
+    { new: true }
+  );
+
+  if (!updatedOpportunity)
+  {
+    throw new Error("Opportunity not found");
+  }
+
+  return {
+    ...updatedOpportunity,
+    status: Status[updatedOpportunity.status],
+  };
+};
+
 export {
   getOpportunities,
   getVolunteerOpportunities,
   opportunitySignUp,
   postOpportunity,
   getAllUsersForOpportunity,
+  updateOpportunity,
 };
