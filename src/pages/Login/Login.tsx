@@ -8,9 +8,11 @@ import {
   Text,
   Container,
   Group,
-  Button,
+  Button
 } from "@mantine/core";
 import classes from "./Login.module.css";
+import logo from '../../../logo.png';
+import Image from 'next/image';
 
 export default function Login() {
   return (
@@ -20,7 +22,11 @@ export default function Login() {
       style={{ display: "flex", justifyContent: "center" }}
     >
       <Group style={{ flexDirection: "column", alignItems: "center" }}>
-        <Title ta="center" className={classes.title}>
+      <Image src={logo} alt="logo"  width={150}  height={150} />
+      <Title ta="center" className={classes.title} style={{marginBottom: 10, marginTop:'2%'}}>
+          Match Aid
+        </Title>
+        <Title ta="center" className={classes.title} style={{marginBottom: 10}}>
           Welcome back
         </Title>
 

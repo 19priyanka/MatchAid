@@ -2,7 +2,7 @@ import { AppShell, Burger, Group} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import VolunteerNavBar from "../NavBar/VolunteerNavBar";
 import logo from '../../../logo.png';
-import Image from 'next/image'
+import Image from 'next/image';
 import { useState } from "react";
 import OrganizationNavBar from "../NavBar/OrganizationNavBar";
 import GuestNavBar from "../NavBar/GuestNavBar";
