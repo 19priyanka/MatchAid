@@ -29,6 +29,20 @@ const postReview = async(
   return newReview;
 };
 
+const getAllReviews = async (): Promise<Review[]> =>
+{
+  try
+  {
+    const reviews = await ReviewModel.find({}) as Review[];
+    return reviews;
+  }
+  catch (error)
+  {
+    throw new Error("Error retrieving reviews");
+  }
+};
+
 export {
   postReview,
+  getAllReviews,
 };
