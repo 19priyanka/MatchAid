@@ -99,4 +99,17 @@ const getUser = async (email: string): Promise<SafeUser> => {
   };
 };
 
-export { login, signup, editProfile, getUser };
+const getAllOrganizations = async (): Promise<User[]> =>
+{
+  try
+  {
+    const organizations = await UserModel.find({ userType: UserType.Organization }) as User[];
+    return organizations;
+  }
+  catch (error)
+  {
+    throw new Error("Error retrieving organizations");
+  }
+};
+
+export { login, signup, editProfile, getUser, getAllOrganizations };
