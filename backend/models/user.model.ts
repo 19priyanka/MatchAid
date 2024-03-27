@@ -112,4 +112,17 @@ const getAllOrganizations = async (): Promise<User[]> =>
   }
 };
 
-export { login, signup, editProfile, getUser, getAllOrganizations };
+const getAllVolunteers = async (): Promise<User[]> =>
+{
+  try
+  {
+    const volunteers = await UserModel.find({ userType: UserType.Volunteer }) as User[];
+    return volunteers;
+  }
+  catch (error)
+  {
+    throw new Error("Error retrieving volunteers");
+  }
+};
+
+export { login, signup, editProfile, getUser, getAllOrganizations, getAllVolunteers };
