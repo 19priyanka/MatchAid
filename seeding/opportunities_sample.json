@@ -1,8 +1,8 @@
 [
   {
     "organization": {
-      "id": "65ea3a9ca520d21a8d9439b1",
-      "name": "Charity Foundation"
+      "name": "Charity Foundation",
+      "email": "charity@gmail.com"
     },
     "name": "Food Drive",
     "time": "2023-01-25T09:00:00Z",
@@ -14,8 +14,8 @@
   },
   {
     "organization": {
-      "id": "65ea3a9ca520d21a8d9439b2",
-      "name": "Community Outreach"
+      "name": "Community Outreach",
+      "email": "community@gmail.com"
     },
     "name": "Tutoring Program",
     "time": "2023-02-10T14:00:00Z",
@@ -27,8 +27,8 @@
   },
   {
     "organization": {
-      "id": "65ea3a9ca520d21a8d9439b3",
-      "name": "Animal Rescue Society"
+      "name": "Animal Rescue Society",
+      "email": "animal_rescue@gmail.com"
     },
     "name": "Pet Adoption Event",
     "time": "2023-03-15T11:00:00Z",

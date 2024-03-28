@@ -9,11 +9,11 @@ const { Schema } = mongoose;
 const opportunitySchema = new Schema(
   {
     organization: {
-      id: {
-        type: mongoose.Types.ObjectId,
+      name: {
+        type: String,
         required: true,
       },
-      name: {
+      email: {
         type: String,
         required: true,
       },
@@ -56,6 +56,14 @@ const opportunitySchema = new Schema(
           type: String,
           required: true,
         },
+        reason: {
+          type: String,
+          required: true,
+        },
+        hoursOfAvailability: {
+          type: Number,
+          required: true,
+        },
       },
     ],
     status: {
@@ -67,7 +75,9 @@ const opportunitySchema = new Schema(
   { versionKey: false }
 );
 
-const OpportunityModel = mongoose.model("Opportunity", opportunitySchema);
+const OpportunityModel =
+  mongoose.models.Opportunities ||
+  mongoose.model("Opportunities", opportunitySchema);
 
 const reviewSchema = new Schema(
   {
@@ -96,7 +106,8 @@ const reviewSchema = new Schema(
   { versionKey: false }
 );
 
-const ReviewModel = mongoose.model("Review", reviewSchema);
+const ReviewModel =
+  mongoose.models.Reviews || mongoose.model("Reviews", reviewSchema);
 
 const userSchema = new Schema(
   {
@@ -110,7 +121,7 @@ const userSchema = new Schema(
     },
     userType: {
       type: String,
-      enum: ["Volunteer", "Organization"],
+      enum: ["Volunteer", "Organization", "Admin"],
       required: true,
     },
     phoneNumber: {
@@ -122,6 +133,7 @@ const userSchema = new Schema(
     },
     noOfTimesVolunteered: {
       type: Number,
+      required: true,
     },
     createdAt: {
       type: Date,
@@ -131,7 +143,7 @@ const userSchema = new Schema(
   { versionKey: false }
 );
 
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.models.Users || mongoose.model("Users", userSchema);
 
 async function seedDatabase() {
   const mongoConnectionString = process.env.MONGO_CONNECTION_STRING;

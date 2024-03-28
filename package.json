@@ -17,6 +17,8 @@
     "@mantine/modals": "^7.5.3",
     "@mantine/nprogress": "^7.5.3",
     "@tabler/icons-react": "^2.47.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "dayjs": "^1.11.10",
     "mongodb": "^6.4.0",
     "mongoose": "^8.2.1",

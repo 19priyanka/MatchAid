@@ -1,20 +1,17 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
-let client: MongoClient | undefined;
-
-const getMongoClient = async () => {
+const connectMongooseClient = async () => {
   const mongoConnectionString = process.env.MONGO_CONNECTION_STRING;
 
   if (!mongoConnectionString) {
     throw new Error("Please define your mongo connection string.");
   }
 
-  if (!client) {
-    client = new MongoClient(mongoConnectionString);
+  if (mongoose.connection.readyState) {
+    return;
   }
 
-  await client.connect();
-  return client;
+  await mongoose.connect(mongoConnectionString);
 };
 
-export { getMongoClient };
+export { connectMongooseClient };

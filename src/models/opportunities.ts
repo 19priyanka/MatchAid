@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 const opportunitySchema = new Schema(
   {
     organization: {
-      id: {
-        type: mongoose.Types.ObjectId,
+      name: {
+        type: String,
         required: true,
       },
-      name: {
+      email: {
         type: String,
         required: true,
       },
@@ -50,6 +50,14 @@ const opportunitySchema = new Schema(
         },
         phoneNumber: {
           type: String,
+          required: true,
+        },
+        reason: {
+          type: String,
+          required: true,
+        },
+        hoursOfAvailability: {
+          type: Number,
           required: true,
         },
       },
