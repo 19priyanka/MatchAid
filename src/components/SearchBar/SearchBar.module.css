@@ -1,0 +1,13 @@
+  .search {
+    margin: 1.5rem;
+    margin-right: 15%;
+  }
+  .tabs {
+    padding-bottom: 5;
+    margin-bottom: -0.9rem;
+  }
+  .tabBar {
+    gap: 0;
+    margin-bottom: -2.2rem;
+    margin-left: 5%;
+  }
