@@ -14,26 +14,19 @@ const data = [
     name: 'Robert Wolfkisser',
     ocurrences: '3x Volunteer',
     email: 'rob_wolf@gmail.com',
+    reported_by: "Organization 1",
   },
   {
     name: 'Jill Jailbreaker',
     ocurrences: '2x Volunteer',
     email: 'jj@breaker.com',
+    reported_by: "Organization 2",
   },
   {
     name: 'Henry Silkeater',
     ocurrences: '2x Volunteer',
     email: 'henry@silkeater.io',
-  },
-  {
-    name: 'Bill Horsefighter',
-    ocurrences: '1x Volunteer',
-    email: 'bhorsefighter@gmail.com',
-  },
-  {
-    name: 'Jeremy Footviewer',
-    ocurrences: '5x Volunteer',
-    email: 'jeremy@foot.dev',
+    reported_by: "Organization 1",
   },
 ];
   
@@ -57,7 +50,13 @@ const UsersStack = () => {
           </div>
         </Group>
       </Table.Td>
-      
+      <Table.Td>
+      <Group>
+            <Text>
+                Reported by: {item.reported_by}
+            </Text>
+        </Group>
+      </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
           <Menu

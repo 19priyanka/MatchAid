@@ -1,17 +1,19 @@
 import React from "react";
-import VolunteerNavBar from "../../components/NavBar/VolunteerNavBar";
+import Layout from "../../components/shared/layout";
+import SearchInput from "../../components/SearchBar/SearchInput";
 import { UsersStack } from "../../components/UserTable/OrganizationUserTable";
 
-export default function organizationUserView(){
+function organizationUserView(){
     return(
         <div>
         <div >
-            <VolunteerNavBar />
-            <main style={{ marginLeft : "25%" } }>
+            <Layout>
+            <SearchInput tabs={[]}/>
                 <UsersStack />
-            </main>
+            </Layout>
         </div>
         </div>
 
     );
 }
+export default organizationUserView;

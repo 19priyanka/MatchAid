@@ -35,7 +35,7 @@ export function VolunteerModal() {
             leftSection={<IconClock style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}/>
             </Group>
             <Group mt="xs">
-            <Button radius="md" style={{ flex: 1 }}>
+            <Button color = "black"radius="md" style={{ flex: 1 }}>
               Register to Volunteer
             </Button>
             
@@ -43,7 +43,7 @@ export function VolunteerModal() {
          
          </Modal>
     
-          <Button onClick={open}>Volunteer</Button>
+          <Button color = "black" onClick={open}>Volunteer</Button>
           
         </>
   );

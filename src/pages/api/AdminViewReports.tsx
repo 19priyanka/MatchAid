@@ -1,15 +1,15 @@
 import React from "react";
 import Layout from "../../components/shared/layout";
 import SearchInput from "../../components/SearchBar/SearchInput";
-import  UsersStack  from "../../components/UserTable/AdminUserTable";
+import  UsersStack  from "../../components/UserTable/AdminReportsTable";
 
-function AdminUserView(){
+function AdminViewReports(){
     return(
         <div>
         <div >
             <main>
                 <Layout>
-                <SearchInput tabs={["Volunteers", "New Reports"]} selected={0}/>
+                <SearchInput tabs={["Volunteers", "New Reports"]} selected={1}/>
                 <UsersStack />
                 </Layout>
             </main>
@@ -19,4 +19,4 @@ function AdminUserView(){
     );
 }
 
-export default AdminUserView;
+export default AdminViewReports;
