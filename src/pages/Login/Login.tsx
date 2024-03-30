@@ -35,6 +35,9 @@ export default function Login() {
   const handleSignUp = () => {
     router.push('/Signup/Signup');
   };
+  const handleLogin = () => {
+    router.push("/homePage");
+  };
 
 
   return (
@@ -102,6 +105,7 @@ export default function Login() {
             width: "30%",
             fontSize: isMobileView ? '13px' : "18px",
           }}
+          onClick={handleLogin}
         >
           Log in
         </Button>
