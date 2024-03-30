@@ -8,20 +8,53 @@ import {
   Text,
   Container,
   Group,
+  AppShell,
   Button
 } from "@mantine/core";
 import classes from "./Login.module.css";
 import logo from '../../../logo.png';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
 export default function Login() {
+  const router = useRouter();
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    
+    const checkMobileView = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    checkMobileView();
+    window.addEventListener('resize', checkMobileView);
+    return () => window.removeEventListener('resize', checkMobileView);
+  }, []);
+
+  const handleSignUp = () => {
+    router.push('/Signup/Signup');
+  };
+
+
   return (
+    <>
+<AppShell>
+    <AppShell.Header>
+       <Group>
+        <Image src={logo} alt="logo"  width={70}
+      height={70} />
+        </Group>
+      </AppShell.Header>
+      </AppShell>
+      
     <Container
       size={420}
       my={40}
       style={{ display: "flex", justifyContent: "center" }}
     >
-      <Group style={{ flexDirection: "column", alignItems: "center" }}>
+      
+      <Group style={{ flexDirection: "column", alignItems: "center", marginTop:'10%' }}>
       <Image src={logo} alt="logo"  width={150}  height={150} />
       <Title ta="center" className={classes.title} style={{marginBottom: 10, marginTop:'2%'}}>
           Match Aid
@@ -35,7 +68,10 @@ export default function Login() {
           shadow="md"
           p={30}
           radius="lg"
-          style={{ width: 660, height: 351 }}
+          style={{ 
+            width: isMobileView ? '100%' : 660, 
+            height: isMobileView ? 'auto' : 351 
+          }}
         >
           <Group style={{ flexDirection: "column", alignItems: "center" }}>
             <TextInput
@@ -64,7 +100,7 @@ export default function Login() {
             backgroundColor: "black",
             borderRadius: 10,
             width: "30%",
-            fontSize: "18px",
+            fontSize: isMobileView ? '13px' : "18px",
           }}
         >
           Log in
@@ -72,11 +108,13 @@ export default function Login() {
 
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           Do not have an account yet?{" "}
-          <Anchor size="sm" component="button">
+          <Anchor size="sm" component="button" onClick={handleSignUp}>
             Sign Up
           </Anchor>
         </Text>
       </Group>
-    </Container>
+
+      </Container>
+      </>
   );
 }
