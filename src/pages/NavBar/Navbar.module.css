@@ -16,8 +16,8 @@
     height: rem(25px);
   }
  .activeLink {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  background-color: #f5f5f5;
+  color: #000000;
   
 }
 
