@@ -1,16 +1,18 @@
 import { Group, Stack, Button, Card, Image, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
-import classes from './SearchBar.module.css';
 import { useState } from "react";
 import { UserType } from "../../CustomTypes/UserType";
 
 // example for the input
-  // const num = 0; this is the index of the tab that is currently in use or navigating to
-  // const tabs = ["Upcoming Events", "Past Events"];
+  // const volunteerEvents = [
+    // {Name: "Soup Kitchen", VolCount: 4, Date: "April 14", times: "8:30am-12:00pm", Description: "This is a description of the event that's going to take place."},
+    // {Name: "Homeless Shelter", VolCount: 10, Date: "April 15", times: "2:30pm-9:00pm", Description: "This is a description of the event that's going to take place."},
+    // ];
   //   <Layout>
-  //     <SearchInput selected={num} tabs={tabs}/>
-  //     <h1 className="underline">Home</h1>
+    //   <Group justify="space-evenly" style={{margin: 25}}>
+        //   {volunteerEvents.map((event, index) => {
+        //     return <VolunteerEventCard key={index} event={event} />
+        // })}
+        // </Group>
   //   </Layout>
 
 const VolunteerEventCard= ( {event}) => {
