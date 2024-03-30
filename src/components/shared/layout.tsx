@@ -1,12 +1,12 @@
 import { AppShell, Burger, Group} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import VolunteerNavBar from "../NavBar/VolunteerNavBar";
+import VolunteerNavBar from "../../pages/NavBar/VolunteerNavBar";
 import logo from '../../../logo.png';
 import Image from 'next/image';
 import { useState } from "react";
-import OrganizationNavBar from "../NavBar/OrganizationNavBar";
-import GuestNavBar from "../NavBar/GuestNavBar";
-import AdminNavBar from "../NavBar/AdminNavBar";
+import OrganizationNavBar from "../../pages/NavBar/OrganizationNavBar";
+import GuestNavBar from "../../pages/NavBar/GuestNavBar";
+import AdminNavBar from "../../pages/NavBar/AdminNavBar";
 import { UserType } from "../../CustomTypes/UserType";
 
 interface LayoutProps {
