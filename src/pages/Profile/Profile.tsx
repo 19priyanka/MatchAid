@@ -9,15 +9,15 @@ import {
   AppShell,
   Group,
 } from "@mantine/core";
-import classes from "./Volunteer.module.css";
+import classes from "./Profile.module.css";
 import Image from "next/image";
 import organizationProfileIcon from "../../../ organizationProfileIcon.png";
 import volunteerProfileIcon from "../../../volunteerProfileIcon.png";
 import Layout from "../../components/shared/layout";
 import { UserType } from "../../CustomTypes/UserType";
-import { set } from "mongoose";
 
-export default function VolunteerProfile() {
+
+export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [user, setUser] = useState('organization' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
