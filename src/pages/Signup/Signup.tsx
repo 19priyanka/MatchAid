@@ -102,7 +102,7 @@ export default function Login() {
                 />
                 <TextInput
                   label="Phone Number"
-                  placeholder="you@mantine.dev"
+                  placeholder="123-456-7890"
                   required
                   style={{  width: "88%", borderRadius: 15 }}
                   mt="lg"
