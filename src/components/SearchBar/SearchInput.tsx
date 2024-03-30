@@ -22,8 +22,9 @@ const SearchInput= ( {tabs, selected=0}) => {
       // href={link.link}
       onClick={(event) => event.preventDefault()}
       color= {(index==selected)? ('black'): ('grey')}
+      variant= {(index==selected)? ('filled'): ('light')}
       radius={16}
-      style={{height: 53}}
+      style={{height: 45}}
     >
       {tab}
     </Button>
@@ -38,6 +39,7 @@ const SearchInput= ( {tabs, selected=0}) => {
           data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
           visibleFrom="xs"
           radius = {30}
+          variant = "filled"
           // style = {{margin: 25}}
         />
         <Group className={classes.tabBar} style={{overflow: 'clip'}}>
