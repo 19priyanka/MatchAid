@@ -6,6 +6,7 @@ import "@mantine/nprogress";
 import "@mantine/modals";
 import "@mantine/code-highlight";
 
+import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 
 import type { AppProps } from "next/app";
@@ -17,11 +18,13 @@ const theme = createTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <MantineProvider theme={theme}>
-      <SWRConfig value={{ refreshInterval: 30000, revalidateOnFocus: false }}>
-        <Component {...pageProps} />;
-      </SWRConfig>
-    </MantineProvider>
+    <SessionProvider session={pageProps.session}>
+      <MantineProvider theme={theme}>
+        <SWRConfig value={{ refreshInterval: 30000, revalidateOnFocus: false }}>
+          <Component {...pageProps} />;
+        </SWRConfig>
+      </MantineProvider>
+    </SessionProvider>
   );
 }
 

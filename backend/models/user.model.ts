@@ -5,19 +5,16 @@ import { SafeUser, User, UserType } from "../types/User";
 
 const saltRounds = 10;
 const login = async (email: string, password: string): Promise<SafeUser> => {
-  const hashedPassword = bcrypt
-    .hash(password, saltRounds)
-    .then((hash) => {
-      return hash;
-    })
-    .catch((err) => console.error(err.message));
-
   const user = await UserModel.findOne({
     email,
-    password: hashedPassword,
   });
 
   if (!user) {
+    throw new Error("Invalid credentials");
+  }
+
+  const passwordsMatch = await bcrypt.compare(password, user.password);
+  if (!passwordsMatch) {
     throw new Error("Invalid credentials");
   }
 
@@ -99,30 +96,33 @@ const getUser = async (email: string): Promise<SafeUser> => {
   };
 };
 
-const getAllOrganizations = async (): Promise<User[]> =>
-{
-  try
-  {
-    const organizations = await UserModel.find({ userType: UserType.Organization }) as User[];
+const getAllOrganizations = async (): Promise<User[]> => {
+  try {
+    const organizations = (await UserModel.find({
+      userType: UserType.Organization,
+    })) as User[];
     return organizations;
-  }
-  catch (error)
-  {
+  } catch (error) {
     throw new Error("Error retrieving organizations");
   }
 };
 
-const getAllVolunteers = async (): Promise<User[]> =>
-{
-  try
-  {
-    const volunteers = await UserModel.find({ userType: UserType.Volunteer }) as User[];
+const getAllVolunteers = async (): Promise<User[]> => {
+  try {
+    const volunteers = (await UserModel.find({
+      userType: UserType.Volunteer,
+    })) as User[];
     return volunteers;
-  }
-  catch (error)
-  {
+  } catch (error) {
     throw new Error("Error retrieving volunteers");
   }
 };
 
-export { login, signup, editProfile, getUser, getAllOrganizations, getAllVolunteers };
+export {
+  login,
+  signup,
+  editProfile,
+  getUser,
+  getAllOrganizations,
+  getAllVolunteers,
+};
