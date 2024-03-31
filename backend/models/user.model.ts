@@ -23,7 +23,7 @@ const login = async (email: string, password: string): Promise<SafeUser> => {
     email: user.email,
     phoneNumber: user?.phoneNumber,
     createdAt: user.createdAt,
-    userType: UserType[user.userType],
+    userType: user.userType,
     noOfTimesVolunteered: user.noOfTimesVolunteered,
   };
 };
@@ -37,6 +37,7 @@ const signup = async (user: User): Promise<SafeUser> => {
     password: hashedPassword,
     phoneNumber: user.phoneNumber,
     userType: user.userType,
+    createdAt: new Date(),
     noOfTimesVolunteered: 0,
   });
 
@@ -74,7 +75,7 @@ const editProfile = async (user: Partial<User>): Promise<User> => {
 
   return {
     ...updatedUser,
-    userType: UserType[updatedUser.userType],
+    userType: updatedUser.userType,
     ...(user.password ? { password: user.password } : undefined),
   };
 };
@@ -91,7 +92,7 @@ const getUser = async (email: string): Promise<SafeUser> => {
     email: user.email,
     phoneNumber: user?.phoneNumber,
     createdAt: user.createdAt,
-    userType: UserType[user.userType],
+    userType: user.userType,
     noOfTimesVolunteered: user.noOfTimesVolunteered,
   };
 };

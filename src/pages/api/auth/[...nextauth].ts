@@ -28,8 +28,10 @@ async function auth(request: NextApiRequest, response: NextApiResponse) {
           const user = await res.json();
 
           if (res.ok && user) {
-            console.log("user in auth ", user);
-            return user;
+            return {
+              ...user,
+              name: user.userType,
+            };
           }
           return null;
         },

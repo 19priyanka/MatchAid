@@ -35,5 +35,5 @@ const userSchema = new Schema(
   { versionKey: false }
 );
 
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.models.Users || mongoose.model("Users", userSchema);
 export { UserModel };

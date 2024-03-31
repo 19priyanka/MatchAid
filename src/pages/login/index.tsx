@@ -25,8 +25,8 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = () => {
-    signIn("credentials", {
+  const handleSignIn = async () => {
+    await signIn("credentials", {
       username,
       password,
       redirect: false,
@@ -48,10 +48,7 @@ export default function Login() {
   }, []);
 
   const handleSignUp = () => {
-    router.push("/Signup/Signup");
-  };
-  const handleLogin = () => {
-    router.push("/homePage");
+    router.push("/Signup");
   };
 
   return (
@@ -153,9 +150,7 @@ export default function Login() {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  console.log("session in index: ", session);
-
-  if (session?.user?.email) {
+  if (session?.user?.email && session?.user?.name) {
     return {
       redirect: {
         destination: "/",

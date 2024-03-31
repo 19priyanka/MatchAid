@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const connectMongooseClient = async () => {
-  const mongoConnectionString = process.env.MONGO_CONNECTION_STRING;
+  let mongoConnectionString = process.env.MONGO_CONNECTION_STRING;
+  if (process.env.ENVIORNMENT === "development") {
+    mongoConnectionString = process.env.MONGO_CONNECTION_STRING_DEV;
+  }
 
   if (!mongoConnectionString) {
     throw new Error("Please define your mongo connection string.");
