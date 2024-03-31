@@ -8,16 +8,17 @@ import {
 
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
-import { set } from "mongoose";
+
 
 const data = [
   { link: "/homePage", label: "Home", icon: IconBellRinging },
   { link: "/events", label: "My Events", icon: IconReceipt2 },
   {
-    link: "/Profile/VolunteerProfile",
+    link: "/Profile/Profile",
     label: "Profile",
     icon: IconFingerprint,
   },
+
 ];
 
 export default function VolunteerNavBar() {
@@ -58,15 +59,12 @@ export default function VolunteerNavBar() {
       <div className={classes.navbarMain}>{links}</div>
 
       <div className={classes.footer}>
-        <a
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
+        <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
-        </a>
+        </div>
       </div>
+  
     </nav>
   );
 }

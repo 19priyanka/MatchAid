@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../../components/shared/layout";
-import SearchInput from "../../components/SearchBar/SearchInput";
-import  UsersStack  from "../../components/UserTable/AdminUserTable";
+import Layout from "../components/shared/layout";
+import SearchInput from "../components/SearchBar/SearchInput";
+import  UsersStack  from "../components/UserTable/AdminUserTable";
 
 function AdminUserView(){
     return(
