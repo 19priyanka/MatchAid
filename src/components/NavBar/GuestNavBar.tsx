@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
-import {
-  IconHome,
-
-} from "@tabler/icons-react";
+import { IconHome } from "@tabler/icons-react";
 
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
-
-const data = [
-  { link: "/homePage", label: "Home", icon: IconHome, },
- 
-];
+const data = [{ link: "/", label: "Home", icon: IconHome }];
 
 export default function GuestNavBar() {
   const router = useRouter();
@@ -28,12 +21,11 @@ export default function GuestNavBar() {
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-
   useEffect(() => {
     const activeLink = data.find(
       (item) => item.link === router.pathname
     )?.label;
-    setActive(activeLink || '');
+    setActive(activeLink || "");
   }, [router.pathname]);
 
   const handleLinkClick = (label: any, link: any) => {
@@ -61,9 +53,6 @@ export default function GuestNavBar() {
   return (
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
-
-     
-  
     </nav>
   );
 }

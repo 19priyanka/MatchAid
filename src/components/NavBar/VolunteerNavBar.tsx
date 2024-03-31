@@ -9,16 +9,14 @@ import {
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
-
 const data = [
-  { link: "/homePage", label: "Home", icon: IconHome, },
+  { link: "/", label: "Home", icon: IconHome },
   { link: "/events", label: "My Events", icon: IconCalendarEvent },
   {
     link: "/Profile/Profile",
     label: "Profile",
     icon: IconUserCircle,
   },
-
 ];
 
 export default function VolunteerNavBar() {
@@ -36,12 +34,11 @@ export default function VolunteerNavBar() {
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-
   useEffect(() => {
     const activeLink = data.find(
       (item) => item.link === router.pathname
     )?.label;
-    setActive(activeLink || '');
+    setActive(activeLink || "");
   }, [router.pathname]);
 
   const handleLinkClick = (label: any, link: any) => {
@@ -70,13 +67,15 @@ export default function VolunteerNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div style={{marginTop: isMobileView? "135%": "200%"}}>
-        <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
+      <div style={{ marginTop: isMobileView ? "135%" : "200%" }}>
+        <div
+          className={classes.link}
+          onClick={() => handleLinkClick("Logout", "/login")}
+        >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </div>
       </div>
-  
     </nav>
   );
 }

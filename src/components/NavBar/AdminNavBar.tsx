@@ -7,13 +7,11 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 
-
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
-
 const data = [
-  { link: "/listOrganizations", label: "Home", icon: IconHome},
+  { link: "/listOrganizations", label: "Home", icon: IconHome },
   { link: "/listOrganizations", label: "Organizations", icon: IconUsersGroup },
   { link: "/AdminViewReports", label: "Volunteers", icon: IconAccessible },
   {
@@ -42,7 +40,7 @@ export default function AdminNavBar() {
     const activeLink = data.find(
       (item) => item.link === router.pathname
     )?.label;
-    setActive(activeLink || '');
+    setActive(activeLink || "");
   }, [router.pathname]);
 
   const handleLinkClick = (label: any, link: any) => {
@@ -60,7 +58,6 @@ export default function AdminNavBar() {
         }`}
         key={item.label}
         onClick={() => handleLinkClick(item.label, item.link)}
-        
       >
         <item.icon className={classes.linkIcon} stroke={1.5} />
         <span>{item.label}</span>
@@ -72,13 +69,15 @@ export default function AdminNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div style={{marginTop: isMobileView? "135%": "180%"}}>
-        <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
+      <div style={{ marginTop: isMobileView ? "135%" : "180%" }}>
+        <div
+          className={classes.link}
+          onClick={() => handleLinkClick("Logout", "/login")}
+        >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </div>
       </div>
-  
     </nav>
   );
 }
