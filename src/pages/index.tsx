@@ -8,7 +8,6 @@ import { Group } from "@mantine/core";
 import { getSession } from "next-auth/react";
 
 export default function homePage() {
-  const [tabs, settabs] = useState([]);
   const [user, setUser] = useState("GUEST" as UserType);
   const volunteerEvents = [
     {
