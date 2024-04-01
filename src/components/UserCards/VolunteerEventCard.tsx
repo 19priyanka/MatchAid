@@ -1,6 +1,9 @@
-import { Group, Stack, Button, Card, Image, Text } from '@mantine/core';
+import { Group, Stack, Button, Card, Image, Text, Popover } from '@mantine/core';
 import { useState } from "react";
 import { UserType } from "../../CustomTypes/UserType";
+
+import VolunteerMenu  from './VolunteerMenu'
+
 
 // example for the input
   // const volunteerEvents = [
@@ -37,6 +40,8 @@ const VolunteerEventCard= ( {event}) => {
             return <Group justify='flex-end'><Button color="black" mt="md" radius="md" style={{paddingInline: 25}}>To volunteer, sign up or login!</Button></Group>;
         }
       };
+    
+
 
   return (
     <Card shadow="lg" padding="lg" radius="md" withBorder>
@@ -49,7 +54,15 @@ const VolunteerEventCard= ( {event}) => {
         </Card.Section>
 
         <Stack mt="md" mb="md" >
-            <Text fw={500} size="md">{event.Name}</Text>
+            {user==UserType.ORGANIZATION? (
+              <Group>
+                <Text fw={500} size="md">{event.Name}</Text>
+                <VolunteerMenu/>
+              </Group>
+            ):(
+              <Text fw={500} size="md">{event.Name}</Text>
+            )}
+            
             <Group >
             <Text size="xs">Date: {event.Date}, {event.times}</Text>
             <Text size="xs">{event.VolCount} volunteers wanted</Text>

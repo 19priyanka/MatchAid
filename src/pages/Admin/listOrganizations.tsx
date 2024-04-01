@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-import Layout from "../components/shared/layout"
-import SearchInput from "../components/SearchBar/SearchInput"
-import { UserType } from "../CustomTypes/UserType";
-import OrganizationCard from "../components/shared/OrganizationCard";
+import Layout from "../../components/shared/layout"
+import SearchInput from "../../components/SearchBar/SearchInput"
+import { UserType } from "../../CustomTypes/UserType";
+import OrganizationCard from "../../components/UserCards/OrganizationCard";
 import { Group } from "@mantine/core";
 
 export default function homePage(){
