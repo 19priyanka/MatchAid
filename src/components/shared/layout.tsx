@@ -42,8 +42,8 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
     >
       <AppShell.Header>
         <Group>
-        <Image src={logo} alt="logo"  width={70}
-      height={70} />
+        <Image src={logo} alt="logo"  width={50}
+      height={50} />
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         
         </Group>

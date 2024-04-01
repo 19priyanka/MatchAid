@@ -45,21 +45,21 @@ export default function Login() {
 <AppShell>
     <AppShell.Header>
        <Group>
-        <Image src={logo} alt="logo"  width={70}
-      height={70} />
+        <Image src={logo} alt="logo"  width={50}
+      height={50} />
         </Group>
       </AppShell.Header>
       </AppShell>
       
     <Container
-      size={420}
-      my={40}
+      size={350}
+      mt={20}
       style={{ display: "flex", justifyContent: "center" }}
     >
       
-      <Group style={{ flexDirection: "column", alignItems: "center", marginTop:'10%' }}>
-      <Image src={logo} alt="logo"  width={150}  height={150} />
-      <Title ta="center" className={classes.title} style={{marginBottom: 10, marginTop:'2%'}}>
+      <Group style={{ flexDirection: "column", alignItems: "center", marginTop:'12%' }}>
+      <Image src={logo} alt="logo"  width={100}  height={100} />
+      <Title ta="center" className={classes.title} style={{marginBottom: 10}}>
           Match Aid
         </Title>
         <Title ta="center" className={classes.title} style={{marginBottom: 10}}>
