@@ -49,7 +49,7 @@ export default function Login() {
       <Container
         size={420}
       
-        style={{ display: "flex",  marginTop: "5%",justifyContent: "center" }}
+        style={{ display: "flex",  marginTop: isMobileView? "22%" : "5%" ,justifyContent: "center" }}
       >
         <Group
           style={{
