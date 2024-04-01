@@ -24,6 +24,17 @@ const data = [
 export default function AdminNavBar() {
   const router = useRouter();
   const [active, setActive] = useState("");
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const checkMobileView = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    checkMobileView();
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
+  }, []);
 
   useEffect(() => {
     const activeLink = data.find(
@@ -58,7 +69,7 @@ export default function AdminNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div className={classes.footer}>
+      <div style={{marginTop: isMobileView? "135%": "180%"}}>
         <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
