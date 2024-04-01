@@ -15,7 +15,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
-  const [user, setUser] = useState('admin' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
+  const [user, setUser] = useState('organization' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
   
   const renderNavBar = () => {
     switch (user) {
