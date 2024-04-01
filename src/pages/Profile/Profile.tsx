@@ -75,14 +75,14 @@ export default function Profile() {
     <Layout>
           
       <Container
-        size={isMobileView ? "xs" : "sm"}
+        size={isMobileView ? "xs" : "xl"}
         style={{ display: "flex", justifyContent: "center" }}
       >
               
         <Paper
           withBorder
           shadow="md"
-          p={30}
+          p={20}
           radius="md"
           style={{ width: "100%", maxWidth: 500 }}
         >
@@ -92,7 +92,7 @@ export default function Profile() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginBottom: 10,
+             
             }}
           >
             <Image
@@ -110,7 +110,7 @@ export default function Profile() {
             </Title>
 
             <Title
-              order={4}
+            
               style={{ color: "gray", fontStyle: "italic", fontSize: 16 }}
             >
               {profileData.accountType}
@@ -124,7 +124,7 @@ export default function Profile() {
             onChange={(e) => handleChange(e, "fullName")}
             required
             disabled={!isEditMode}
-            mt="md"
+          
           />
                   
           <TextInput
@@ -134,7 +134,7 @@ export default function Profile() {
             onChange={(e) => handleChange(e, "email")}
             required
             disabled={!isEditMode}
-            mt="md"
+         
           />
                   
           <TextInput
@@ -144,7 +144,7 @@ export default function Profile() {
             onChange={(e) => handleChange(e, "phoneNumber")}
             required
             disabled={!isEditMode}
-            mt="md"
+        
           />
                   
           <PasswordInput
@@ -152,13 +152,13 @@ export default function Profile() {
             value={profileData.password}
             onChange={(e) => handleChange(e, "password")}
             required
-            mt="md"
+          
             disabled={!isEditMode}
           />
                   
           <Button
             fullWidth
-            mt="xl"
+            mt="lg"
             m={20}
             onClick={isEditMode ? handleSaveInfo : handleEditInfo}
             size="md"

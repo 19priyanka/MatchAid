@@ -19,6 +19,6 @@
     pointer-events: none;
     font-size: var(--mantine-font-size-sm);
     padding-left: 5px;
-    padding-top: calc(var(--mantine-spacing-sm) / 2);
+   
     z-index: 1;
   }

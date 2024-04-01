@@ -21,25 +21,4 @@
 }
 
   
-  .header {
-    margin-top: calc(var(--mantine-spacing-lg) * 10);
-    padding-bottom: var(--mantine-spacing-md);
-    margin-bottom: calc(var(--mantine-spacing-md) * 1.5);
-    border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  }
-  .navbar {
-    height: 60rem;
-    width: 18.75rem;
-    padding: var(--mantine-spacing-md);
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  }
-  
-  .navbarMain {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
+
