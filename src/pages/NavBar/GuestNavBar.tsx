@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconReceipt2,
-  IconLogout,
+  IconHome,
+
 } from "@tabler/icons-react";
 
 import classes from "./Navbar.module.css";
@@ -11,7 +9,7 @@ import { useRouter } from "next/router";
 
 
 const data = [
-  { link: "/homePage", label: "Home", icon: IconBellRinging },
+  { link: "/homePage", label: "Home", icon: IconHome, },
  
 ];
 
@@ -64,12 +62,7 @@ export default function GuestNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div style={{marginTop: isMobileView? "135%": "180%"}}>
-        <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </div>
-      </div>
+     
   
     </nav>
   );

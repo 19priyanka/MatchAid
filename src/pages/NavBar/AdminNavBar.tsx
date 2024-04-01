@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconReceipt2,
+  IconHome,
+  IconUsersGroup,
+  IconUserCircle,
+  IconAccessible,
   IconLogout,
 } from "@tabler/icons-react";
+
 
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
 
 const data = [
-  { link: "/listOrganizations", label: "Home", icon: IconBellRinging },
-  { link: "/listOrganizations", label: "Organizations", icon: IconReceipt2 },
-  { link: "/AdminViewReports", label: "Volunteers", icon: IconReceipt2 },
+  { link: "/listOrganizations", label: "Home", icon: IconHome},
+  { link: "/listOrganizations", label: "Organizations", icon: IconUsersGroup },
+  { link: "/AdminViewReports", label: "Volunteers", icon: IconAccessible },
   {
     link: "/Profile/Profile",
     label: "Profile",
-    icon: IconFingerprint,
+    icon: IconUserCircle,
   },
 ];
 

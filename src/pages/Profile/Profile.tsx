@@ -42,7 +42,7 @@ export default function Profile() {
   };
 
   const [profileData, setProfileData] = useState({
-    fullName: "John Doe",
+    fullName: "Charitable Organization",
     email: "johndoe@gmail.com",
     phoneNumber: "123-456-7890",
     password: "password",

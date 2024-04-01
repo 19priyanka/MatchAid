@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconReceipt2,
+  IconHome,
+  IconUserCircle,
+  IconCalendarEvent,
   IconLogout,
 } from "@tabler/icons-react";
 
@@ -11,12 +11,12 @@ import { useRouter } from "next/router";
 
 
 const data = [
-  { link: "/homePage", label: "Home", icon: IconBellRinging },
-  { link: "/events", label: "My Events", icon: IconReceipt2 },
+  { link: "/homePage", label: "Home", icon: IconHome, },
+  { link: "/events", label: "My Events", icon: IconCalendarEvent },
   {
     link: "/Profile/Profile",
     label: "Profile",
-    icon: IconFingerprint,
+    icon: IconUserCircle,
   },
 
 ];
@@ -70,7 +70,7 @@ export default function VolunteerNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div style={{marginTop: isMobileView? "135%": "180%"}}>
+      <div style={{marginTop: isMobileView? "135%": "200%"}}>
         <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
