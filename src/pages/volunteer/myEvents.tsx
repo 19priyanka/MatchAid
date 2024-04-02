@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-import Layout from "../components/shared/layout"
-import SearchInput from "../components/SearchBar/SearchInput"
-import { UserType } from "../CustomTypes/UserType";
-import VolunteerEventCard from "../components/UserCards/VolunteerEventCard";
+import Layout from "../../components/shared/layout"
+import SearchInput from "../../components/SearchBar/SearchInput"
+import { UserType } from "../../CustomTypes/UserType";
+import VolunteerEventCard from "../../components/UserCards/VolunteerEventCard";
 import { Group } from "@mantine/core";
 
 export default function homePage(){
-    const [tabs, settabs] = useState([]);
+    const [tabs, settabs] = useState(["Upcoming", "Past Events"]);
     const [user, setUser] = useState('GUEST' as UserType);
     const volunteerEvents = [
                             {Name: "Soup Kitchen", VolCount: 4, Date: "April 14", times: "8:30am-12:00pm", Description: "This is a description of the event that's going to take place."},
@@ -33,7 +33,6 @@ export default function homePage(){
                 return <VolunteerEventCard key={index} event={event} />
             })}
         </Group>
-        
     </Layout>
     )
 }
