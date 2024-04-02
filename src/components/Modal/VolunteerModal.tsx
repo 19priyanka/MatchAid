@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import classes from './modal.module.css';
 import { IconHeart, IconClock } from '@tabler/icons-react';
-import { NumberInput, NumberInputHandlers, Group, Badge, Radio, ActionIcon } from '@mantine/core';
+import { NumberInput, NumberInputHandlers, Group, Badge, Radio, ActionIcon, TextInput } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, rem } from '@mantine/core';
@@ -16,15 +16,15 @@ export function VolunteerModal() {
   return (
         <>
           <Modal opened={opened} onClose={close} title="Organization #2">
-          <Radio.Group label= "Reason for Volunteering"
+          <Radio.Group label= "Reason for Volunteering" withAsterisk
                         description="Why are you interested in volunteering for this organization?">
             <Group mt= "xs">
                 <Radio value= "passion" label= "This is an event I feel passionately about"/>
                 <Radio value= "free" label= "I have some free time and want to give back"/>
                 <Radio value= "try" label= "I want to try something new"/>
                 <Group>
-                <Radio value= "other" label= "Other"/>
-                    <input type="text" id="otherOption" name="otherOption" />
+                <Radio value= "other" />
+                    <TextInput placeholder= "Other..." />
                 </Group>
             </Group>
             </Radio.Group>

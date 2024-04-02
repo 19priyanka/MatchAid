@@ -1,6 +1,6 @@
 import { Avatar, Table, Group, Text, ActionIcon, Menu, rem } from '@mantine/core';
 import {
-  IconUserExclamation,
+  IconUserCircle, IconUserExclamation,
 } from '@tabler/icons-react';
 
 const data = [
@@ -31,7 +31,8 @@ export function UsersStack() {
     <Table.Tr key={item.name}>
       <Table.Td>
         <Group gap="sm">
-         
+        <IconUserCircle style={{ width: rem(50), height: rem(50) }}/>
+
           <div>
             <Text fz="sm" fw={500}>
               {item.name}
