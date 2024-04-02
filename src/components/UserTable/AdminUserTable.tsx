@@ -47,6 +47,7 @@ const UsersStack = () => {
     <Table.Tr key={item.name}>
       <Table.Td>
         <Group >
+            <IconUserCircle style={{ width: rem(50), height: rem(50) }}/>
           <div>
             <Text fz="sm" fw={500}>
               {item.name}
