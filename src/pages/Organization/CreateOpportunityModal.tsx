@@ -15,12 +15,13 @@ export function CreateOpportunityModal() {
 
   return (
         <>
-          <Modal opened={opened} onClose={close} >
+          <Modal title= "Create an Opportunity" opened={opened} onClose={close} >
           
           <TextInput label="Opportunity Name" withAsterisk placeholder="Enter name here"/>
                      
             <DateTimePicker dropdownType= "modal" label="Date/Time" withAsterisk description = "Date and start time of opportunity"/>
-            <TimeInput withAsterisk description="End time of opportunity"/>            
+            <TimeInput withAsterisk description="End time of opportunity"/>   
+            <TextInput label="Location" withAsterisk placeholder="Enter address of opportunity here"/>         
             <NumberInput label= "Number of Volunteers Needed" withAsterisk placeholder="Enter number here" min={1} />
             <TextInput label="Description" withAsterisk placeholder="Enter description here"/>
             <Group mt="xs">
