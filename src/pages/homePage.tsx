@@ -8,7 +8,7 @@ import { Group } from "@mantine/core";
 
 export default function homePage(){
     const [tabs, settabs] = useState([]);
-    const [user, setUser] = useState(UserType.ADMIN);
+    const [user, setUser] = useState(UserType.GUEST);
     const volunteerEvents = [
                             {Name: "Soup Kitchen", VolCount: 4, Date: "April 14", times: "8:30am-12:00pm", Description: "This is a description of the event that's going to take place."},
                             {Name: "Homeless Shelter", VolCount: 10, Date: "April 15", times: "2:30pm-9:00pm", Description: "This is a description of the event that's going to take place."},

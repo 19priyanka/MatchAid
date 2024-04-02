@@ -19,8 +19,8 @@ import VolunteerMenu  from './VolunteerMenu'
   //   </Layout>
 
 const VolunteerEventCard= ( {event}) => {
-    const [user, setUser] = useState(UserType.VOLUNTEER);
-    const [attending, setAttendance] = useState(true);
+    const [user, setUser] = useState(UserType.GUEST);
+    const [attending, setAttendance] = useState(false);
 
     const renderButtons = () => {
         switch (user) {
