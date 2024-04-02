@@ -1,4 +1,4 @@
-import { Group, Stack, Button, Card, Image, Text, Popover } from '@mantine/core';
+import { Group, Stack, Button, Card, Image, Text, Tooltip } from '@mantine/core';
 import { useState } from "react";
 import { UserType } from "../../CustomTypes/UserType";
 
@@ -19,25 +19,36 @@ import VolunteerMenu  from './VolunteerMenu'
   //   </Layout>
 
 const VolunteerEventCard= ( {event}) => {
-    const [user, setUser] = useState('GUEST' as UserType);
+    const [user, setUser] = useState(UserType.GUEST);
+    const [attending, setAttendance] = useState(false);
 
     const renderButtons = () => {
         switch (user) {
           case UserType.ADMIN:
             return   <Group justify='flex-end'>
-                        <Button color="black" mt="md" radius="md" style={{paddingInline: 25}}>
+                        <Button color="black" mt="md" radius="xl" style={{paddingInline: 25}}>
                         Approve
                         </Button>
-                        <Button color="black" mt="md" radius="md" style={{paddingInline: 25}}>
+                        <Button color="black" mt="md" radius="xl" style={{paddingInline: 25}}>
                         Reject
                         </Button>
                     </Group>;
           case UserType.ORGANIZATION:
-            return   <Group justify='flex-end'><Button color="black" mt="md" radius="md" style={{paddingInline: 25}} >Edit</Button></Group>;
+            return   <Group justify='flex-end'><Button color="black" mt="md" radius="xl" style={{paddingInline: 25}} >Edit</Button></Group>;
           case UserType.VOLUNTEER:
-            return   <Group justify='flex-end'><Button color="black" mt="md" radius="md" style={{paddingInline: 25}}>Volunteer</Button></Group>;
+            if(attending){
+              return   <Group justify='flex-end'>
+                <Tooltip withArrow 
+                         multiline w={200} 
+                         position="top" 
+                         label="Report this organization if you do not feel they meet MatchAid standards">
+                <Button color="black" mt="md" radius="xl" style={{paddingInline: 25}} >Report</Button>
+                </Tooltip>
+              </Group>;
+            }
+            else return   <Group justify='flex-end'><Button color="black" mt="md" radius="xl" style={{paddingInline: 25}}>Volunteer</Button></Group>;
           default:
-            return <Group justify='flex-end'><Button color="black" mt="md" radius="md" style={{paddingInline: 25}}>To volunteer, sign up or login!</Button></Group>;
+            return <Group justify='flex-end'><Button color="black" mt="md" radius="xl" style={{paddingInline: 25}}>To volunteer, sign up or login!</Button></Group>;
         }
       };
     

@@ -34,7 +34,7 @@ const VolunteerEventCard= ( {organization}) => {
         <Text  mt="sm" size="sm" c="dimmed">{organization.Description}</Text>
 
         <Group justify='flex-end'>
-            <Button color="black" mt="md" radius="md" style={{paddingInline: 25}}>More details</Button>
+            <Button color="black" mt="md" radius="xl" style={{paddingInline: 25}}>More details</Button>
         </Group>
     </Card>
 
