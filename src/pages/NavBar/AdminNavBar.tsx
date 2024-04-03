@@ -60,6 +60,7 @@ export default function AdminNavBar() {
         }`}
         key={item.label}
         onClick={() => handleLinkClick(item.label, item.link)}
+        
       >
         <item.icon className={classes.linkIcon} stroke={1.5} />
         <span>{item.label}</span>
