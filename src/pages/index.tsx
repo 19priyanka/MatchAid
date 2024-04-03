@@ -3,9 +3,9 @@ import { useState } from "react";
 import Layout from "../components/shared/layout";
 import SearchInput from "../components/SearchBar/SearchInput";
 import { UserType } from "../CustomTypes/UserType";
-import VolunteerEventCard from "../components/shared/VolunteerEventCard";
 import { Group } from "@mantine/core";
 import { getSession } from "next-auth/react";
+import VolunteerEventCard from "../components/UserCards/VolunteerEventCard";
 
 export default function homePage() {
   const [user, setUser] = useState("GUEST" as UserType);
