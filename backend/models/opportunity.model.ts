@@ -157,7 +157,7 @@ const getAllUsersForOpportunity = async (opportunityId: string): Promise<User[]>
 const updateOpportunity = async (opportunity: Partial<Opportunity>): Promise<Opportunity> =>
 {
   const updatedOpportunity = await OpportunityModel.findOneAndUpdate(
-    { _id: opportunity._id },
+    { name: opportunity.name },
     {
       ...(opportunity.status ? { status: opportunity.status } : undefined),
     },

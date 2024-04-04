@@ -14,7 +14,7 @@ export default async function handler
 {
   try
   {
-    if (!req.body._id || !req.body.status) {
+    if (!req.body.name || !req.body.status) {
       res.status(400).json({ message: "Opportunity ID and status are required" });
     }
     await connectMongooseClient();

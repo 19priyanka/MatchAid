@@ -16,15 +16,15 @@ export default async function handler
   {
     const
     {
-      reviewee,
-      reviewer,
+      revieweeEmail,
+      reviewerEmail,
       description,
       rating,
     } = req.body;
     if
     (
-      !reviewee ||
-      !reviewer ||
+      !revieweeEmail ||
+      !reviewerEmail ||
       !description ||
       !rating
     )
@@ -36,8 +36,8 @@ export default async function handler
 
     const review: Review = await postReview
     ({
-      reviewee,
-      reviewer,
+      revieweeEmail,
+      reviewerEmail,
       description,
       rating,
     });

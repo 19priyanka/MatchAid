@@ -6,13 +6,10 @@ const opportunitySchema = new Schema(
     organization: {
       name: {
         type: String,
-        required: true,
       },
       email: {
         type: String,
-        required: true,
       },
-      required: true,
     },
     name: {
       type: String,

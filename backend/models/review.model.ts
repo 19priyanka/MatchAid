@@ -1,26 +1,32 @@
 import { Review } from "../types/Review";
 import { ReviewModel } from "../../src/models/reviews";
-import { User } from "../types/User";
+import { UserModel } from "../../src/models/users";
 
 export interface PostReview
 {
-  reviewee: User;
-  reviewer: User;
+  revieweeEmail: string;
+  reviewerEmail: string;
   description: string;
   rating: number;
 }
 
-const postReview = async(
-  review: PostReview
-): Promise<Review> =>
-{
-  const newReviewModel = new ReviewModel
-  ({
-    revieweeId: review.reviewee,
-    reviewerId: review.reviewer,
+const postReview = async(review: PostReview): Promise<Review> => {
+  const revieweeUser = await UserModel.findOne({ email: review.revieweeEmail });
+  if (!revieweeUser) {
+    throw new Error(`Reviewee with email ${review.revieweeEmail} not found`);
+  }
+
+  const reviewerUser = await UserModel.findOne({ email: review.reviewerEmail });
+  if (!reviewerUser) {
+    throw new Error(`Reviewer with email ${review.reviewerEmail} not found`);
+  }
+
+  const newReviewModel = new ReviewModel({
+    revieweeId: revieweeUser._id,
+    reviewerId: reviewerUser._id,
     description: review.description,
     rating: review.rating,
-    revieweeType: review.reviewee.userType,
+    revieweeType: revieweeUser.userType,
   });
 
   const newReviewDocument = await newReviewModel.save();
