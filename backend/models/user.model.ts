@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../../src/models/users";
 import { SafeUser, User, UserType } from "../types/User";
 
-const saltRounds = 10;
+const saltRounds = 9;
 const login = async (email: string, password: string): Promise<SafeUser> => {
   const user = await UserModel.findOne({
     email,

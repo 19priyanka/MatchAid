@@ -1,7 +1,7 @@
 [
   {
     "email": "user1@example.com",
-    "password": "hashed-password-1",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Volunteer",
     "phoneNumber": "123-456-7890",
     "fullName": "John Doe",
@@ -10,7 +10,7 @@
   },
   {
     "email": "user2@example.com",
-    "password": "hashed-password-2",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Organization",
     "fullName": "Charity Foundation",
     "createdAt": "2023-02-20T10:30:00Z",
@@ -18,8 +18,17 @@
   },
   {
     "email": "user3@example.com",
-    "password": "hashed-password-3",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Volunteer",
+    "phoneNumber": "987-654-3210",
+    "fullName": "Alice Smith",
+    "noOfTimesVolunteered": 1,
+    "createdAt": "2023-03-10T08:45:00Z"
+  },
+  {
+    "email": "user4@example.com",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
+    "userType": "Admin",
     "phoneNumber": "987-654-3210",
     "fullName": "Alice Smith",
     "noOfTimesVolunteered": 1,
