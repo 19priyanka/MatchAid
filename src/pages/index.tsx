@@ -54,7 +54,7 @@ export default function homePage() {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  if (session?.user?.email && session?.user?.name) {
+  if (!(session?.user?.email && session?.user?.name)) {
     return {
       redirect: {
         destination: "/login",

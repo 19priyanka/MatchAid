@@ -20,16 +20,12 @@ import { useState, useEffect } from "react";
 import { getSession, signIn } from "next-auth/react";
 import axios from "axios";
 import { GetServerSideProps } from "next";
-
-enum UserType {
-  Volunteer = "Volunteer",
-  Organization = "Organization",
-}
+import { UserType } from "../../CustomTypes/UserType";
 
 export default function Login() {
   const router = useRouter();
   const [isMobileView, setIsMobileView] = useState(false);
-  const [userType, setUserType] = useState<string | null>(UserType.Volunteer);
+  const [userType, setUserType] = useState<string | null>(UserType.VOLUNTEER);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -208,7 +204,11 @@ export default function Login() {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  if (session?.user?.email && session?.user?.name) {
+  if (
+    session?.user?.email &&
+    session?.user?.name &&
+    session?.user?.name !== UserType.GUEST
+  ) {
     return {
       redirect: {
         destination: "/",

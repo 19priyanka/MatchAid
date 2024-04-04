@@ -18,6 +18,8 @@ import logo from "../../../logo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { ArrowRight } from "tabler-icons-react";
+import { UserType } from "../../CustomTypes/UserType";
 
 export default function Login() {
   const router = useRouter();
@@ -49,6 +51,16 @@ export default function Login() {
 
   const handleSignUp = () => {
     router.push("/Signup");
+  };
+
+  const handleGuestSignIn = async () => {
+    await signIn("credentials", {
+      username: UserType.GUEST,
+      password: UserType.GUEST,
+      redirect: false,
+    });
+
+    router.push("/");
   };
 
   return (
@@ -88,7 +100,6 @@ export default function Login() {
           >
             Welcome back
           </Title>
-
           <Paper
             withBorder
             shadow="md"
@@ -120,21 +131,29 @@ export default function Login() {
               <Checkbox label="Keep me signed in" />
             </Group>
           </Paper>
-
           <Button
             mt="xl"
             size="md"
             style={{
               backgroundColor: "black",
               borderRadius: 10,
-              width: "30%",
+              width: isMobileView ? "100%" : "40%",
               fontSize: isMobileView ? "13px" : "18px",
             }}
             onClick={handleSignIn}
           >
             Log in
           </Button>
-
+          <p className="font-semibold">Or</p>
+          <button
+            className="group flex w-full md:w-[40%] cursor-pointer items-center justify-center rounded-xl bg-indigo-700 px-6 py-2 text-white transition"
+            onClick={handleGuestSignIn}
+          >
+            <span className="group flex w-full items-center justify-center rounded py-0.5 text-center font-semibold text-[13px] md:text-[18px]">
+              Continue as Guest
+            </span>
+            <ArrowRight className="flex-0 ml-4 h-6 w-6 my-auto" />
+          </button>
           <Text c="dimmed" size="sm" ta="center" mt={5}>
             Do not have an account yet?{" "}
             <Anchor size="sm" component="button" onClick={handleSignUp}>
@@ -150,7 +169,11 @@ export default function Login() {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  if (session?.user?.email && session?.user?.name) {
+  if (
+    session?.user?.email &&
+    session?.user?.name &&
+    session?.user?.name !== UserType.GUEST
+  ) {
     return {
       redirect: {
         destination: "/",

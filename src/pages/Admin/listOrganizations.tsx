@@ -1,9 +1,8 @@
-import type { GetServerSideProps, NextPage } from "next";
-import { useState } from "react";
-import Layout from "../components/shared/layout";
-import SearchInput from "../components/SearchBar/SearchInput";
-import { UserType } from "../CustomTypes/UserType";
-import OrganizationCard from "../components/shared/OrganizationCard";
+import type { GetServerSideProps } from "next";
+import Layout from "../../components/shared/layout";
+import SearchInput from "../../components/SearchBar/SearchInput";
+import { UserType } from "../../CustomTypes/UserType";
+import OrganizationCard from "../../components/UserCards/OrganizationCard";
 import { Group } from "@mantine/core";
 import { getSession } from "next-auth/react";
 
@@ -38,7 +37,10 @@ export default function homePage() {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  if (session?.user?.email && session?.user?.name) {
+  if (
+    !(session?.user?.email && session?.user?.name) ||
+    session?.user?.name !== UserType.ADMIN
+  ) {
     return {
       redirect: {
         destination: "/login",

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { UserType } from "../../../CustomTypes/UserType";
 
 async function auth(request: NextApiRequest, response: NextApiResponse) {
   return NextAuth(request, response, {
@@ -19,6 +20,17 @@ async function auth(request: NextApiRequest, response: NextApiResponse) {
           },
         },
         async authorize(credentials) {
+          if (
+            credentials?.username === UserType.GUEST &&
+            credentials?.password === UserType.GUEST
+          ) {
+            return {
+              name: UserType.GUEST,
+              email: UserType.GUEST,
+              userType: UserType.GUEST,
+            };
+          }
+
           const res = await fetch(`${process.env.NEXTAUTH_URL}/api/login`, {
             method: "POST",
             body: JSON.stringify(credentials),
