@@ -4,6 +4,8 @@ import VolunteerNavBar from "../NavBar/VolunteerNavBar";
 import logo from "../../../logo.png";
 import Image from "next/image";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+
 import OrganizationNavBar from "../NavBar/OrganizationNavBar";
 import GuestNavBar from "../NavBar/GuestNavBar";
 import AdminNavBar from "../NavBar/AdminNavBar";
@@ -15,7 +17,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
-  const [user, setUser] = useState("organization" as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
+  const { data: session } = useSession();
+  const [user, setUser] = useState(session?.user?.name);
 
   const renderNavBar = () => {
     switch (user) {

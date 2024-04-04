@@ -6,7 +6,7 @@ import {
   IconAccessible,
   IconLogout,
 } from "@tabler/icons-react";
-
+import { signOut } from "next-auth/react";
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
@@ -69,15 +69,15 @@ export default function AdminNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div style={{ marginTop: isMobileView ? "135%" : "180%" }}>
-        <div
-          className={classes.link}
-          onClick={() => handleLinkClick("Logout", "/login")}
-        >
+      <button
+        onClick={() => signOut()}
+        style={{ marginTop: isMobileView ? "135%" : "180%" }}
+      >
+        <div className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </div>
-      </div>
+      </button>
     </nav>
   );
 }
