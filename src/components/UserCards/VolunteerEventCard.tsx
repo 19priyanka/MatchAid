@@ -19,7 +19,7 @@ import VolunteerMenu  from './VolunteerMenu'
   //   </Layout>
 
 const VolunteerEventCard= ( {event}) => {
-    const [user, setUser] = useState(UserType.GUEST);
+    const [user, setUser] = useState(UserType.ORGANIZATION);
     const [attending, setAttendance] = useState(false);
 
     const renderButtons = () => {
