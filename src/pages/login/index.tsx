@@ -68,28 +68,28 @@ export default function Login() {
       <AppShell>
         <AppShell.Header>
           <Group>
-            <Image src={logo} alt="logo" width={70} height={70} />
+            <Image src={logo} alt="logo" width={50} height={50} />
           </Group>
         </AppShell.Header>
       </AppShell>
 
       <Container
-        size={420}
-        my={40}
+        size={350}
+        mt={20}
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Group
           style={{
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "10%",
+            marginTop: "12%",
           }}
         >
-          <Image src={logo} alt="logo" width={150} height={150} />
+          <Image src={logo} alt="logo" width={100} height={100} />
           <Title
             ta="center"
             className={classes.title}
-            style={{ marginBottom: 10, marginTop: "2%" }}
+            style={{ marginBottom: 10 }}
           >
             Match Aid
           </Title>
@@ -100,6 +100,7 @@ export default function Login() {
           >
             Welcome back
           </Title>
+
           <Paper
             withBorder
             shadow="md"
@@ -131,35 +132,35 @@ export default function Login() {
               <Checkbox label="Keep me signed in" />
             </Group>
           </Paper>
+
           <Button
-            mt="xl"
+            mt="sm"
             size="md"
             style={{
               backgroundColor: "black",
               borderRadius: 10,
-              width: isMobileView ? "100%" : "40%",
+              width: "30%",
               fontSize: isMobileView ? "13px" : "18px",
             }}
             onClick={handleSignIn}
           >
             Log in
           </Button>
-          <p className="font-semibold">Or</p>
-          <button
-            className="group flex w-full md:w-[40%] cursor-pointer items-center justify-center rounded-xl bg-indigo-700 px-6 py-2 text-white transition"
-            onClick={handleGuestSignIn}
-          >
-            <span className="group flex w-full items-center justify-center rounded py-0.5 text-center font-semibold text-[13px] md:text-[18px]">
-              Continue as Guest
-            </span>
-            <ArrowRight className="flex-0 ml-4 h-6 w-6 my-auto" />
-          </button>
-          <Text c="dimmed" size="sm" ta="center" mt={5}>
+          <Text c="dimmed" size="sm" ta="center" >
             Do not have an account yet?{" "}
             <Anchor size="sm" component="button" onClick={handleSignUp}>
               Sign Up
             </Anchor>
+            <Text mt={5}>
+            Or {" "}
+            <Anchor size="sm" component="button" onClick={handleGuestSignIn}>
+              Continue as Guest 
+             
+            </Anchor>
+            </Text>
+          
           </Text>
+         
         </Group>
       </Container>
     </>
