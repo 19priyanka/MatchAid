@@ -17,18 +17,35 @@ import volunteerProfileIcon from "../../../volunteerProfileIcon.png";
 import Layout from "../../components/shared/layout";
 import { UserType } from "../../CustomTypes/UserType";
 import { GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [user, setUser] = useState("organization" as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
+  const { data: session } = useSession();
+  const [user, setUser] = useState(session?.user?.name);
+  useEffect(() => {
+    setUser(session?.user?.name);
+    // retrieveProfileData();
+  }, [session]);
 
   useEffect(() => {
     setProfileData({
       ...profileData,
       accountType: accountType(),
     });
+    
   }, [user]);
+
+  // console.log(session?.user?.name);
+
+  const retrieveProfileData = async () => {
+    const response = await axios.post("/api/profile", { email: session?.user?.email});
+    
+    console.log(response.data);
+  }
+
 
   const accountType = () => {
     switch (user) {
@@ -40,6 +57,8 @@ export default function Profile() {
         return "Volunteer";
     }
   };
+
+
 
   const [profileData, setProfileData] = useState({
     fullName: "Charitable Organization",
@@ -67,8 +86,22 @@ export default function Profile() {
     setIsEditMode(true);
   };
 
-  const handleSaveInfo = () => {
+  const handleSaveInfo = async () => {
     setIsEditMode(false);
+  
+      const response = await axios.post("/api/profile/edit", {
+        fullName: profileData.fullName,
+        email: profileData.email,
+        phoneNumber: profileData.phoneNumber,
+        password: profileData.password,
+      });
+      if (response.status !== 200) {
+        console.error("Error signing up");
+        return;
+      }
+
+   
+  
   };
 
   return (
