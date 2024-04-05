@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserType } from "../../CustomTypes/UserType";
 import VolunteerMenu from "./VolunteerMenu";
 
@@ -29,6 +29,9 @@ const VolunteerEventCard = ({ event }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState(session?.user?.name);
   const [attending, setAttendance] = useState(false);
+  useEffect(() => {
+    setUser(session?.user?.name);
+  }, [session]);
 
   const renderButtons = () => {
     switch (user) {

@@ -3,7 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import VolunteerNavBar from "../NavBar/VolunteerNavBar";
 import logo from "../../../logo.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import OrganizationNavBar from "../NavBar/OrganizationNavBar";
@@ -19,7 +19,11 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
   const { data: session } = useSession();
   const [user, setUser] = useState(session?.user?.name);
+  useEffect(() => {
+    setUser(session?.user?.name);
+  }, [session]);
 
+  console.log(session);
   const renderNavBar = () => {
     switch (user) {
       case UserType.ADMIN:
