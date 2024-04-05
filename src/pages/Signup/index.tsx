@@ -72,21 +72,21 @@ export default function Login() {
       <AppShell>
         <AppShell.Header>
           <Group>
-            <Image src={logo} alt="logo" width={70} height={70} />
+            <Image src={logo} alt="logo" width={50} height={50} />
           </Group>
         </AppShell.Header>
       </AppShell>
 
       <Container
         size={420}
-        my={40}
-        style={{ display: "flex", justifyContent: "center" }}
+      
+        style={{ display: "flex",  marginTop: isMobileView? "22%" : "5%" ,justifyContent: "center" }}
       >
         <Group
           style={{
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "20%",
+           
           }}
         >
           <Paper
@@ -95,8 +95,8 @@ export default function Login() {
             p={30}
             radius="lg"
             style={{
-              width: isMobileView ? "100%" : 664,
-              height: isMobileView ? "100%" : 950,
+              width: isMobileView ? "100%" : 550,
+              height: isMobileView ? "100%" : 710,
             }}
           >
             <Group
@@ -106,26 +106,24 @@ export default function Login() {
                 alignItems: "center",
               }}
             >
-              <Image src={logo} alt="logo" width={100} height={100} />
+              <Image src={logo} alt="logo" width={90} height={90} />
               <Title
                 ta="center"
                 className={classes.title}
-                style={{ marginBottom: 10, marginTop: "2%" }}
+               
               >
                 Create an account
               </Title>
             </Group>
+           
+              <Group style={{ flexDirection: "column", alignItems: "start"}} ml={40}>
 
-            <Group
-              style={{ flexDirection: "column", alignItems: "start" }}
-              ml={40}
-            >
               <TextInput
                 label="Full Name"
                 placeholder="Your name"
                 required
                 style={{ width: "88%", borderRadius: 15 }}
-                mt="lg"
+         
                 value={fullName}
                 onChange={(event) => setFullName(event.target.value)}
               />
@@ -134,7 +132,7 @@ export default function Login() {
                 placeholder="you@mantine.dev"
                 required
                 style={{ width: "88%", borderRadius: 15 }}
-                mt="lg"
+         
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
               />
@@ -143,7 +141,7 @@ export default function Login() {
                 placeholder="123-456-7890"
                 required
                 style={{ width: "88%", borderRadius: 15 }}
-                mt="lg"
+         
                 value={phoneNumber}
                 onChange={(event) => setPhoneNumber(event.target.value)}
               />
@@ -151,14 +149,14 @@ export default function Login() {
                 label="Password"
                 placeholder="Your password"
                 required
-                mt="lg"
+        
                 value={password}
                 style={{ width: "88%", borderRadius: 15 }}
                 onChange={(event) => setPassword(event.target.value)}
               />
 
               <Select
-                mt="lg"
+                mt="sm"
                 comboboxProps={{ withinPortal: true }}
                 data={["Volunteer", "Organization"]}
                 placeholder="Pick one"
@@ -171,24 +169,26 @@ export default function Login() {
             </Group>
 
             <Group style={{ justifyContent: "center" }}>
-              <Button
-                mb="md"
-                size="md"
-                style={{
-                  backgroundColor: "black",
-                  borderRadius: 10,
-                  width: "65%",
-                  fontSize: "18px",
-                  alignSelf: "center",
-                  marginTop: "7%",
-                }}
+            <Button
+               
+               mb="md"
+               size="md"
+               style={{
+                 backgroundColor: "black",
+                 borderRadius: 10,
+                 width: "65%",
+                 fontSize: "18px",
+                 alignSelf: "center",
+                 marginTop:"7%",
+               }}
+            
                 onClick={handleSignUp}
               >
                 Sign Up
               </Button>
             </Group>
 
-            <Text c="dimmed" size="sm" ta="center" mt={5}>
+            <Text c="dimmed" size="sm" ta="center" >
               Already have an account yet?{" "}
               <Anchor size="sm" component="button" onClick={handleLogin}>
                 Login
