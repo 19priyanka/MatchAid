@@ -77,10 +77,7 @@ export default function AdminNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <button
-        onClick={() => signOut()}
-        style={{ marginTop: isMobileView ? "135%" : "180%" }}
-      >
+      <button onClick={() => signOut()} className="absolute bottom-0">
         <div className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
