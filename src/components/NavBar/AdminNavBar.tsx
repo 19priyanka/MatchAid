@@ -11,9 +11,17 @@ import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
 const data = [
-  { link: "/listOrganizations", label: "Home", icon: IconHome },
-  { link: "/listOrganizations", label: "Organizations", icon: IconUsersGroup },
-  { link: "/AdminViewReports", label: "Volunteers", icon: IconAccessible },
+  { link: "/Admin/listOrganizations", label: "Home", icon: IconHome },
+  {
+    link: "/Admin/listOrganizations",
+    label: "Organizations",
+    icon: IconUsersGroup,
+  },
+  {
+    link: "/Admin/AdminViewReports",
+    label: "Volunteers",
+    icon: IconAccessible,
+  },
   {
     link: "/Profile/Profile",
     label: "Profile",

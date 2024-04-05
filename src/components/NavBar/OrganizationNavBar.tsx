@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 const data = [
   { link: "/", label: "Home", icon: IconHome },
   {
-    link: "/organizationUserView",
+    link: "/Organization/organizationUserView",
     label: "Report Volunteers",
     icon: IconReport,
   },
