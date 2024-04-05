@@ -1,26 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  IconHome,
-  IconReport,
-  IconUserCircle,
-  IconLogout,
-} from "@tabler/icons-react";
+import { IconHome } from "@tabler/icons-react";
 
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
+const data = [{ link: "/", label: "Home", icon: IconHome }];
 
-const data = [
-  { link: "/homePage", label: "Home", icon: IconHome, },
-  { link: "/organizationUserView", label: "Report Volunteers", icon: IconReport },
-  {
-    link: "/Profile/Profile",
-    label: "Profile",
-    icon: IconUserCircle,
-  },
-];
-
-export default function OrganizationNavBar() {
+export default function GuestNavBar() {
   const router = useRouter();
   const [active, setActive] = useState("");
   const [isMobileView, setIsMobileView] = useState(false);
@@ -35,12 +21,11 @@ export default function OrganizationNavBar() {
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-
   useEffect(() => {
     const activeLink = data.find(
       (item) => item.link === router.pathname
     )?.label;
-    setActive(activeLink || '');
+    setActive(activeLink || "");
   }, [router.pathname]);
 
   const handleLinkClick = (label: any, link: any) => {
@@ -68,14 +53,6 @@ export default function OrganizationNavBar() {
   return (
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
-
-      <div style={{marginTop: isMobileView? "135%": "200%"}}>
-        <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </div>
-      </div>
-  
     </nav>
   );
 }

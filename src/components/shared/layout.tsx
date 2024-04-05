@@ -1,12 +1,14 @@
-import { AppShell, Burger, Group} from "@mantine/core";
+import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import VolunteerNavBar from "../../pages/NavBar/VolunteerNavBar";
-import logo from '../../../logo.png';
-import Image from 'next/image';
-import { useState } from "react";
-import OrganizationNavBar from "../../pages/NavBar/OrganizationNavBar";
-import GuestNavBar from "../../pages/NavBar/GuestNavBar";
-import AdminNavBar from "../../pages/NavBar/AdminNavBar";
+import VolunteerNavBar from "../NavBar/VolunteerNavBar";
+import logo from "../../../logo.png";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+
+import OrganizationNavBar from "../NavBar/OrganizationNavBar";
+import GuestNavBar from "../NavBar/GuestNavBar";
+import AdminNavBar from "../NavBar/AdminNavBar";
 import { UserType } from "../../CustomTypes/UserType";
 
 interface LayoutProps {
@@ -15,16 +17,21 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
-  const [user, setUser] = useState('organization' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
-  
+  const { data: session } = useSession();
+  const [user, setUser] = useState(session?.user?.name);
+  useEffect(() => {
+    setUser(session?.user?.name);
+  }, [session]);
+
+  console.log(session);
   const renderNavBar = () => {
     switch (user) {
       case UserType.ADMIN:
-        return    <AdminNavBar />;
+        return <AdminNavBar />;
       case UserType.ORGANIZATION:
-        return    <OrganizationNavBar />;
+        return <OrganizationNavBar />;
       case UserType.VOLUNTEER:
-        return    <VolunteerNavBar />;
+        return <VolunteerNavBar />;
       default:
         return <GuestNavBar />;
     }
@@ -42,17 +49,12 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
     >
       <AppShell.Header>
         <Group>
-        <Image src={logo} alt="logo"  width={50}
-      height={50} />
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        
+          <Image src={logo} alt="logo" width={50} height={50} />
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">
-     
-        {renderNavBar()}
-      </AppShell.Navbar>
+      <AppShell.Navbar p="md">{renderNavBar()}</AppShell.Navbar>
 
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>

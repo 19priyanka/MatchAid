@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import {
   IconHome,
-  IconUsersGroup,
+  IconReport,
   IconUserCircle,
-  IconAccessible,
   IconLogout,
 } from "@tabler/icons-react";
-
+import { signOut } from "next-auth/react";
 
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
-
 const data = [
-  { link: "/listOrganizations", label: "Home", icon: IconHome},
-  { link: "/listOrganizations", label: "Organizations", icon: IconUsersGroup },
-  { link: "/AdminViewReports", label: "Volunteers", icon: IconAccessible },
+  { link: "/", label: "Home", icon: IconHome },
+  {
+    link: "/Organization/organizationUserView",
+    label: "Report Volunteers",
+    icon: IconReport,
+  },
   {
     link: "/Profile/Profile",
     label: "Profile",
@@ -23,7 +24,7 @@ const data = [
   },
 ];
 
-export default function AdminNavBar() {
+export default function OrganizationNavBar() {
   const router = useRouter();
   const [active, setActive] = useState("");
   const [isMobileView, setIsMobileView] = useState(false);
@@ -42,7 +43,7 @@ export default function AdminNavBar() {
     const activeLink = data.find(
       (item) => item.link === router.pathname
     )?.label;
-    setActive(activeLink || '');
+    setActive(activeLink || "");
   }, [router.pathname]);
 
   const handleLinkClick = (label: any, link: any) => {
@@ -60,7 +61,6 @@ export default function AdminNavBar() {
         }`}
         key={item.label}
         onClick={() => handleLinkClick(item.label, item.link)}
-        
       >
         <item.icon className={classes.linkIcon} stroke={1.5} />
         <span>{item.label}</span>
@@ -72,13 +72,12 @@ export default function AdminNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <div style={{marginTop: isMobileView? "135%": "180%"}}>
-        <div className={classes.link} onClick={() => handleLinkClick('Logout', '/Login/Login')}>
+      <button onClick={() => signOut()} className="absolute bottom-0">
+        <div className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </div>
-      </div>
-  
+      </button>
     </nav>
   );
 }

@@ -68,5 +68,8 @@ const opportunitySchema = new Schema(
   { versionKey: false }
 );
 
-const OpportunityModel = mongoose.model("Opportunity", opportunitySchema);
+const OpportunityModel =
+  mongoose.models.Opportunities ||
+  mongoose.model("Opportunities", opportunitySchema);
+
 export { OpportunityModel };

@@ -23,13 +23,13 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { username, password } = req.body;
+    if (!username || !password) {
       res.status(400).json({ message: "Email and password are required" });
     }
     await connectMongooseClient();
 
-    const loginInfo: SafeUser = await login(email, password);
+    const loginInfo: SafeUser = await login(username, password);
 
     res.status(200).json(loginInfo);
   } catch (error) {

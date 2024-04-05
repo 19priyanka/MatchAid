@@ -1,19 +1,35 @@
 import { useEffect, useState } from "react";
 import {
   IconHome,
-
+  IconUsersGroup,
+  IconUserCircle,
+  IconAccessible,
+  IconLogout,
 } from "@tabler/icons-react";
-
+import { signOut } from "next-auth/react";
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
 
-
 const data = [
-  { link: "/homePage", label: "Home", icon: IconHome, },
- 
+  { link: "/Admin/listOrganizations", label: "Home", icon: IconHome },
+  {
+    link: "/Admin/listOrganizations",
+    label: "Organizations",
+    icon: IconUsersGroup,
+  },
+  {
+    link: "/Admin/AdminViewReports",
+    label: "Volunteers",
+    icon: IconAccessible,
+  },
+  {
+    link: "/Profile/Profile",
+    label: "Profile",
+    icon: IconUserCircle,
+  },
 ];
 
-export default function GuestNavBar() {
+export default function AdminNavBar() {
   const router = useRouter();
   const [active, setActive] = useState("");
   const [isMobileView, setIsMobileView] = useState(false);
@@ -28,12 +44,11 @@ export default function GuestNavBar() {
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-
   useEffect(() => {
     const activeLink = data.find(
       (item) => item.link === router.pathname
     )?.label;
-    setActive(activeLink || '');
+    setActive(activeLink || "");
   }, [router.pathname]);
 
   const handleLinkClick = (label: any, link: any) => {
@@ -62,8 +77,12 @@ export default function GuestNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-     
-  
+      <button onClick={() => signOut()} className="absolute bottom-0">
+        <div className={classes.link}>
+          <IconLogout className={classes.linkIcon} stroke={1.5} />
+          <span>Logout</span>
+        </div>
+      </button>
     </nav>
   );
 }

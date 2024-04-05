@@ -9,19 +9,20 @@ import {
   AppShell,
   Group,
 } from "@mantine/core";
+import { getSession } from "next-auth/react";
 import classes from "./Profile.module.css";
 import Image from "next/image";
 import organizationProfileIcon from "../../../ organizationProfileIcon.png";
 import volunteerProfileIcon from "../../../volunteerProfileIcon.png";
 import Layout from "../../components/shared/layout";
 import { UserType } from "../../CustomTypes/UserType";
-
+import { GetServerSideProps } from "next";
 
 export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [user, setUser] = useState('organization' as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
-  
+  const [user, setUser] = useState("organization" as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
+
   useEffect(() => {
     setProfileData({
       ...profileData,
@@ -32,12 +33,11 @@ export default function Profile() {
   const accountType = () => {
     switch (user) {
       case UserType.ADMIN:
-        return    'Admin';
+        return "Admin";
       case UserType.ORGANIZATION:
-        return   'Organization';
-     default:
-        return  'Volunteer';
-    
+        return "Organization";
+      default:
+        return "Volunteer";
     }
   };
 
@@ -92,7 +92,6 @@ export default function Profile() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-             
             }}
           >
             <Image
@@ -109,10 +108,7 @@ export default function Profile() {
               {profileData.fullName}
             </Title>
 
-            <Title
-            
-              style={{ color: "gray", fontStyle: "italic", fontSize: 16 }}
-            >
+            <Title style={{ color: "gray", fontStyle: "italic", fontSize: 16 }}>
               {profileData.accountType}
             </Title>
           </Group>
@@ -124,7 +120,6 @@ export default function Profile() {
             onChange={(e) => handleChange(e, "fullName")}
             required
             disabled={!isEditMode}
-          
           />
                   
           <TextInput
@@ -134,7 +129,6 @@ export default function Profile() {
             onChange={(e) => handleChange(e, "email")}
             required
             disabled={!isEditMode}
-         
           />
                   
           <TextInput
@@ -144,7 +138,6 @@ export default function Profile() {
             onChange={(e) => handleChange(e, "phoneNumber")}
             required
             disabled={!isEditMode}
-        
           />
                   
           <PasswordInput
@@ -152,7 +145,6 @@ export default function Profile() {
             value={profileData.password}
             onChange={(e) => handleChange(e, "password")}
             required
-          
             disabled={!isEditMode}
           />
                   
@@ -181,3 +173,25 @@ export default function Profile() {
     </Layout>
   );
 }
+
+const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (
+    !(session?.user?.email && session?.user?.name) ||
+    session?.user?.name === UserType.GUEST
+  ) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
+export { getServerSideProps };
