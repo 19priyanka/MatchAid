@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 const data = [
   { link: "/", label: "Home", icon: IconHome },
-  { link: "/events", label: "My Events", icon: IconCalendarEvent },
+  { link: "/volunteer/myEvents", label: "My Events", icon: IconCalendarEvent },
   {
     link: "/Profile/Profile",
     label: "Profile",
