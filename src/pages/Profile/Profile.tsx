@@ -17,37 +17,42 @@ import volunteerProfileIcon from "../../../volunteerProfileIcon.png";
 import Layout from "../../components/shared/layout";
 import { UserType } from "../../CustomTypes/UserType";
 import { GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+
 
 export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [user, setUser] = useState("organization" as UserType); //Probably will replace this with singleton when we have user authentication working and can pull user type from there
-
-  useEffect(() => {
-    setProfileData({
-      ...profileData,
-      accountType: accountType(),
-    });
-  }, [user]);
-
-  const accountType = () => {
-    switch (user) {
-      case UserType.ADMIN:
-        return "Admin";
-      case UserType.ORGANIZATION:
-        return "Organization";
-      default:
-        return "Volunteer";
-    }
-  };
-
+  const { data: session } = useSession();
   const [profileData, setProfileData] = useState({
-    fullName: "Charitable Organization",
-    email: "johndoe@gmail.com",
-    phoneNumber: "123-456-7890",
-    password: "password",
-    accountType: accountType(),
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    accountType: "",
   });
+  
+  useEffect(() => {
+    const retrieveProfileData = async () => {
+    if (session?.user?.email) {
+   
+    const response = await axios.post("/api/profile", { email: session?.user?.email});
+    setProfileData(
+      {
+        fullName: response.data.fullName,
+        email: response.data.email,
+        phoneNumber: 'HardCoded',
+        password: 'test',
+        accountType: response.data.userType,
+      }
+    )
+    };
+  }
+    retrieveProfileData();
+  }, [session]);
+
+  
 
   useEffect(() => {
     const checkMobileView = () => {
@@ -67,8 +72,21 @@ export default function Profile() {
     setIsEditMode(true);
   };
 
-  const handleSaveInfo = () => {
+  const handleSaveInfo = async () => {
     setIsEditMode(false);
+  
+      const response = await axios.post("/api/profile/edit", {
+        fullName: profileData.fullName,
+        email: profileData.email,
+        phoneNumber: profileData.phoneNumber,
+        password: profileData.password,
+      });
+      if (response.status !== 200) {
+        console.error("Error signing up");
+        return;
+      }
+   
+  
   };
 
   return (
@@ -195,3 +213,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export { getServerSideProps };
+
