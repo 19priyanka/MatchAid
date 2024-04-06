@@ -112,8 +112,8 @@ export default function Profile() {
        console.log(response.data)
       }
     } catch (error) {
-      // Handle the error
-      setPasswordError(error.response.data.message); // Assuming the error message is available in the response data
+
+      setPasswordError(error.response.data.message); 
     }
 
   };

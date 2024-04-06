@@ -17,7 +17,7 @@ import classes from "./Login.module.css";
 import logo from "../../../logo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { ArrowRight } from "tabler-icons-react";
 import { UserType } from "../../CustomTypes/UserType";
 
@@ -29,7 +29,7 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const handleSignIn = async () => {
-     signIn("credentials", {
+   signIn("credentials", {
       username,
       password,
       redirect: false,
@@ -38,10 +38,11 @@ export default function Login() {
       if (ok) {
         router.push("/");
       } else {
-        alert("Invalid Credentials! Please try again");
+    
           setError("Invalid Credentials! Please try again");
       }
   })};
+
     
 
   const [isMobileView, setIsMobileView] = useState(false);
