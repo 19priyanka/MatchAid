@@ -7,6 +7,7 @@ import {
   PasswordInput,
   Button,
   AppShell,
+  Drawer,
   Group,
 } from "@mantine/core";
 import { getSession } from "next-auth/react";
@@ -19,17 +20,18 @@ import { UserType } from "../../CustomTypes/UserType";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { useDisclosure } from '@mantine/hooks';
 
 
 export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const { data: session } = useSession();
+  const [opened, { open, close }] = useDisclosure(false);
   const [profileData, setProfileData] = useState({
     fullName: "",
     email: "",
     phoneNumber: "",
-    password: "",
     accountType: "",
   });
   
@@ -42,8 +44,8 @@ export default function Profile() {
       {
         fullName: response.data.fullName,
         email: response.data.email,
-        phoneNumber: 'HardCoded',
-        password: 'test',
+        phoneNumber: response.data.phoneNumber? response.data.phoneNumber : "",
+
         accountType: response.data.userType,
       }
     )
@@ -79,7 +81,6 @@ export default function Profile() {
         fullName: profileData.fullName,
         email: profileData.email,
         phoneNumber: profileData.phoneNumber,
-        password: profileData.password,
       });
       if (response.status !== 200) {
         console.error("Error signing up");
@@ -146,25 +147,82 @@ export default function Profile() {
             value={profileData.email}
             onChange={(e) => handleChange(e, "email")}
             required
-            disabled={!isEditMode}
+            disabled={true}
           />
-                  
+              {profileData.phoneNumber ?   
           <TextInput
             label="Phone Number"
             placeholder="123-456-7890"
             value={profileData.phoneNumber}
             onChange={(e) => handleChange(e, "phoneNumber")}
-            required
+       
             disabled={!isEditMode}
           />
+          :
+          <TextInput
+          label="Add Your Phone Number"
+          placeholder="123-456-7890"
+         
+          onChange={(e) => handleChange(e, "phoneNumber")}
+       
+          disabled={!isEditMode}
+        />
+}
                   
-          <PasswordInput
-            label="Password"
-            value={profileData.password}
-            onChange={(e) => handleChange(e, "password")}
-            required
-            disabled={!isEditMode}
-          />
+<Drawer opened={opened} onClose={close} title="Change Your Password">
+        <PasswordInput
+         mt="lg"
+          label="Current Password"
+          placeholder="Your current password"
+          required
+          style={{ width: "88%", borderRadius: 15 }}
+        />
+        <PasswordInput
+         mt="lg"
+          label="New Password"
+          placeholder="Your new password"
+          required
+          style={{ width: "88%", borderRadius: 15 }}
+        />
+        <PasswordInput
+         mt="lg"
+          label="Confirm New Password"
+          placeholder="Confirm your new password"
+          required
+          style={{ width: "88%", borderRadius: 15 }}
+        />
+        <Button
+          fullWidth
+          mt="xl"
+          m={20}
+          size="md"
+          style={{
+            justifyContent: "center",
+            backgroundColor: "black",
+            borderRadius: 10,
+            width: "90%",
+            fontSize: "18px",
+            alignSelf: "center",
+          }}
+        >
+          Save Password
+        </Button>
+      </Drawer>
+
+      <Button onClick={open}  
+         fullWidth
+         
+            size="xs"
+            variant="outline"
+            justify="start"
+            style={{
+              width: "100%",
+              color: "black",
+              border:'black',
+              justifyItems: "start",
+              fontStyle: "italic",
+              fontSize: "15px",
+              }}>Change My Password</Button>
                   
           <Button
             fullWidth
