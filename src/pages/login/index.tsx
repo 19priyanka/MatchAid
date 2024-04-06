@@ -17,7 +17,7 @@ import classes from "./Login.module.css";
 import logo from "../../../logo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { ArrowRight } from "tabler-icons-react";
 import { UserType } from "../../CustomTypes/UserType";
 
@@ -29,18 +29,20 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const handleSignIn = async () => {
-     signIn("credentials", {
+   signIn("credentials", {
       username,
       password,
       redirect: false,
-    })  .then(({ ok, error }) => {
+    }).then(({ ok, error }) => {
+     
       if (ok) {
         router.push("/");
       } else {
-          console.log(error)
+    
           setError("Invalid Credentials! Please try again");
       }
   })};
+
     
 
   const [isMobileView, setIsMobileView] = useState(false);
@@ -118,8 +120,9 @@ export default function Login() {
             }}
           >
             <Group style={{ flexDirection: "column", alignItems: "center" }}>
+             {error && 
               <Text style={{color: "red"}} size="sm">
-                {error}</Text>
+                {error}</Text>}
               <TextInput
                 label="Email"
                 placeholder="you@mantine.dev"
