@@ -146,21 +146,19 @@ export default function Login() {
           >
             Log in
           </Button>
-          <Text c="dimmed" size="sm" ta="center" >
+          <Text c="dimmed" size="sm" ta="center">
             Do not have an account yet?{" "}
             <Anchor size="sm" component="button" onClick={handleSignUp}>
               Sign Up
             </Anchor>
-            <Text mt={5}>
-            Or {" "}
-            <Anchor size="sm" component="button" onClick={handleGuestSignIn}>
-              Continue as Guest 
-             
-            </Anchor>
-            </Text>
-          
           </Text>
-         
+
+          <Text mt={5}>
+            Or{" "}
+            <Anchor size="sm" component="button" onClick={handleGuestSignIn}>
+              Continue as Guest
+            </Anchor>
+          </Text>
         </Group>
       </Container>
     </>
