@@ -33,11 +33,12 @@ export default function Login() {
       username,
       password,
       redirect: false,
-    })  .then(({ ok, error }) => {
+    }).then(({ ok, error }) => {
+     
       if (ok) {
         router.push("/");
       } else {
-          console.log(error)
+        alert("Invalid Credentials! Please try again");
           setError("Invalid Credentials! Please try again");
       }
   })};
@@ -118,8 +119,9 @@ export default function Login() {
             }}
           >
             <Group style={{ flexDirection: "column", alignItems: "center" }}>
+             {error && 
               <Text style={{color: "red"}} size="sm">
-                {error}</Text>
+                {error}</Text>}
               <TextInput
                 label="Email"
                 placeholder="you@mantine.dev"

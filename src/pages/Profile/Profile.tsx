@@ -6,6 +6,7 @@ import {
   TextInput,
   PasswordInput,
   Button,
+  Text,
   AppShell,
   Drawer,
   Group,
@@ -21,11 +22,17 @@ import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useDisclosure } from "@mantine/hooks";
+import { set } from "mongoose";
 
 export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const { data: session } = useSession();
+  const [passwordError, setPasswordError] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
   const [profileData, setProfileData] = useState({
     fullName: "",
@@ -83,6 +90,32 @@ export default function Profile() {
       console.error("Error signing up");
       return;
     }
+  };
+
+  const handlePasswordChange = async () => {
+    console.log({ oldPassword, newPassword, confirmPassword });
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+    try {
+      const response = await axios.post("/api/profile/updatePassword", {
+        email: profileData.email,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      });
+      if (response.status === 200) {
+        console.log("Password updated successfully");
+        setPasswordConfirmation("Password updated successfully");
+ 
+      } else {
+       console.log(response.data)
+      }
+    } catch (error) {
+      // Handle the error
+      setPasswordError(error.response.data.message); // Assuming the error message is available in the response data
+    }
+
   };
 
   return (
@@ -167,6 +200,7 @@ export default function Profile() {
               mt="lg"
               label="Current Password"
               placeholder="Your current password"
+              onChange={(e) => setOldPassword(e.target.value)}
               required
               style={{ width: "88%", borderRadius: 15 }}
             />
@@ -175,6 +209,7 @@ export default function Profile() {
               label="New Password"
               placeholder="Your new password"
               required
+              onChange={(e) => setNewPassword(e.target.value)}
               style={{ width: "88%", borderRadius: 15 }}
             />
             <PasswordInput
@@ -182,9 +217,13 @@ export default function Profile() {
               label="Confirm New Password"
               placeholder="Confirm your new password"
               required
+              onChange={(e) => setConfirmPassword(e.target.value)}
               style={{ width: "88%", borderRadius: 15 }}
             />
+              <Text style={{color: "red"}} size="sm"> {passwordError} </Text>
+              <Text style={{color: "green"}} size="sm"> {passwordConfirmation} </Text>
             <Button
+            onClick={handlePasswordChange}
               fullWidth
               mt="xl"
               m={20}
@@ -198,6 +237,7 @@ export default function Profile() {
                 alignSelf: "center",
               }}
             >
+              
               Save Password
             </Button>
           </Drawer>
@@ -215,6 +255,7 @@ export default function Profile() {
               fontStyle: "italic",
               fontSize: "15px",
             }}
+            disabled={!isEditMode}
           >
             Change My Password
           </Button>
