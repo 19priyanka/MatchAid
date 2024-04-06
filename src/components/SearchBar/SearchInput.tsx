@@ -15,8 +15,8 @@ import { ReactNode } from 'react';
 
   interface SearchInputProps {
     tabs: string[];
-    selected: number;
-    setTab: (index: number) => void | null;
+    selected: number | null;
+    setTab: ((index: number) => void) | null;
   }
   
   const SearchInput = ({ tabs, selected, setTab }: SearchInputProps): ReactNode => {
@@ -25,7 +25,7 @@ import { ReactNode } from 'react';
       className={classes.tabs}
       key={tab}
       // href={link.link}
-      onClick={() => setTab(index)}
+      onClick={() => {setTab && setTab(index)}}
       color= {(index==selected)? ('black'): ('grey')}
       variant= {(index==selected)? ('filled'): ('light')}
       radius={16}
