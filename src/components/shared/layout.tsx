@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
     setUser(session?.user?.name);
   }, [session]);
 
-  console.log(session);
+  // console.log("this is the session user",  session?.user);
   const renderNavBar = () => {
     switch (user) {
       case UserType.ADMIN:
