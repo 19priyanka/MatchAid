@@ -26,16 +26,22 @@ export default function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignIn = async () => {
-    await signIn("credentials", {
+     signIn("credentials", {
       username,
       password,
       redirect: false,
-    });
-
-    router.push("/");
-  };
+    })  .then(({ ok, error }) => {
+      if (ok) {
+        router.push("/");
+      } else {
+          console.log(error)
+          setError("Invalid Credentials! Please try again");
+      }
+  })};
+    
 
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -112,6 +118,8 @@ export default function Login() {
             }}
           >
             <Group style={{ flexDirection: "column", alignItems: "center" }}>
+              <Text style={{color: "red"}} size="sm">
+                {error}</Text>
               <TextInput
                 label="Email"
                 placeholder="you@mantine.dev"
