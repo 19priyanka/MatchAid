@@ -80,6 +80,8 @@ export default function Profile() {
   };
   const handleSaveInfo = async () => {
     setIsEditMode(false);
+    setPasswordError("");
+    setPasswordConfirmation("");
 
     const response = await axios.post("/api/profile/edit", {
       fullName: profileData.fullName,
@@ -93,6 +95,8 @@ export default function Profile() {
   };
 
   const handlePasswordChange = async () => {
+    setPasswordError("");
+    setPasswordConfirmation("");
     console.log({ oldPassword, newPassword, confirmPassword });
     if (newPassword !== confirmPassword) {
       setPasswordError("Passwords do not match");
@@ -220,8 +224,10 @@ export default function Profile() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               style={{ width: "88%", borderRadius: 15 }}
             />
-              <Text style={{color: "red"}} size="sm"> {passwordError} </Text>
-              <Text style={{color: "green"}} size="sm"> {passwordConfirmation} </Text>
+            {passwordError &&
+              <Text style={{color: "red"}} size="sm"> {passwordError} </Text>}
+              {passwordConfirmation && 
+              <Text style={{color: "green"}} size="sm"> {passwordConfirmation} </Text>} 
             <Button
             onClick={handlePasswordChange}
               fullWidth
