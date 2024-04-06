@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IconHome } from "@tabler/icons-react";
+import { IconHome, IconLogin } from "@tabler/icons-react";
 
 import classes from "./Navbar.module.css";
 import { useRouter } from "next/router";
@@ -53,6 +53,12 @@ export default function GuestNavBar() {
   return (
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
+      <button onClick={() => router.push('/login')} className="absolute bottom-0">
+        <div className={classes.link}>
+          <IconLogin className={classes.linkIcon} stroke={1.5} />
+          <span>Log in</span>
+        </div>
+      </button>
     </nav>
   );
 }
