@@ -3,8 +3,16 @@ import { connectMongooseClient } from "../../../../backend/middleware/mongodb";
 import { DefaultResponse } from "../login";
 import { Review } from "../../../../backend/types/Review";
 import { getAllReviews } from "../../../../backend/models/review.model";
+import { SafeUser } from "../../../../backend/types/User";
 
-type Data = Review[] | DefaultResponse;
+type Data = ReviewInfo[] | DefaultResponse;
+
+export interface ReviewInfo
+{
+  review: Review;
+  reviewee: SafeUser;
+  reviewer: SafeUser;
+}
 
 export default async function handler
 (
@@ -16,7 +24,7 @@ export default async function handler
   {
     await connectMongooseClient();
 
-    const reviews: Review[] = await getAllReviews();
+    const reviews: ReviewInfo[] = await getAllReviews();
 
     res.status(200).json(reviews);
   }

@@ -1,6 +1,7 @@
 import { Review } from "../types/Review";
 import { ReviewModel } from "../../src/models/reviews";
 import { UserModel } from "../../src/models/users";
+import { ReviewInfo } from "../../src/pages/api/admin/reviews";
 
 export interface PostReview
 {
@@ -35,12 +36,31 @@ const postReview = async(review: PostReview): Promise<Review> => {
   return newReview;
 };
 
-const getAllReviews = async (): Promise<Review[]> =>
+const getAllReviews = async (): Promise<ReviewInfo[]> =>
 {
   try
   {
-    const reviews = await ReviewModel.find({}) as Review[];
-    return reviews;
+    const reviews = await ReviewModel.find({});
+
+    const reviewInfos: ReviewInfo[] = [];
+
+    for (const review of reviews)
+    {
+      const reviewee = await UserModel.findById({_id: review.revieweeId});
+      const reviewer = await UserModel.findById({_id: review.reviewerId});
+
+      if (reviewee && reviewer)
+      {
+        const reviewInfo: ReviewInfo = {
+          review,
+          reviewee,
+          reviewer
+        };
+        reviewInfos.push(reviewInfo);
+      }
+    }
+
+    return reviewInfos;
   }
   catch (error)
   {
