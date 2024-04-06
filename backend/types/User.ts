@@ -14,4 +14,5 @@ export enum UserType {
   Admin = "Admin",
   Volunteer = "Volunteer",
   Organization = "Organization",
+  Guest = "Guest",
 }

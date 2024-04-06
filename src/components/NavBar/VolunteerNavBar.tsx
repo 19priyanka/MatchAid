@@ -68,7 +68,14 @@ export default function VolunteerNavBar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>{links}</div>
 
-      <button onClick={() => signOut()} className="absolute bottom-0">
+      <button
+        onClick={() =>
+          signOut({
+            callbackUrl: "/login",
+          })
+        }
+        className="absolute bottom-0"
+      >
         <div className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>

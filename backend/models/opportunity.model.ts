@@ -29,7 +29,7 @@ const getOpportunities = async (
   let opportunities: Opportunity[] = [];
   if (userType === UserType.Volunteer) {
     opportunities = (await OpportunityModel.find({
-      status: Status.Accepted, // Cast the status to the correct type
+      status: Status.Accepted,
       time: { $gte: new Date() },
       "signedUpUsers.email": { $ne: email },
     }).exec()) as Opportunity[];
@@ -39,6 +39,11 @@ const getOpportunities = async (
     }).exec()) as Opportunity[];
   } else if (userType === UserType.Admin) {
     opportunities = (await OpportunityModel.find({}).exec()) as Opportunity[];
+  } else if (userType === UserType.Guest) {
+    opportunities = (await OpportunityModel.find({
+      status: Status.Accepted,
+      time: { $gte: new Date() },
+    }).exec()) as Opportunity[];
   } else {
     throw new Error("Invalid user type");
   }
@@ -133,29 +138,29 @@ const postOpportunity = async (
   return newOpportunity;
 };
 
-const getAllUsersForOpportunity = async (opportunityId: string): Promise<User[]> =>
-{
-  try
-  {
+const getAllUsersForOpportunity = async (
+  opportunityId: string
+): Promise<User[]> => {
+  try {
     const opportunity = await OpportunityModel.findById(opportunityId);
 
-    if (!opportunity)
-    {
+    if (!opportunity) {
       throw new Error("Opportunity not found");
     }
 
-    const userEmails = opportunity.signedUpUsers.map(user => user.email);
-    const users = await UserModel.find({ email: { $in: userEmails } }) as User[];
+    const userEmails = opportunity.signedUpUsers.map((user) => user.email);
+    const users = (await UserModel.find({
+      email: { $in: userEmails },
+    })) as User[];
     return users;
-  }
-  catch (error)
-  {
+  } catch (error) {
     throw new Error("Error retrieving users for opportunity");
   }
 };
 
-const updateOpportunity = async (opportunity: Partial<Opportunity>): Promise<Opportunity> =>
-{
+const updateOpportunity = async (
+  opportunity: Partial<Opportunity>
+): Promise<Opportunity> => {
   const updatedOpportunity = await OpportunityModel.findOneAndUpdate(
     { name: opportunity.name },
     {
@@ -164,8 +169,7 @@ const updateOpportunity = async (opportunity: Partial<Opportunity>): Promise<Opp
     { new: true }
   );
 
-  if (!updatedOpportunity)
-  {
+  if (!updatedOpportunity) {
     throw new Error("Opportunity not found");
   }
 

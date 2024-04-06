@@ -53,17 +53,11 @@ const signup = async (user: User): Promise<SafeUser> => {
   };
 };
 
-const editProfile = async (user: Partial<User>): Promise<User> => {
-  let hashedPassword;
-  if (user.password) {
-    hashedPassword = await bcrypt.hash(user.password, saltRounds);
-  }
-
+const editProfile = async (user: Partial<User>): Promise<SafeUser> => {
   const updatedUser = await UserModel.findOneAndUpdate(
     { email: user.email },
     {
       ...(user.fullName ? { fullName: user.fullName } : undefined),
-      ...(hashedPassword ? { password: hashedPassword } : undefined),
       ...(user.phoneNumber ? { phoneNumber: user.phoneNumber } : undefined),
     },
     { new: true }
@@ -75,8 +69,6 @@ const editProfile = async (user: Partial<User>): Promise<User> => {
 
   return {
     ...updatedUser,
-    userType: updatedUser.userType,
-    ...(user.password ? { password: user.password } : undefined),
   };
 };
 
@@ -119,6 +111,37 @@ const getAllVolunteers = async (): Promise<User[]> => {
   }
 };
 
+const updatePassword = async (
+  email: string,
+  oldPassword: string,
+  newPassword: string
+): Promise<{ success: boolean; msg: string }> => {
+  const user = await UserModel.findOne({ email }).exec();
+
+  if (!user) {
+    return { success: false, msg: "User not found" };
+  }
+
+  console.log("user", user);
+  console.log("oldPassword", oldPassword);
+  const passwordsMatch = await bcrypt.compare(oldPassword, user.password);
+  // console.log("passwordsMatch", passwordsMatch);
+  if (!passwordsMatch) {
+    return { success: false, msg: "Old password is incorrect" };
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+  await UserModel.findOneAndUpdate(
+    { email },
+    {
+      password: hashedPassword,
+    }
+  );
+
+  return { success: true, msg: "Password updated successfully" };
+};
+
 export {
   login,
   signup,
@@ -126,4 +149,5 @@ export {
   getUser,
   getAllOrganizations,
   getAllVolunteers,
+  updatePassword,
 };

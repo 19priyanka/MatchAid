@@ -5,10 +5,10 @@ import SearchInput from "../components/SearchBar/SearchInput";
 import { UserType } from "../CustomTypes/UserType";
 import VolunteerEventCard from "../components/UserCards/VolunteerEventCard";
 import { Group } from "@mantine/core";
-import { getSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 
-export default function homePage() {
+export default function Home() {
   const [tabs, settabs] = useState([]);
   const { data: session } = useSession();
   const [user, setUser] = useState(session?.user?.name);
@@ -199,22 +199,3 @@ export default function homePage() {
     </Layout>
   );
 }
-
-const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-
-  if (!(session?.user?.email && session?.user?.name)) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
-
-export { getServerSideProps };
