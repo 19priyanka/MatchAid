@@ -37,5 +37,18 @@
     "duration": 6,
     "location": "789 Oak Lane",
     "status": "Pending"
+  },
+  {
+    "organization": {
+      "name": "Community Outreach 2",
+      "email": "community2@gmail.com"
+    },
+    "name": "Tutoring Program",
+    "time": "2024-09-10T14:00:00Z",
+    "description": "Providing tutoring services for students in underserved communities.",
+    "volunteersNeeded": 3,
+    "duration": 2,
+    "location": "456 Elm Avenue",
+    "status": "Accepted"
   }
 ]

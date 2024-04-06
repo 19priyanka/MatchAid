@@ -14,10 +14,6 @@ export default async function handler(
   try {
     const { email, userType } = req.body;
 
-    if (!email) {
-      res.status(400).json({ message: "Email is required" });
-    }
-
     if (!userType) {
       res.status(400).json({ message: "User type is required" });
     }
