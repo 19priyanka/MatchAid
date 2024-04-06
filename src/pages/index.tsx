@@ -6,10 +6,13 @@ import { UserType } from "../CustomTypes/UserType";
 import VolunteerEventCard from "../components/UserCards/VolunteerEventCard";
 import { Group } from "@mantine/core";
 import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function homePage() {
   const [tabs, settabs] = useState([]);
-  const [user, setUser] = useState(UserType.ADMIN);
+  const { data: session } = useSession();
+  const [user, setUser] = useState(session?.user?.name);
+  const [attending, setAttendance] = useState(false);
   const [currentTab, setCurrentTab] = useState(
     user == UserType.GUEST || user == UserType.VOLUNTEER ? -1 : 0
   );
@@ -24,6 +27,7 @@ export default function homePage() {
   >([]);
 
   useEffect(() => {
+    setUser(session?.user?.name);
     let URL = []; // this will be a string with the URL of the endpoint we want to fetch from later instead of the array of data
     switch (currentTab) {
       case 0:
@@ -159,7 +163,7 @@ export default function homePage() {
     //   .catch((error) => {
     //     console.error('Error fetching data:', error);
     //   });
-  }, [currentTab]); // Dependency array ensures the effect runs when selectedTab changes
+  }, [currentTab, session]); // Dependency array ensures the effect runs when selectedTab changes
 
   // Function to fetch data based on the selected tab
   // const fetchData = async (URL) => {
