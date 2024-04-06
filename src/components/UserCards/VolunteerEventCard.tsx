@@ -11,6 +11,9 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { UserType } from "../../CustomTypes/UserType";
 import VolunteerMenu from "./VolunteerMenu";
+import { useRouter } from "next/router";
+import CreateOpportunityModal from "../Modal/CreateOpportunityModal";
+import VolunteerModal from "../Modal/VolunteerModal";
 
 // example for the input
 // const volunteerEvents = [
@@ -29,28 +32,68 @@ const VolunteerEventCard = ({ event }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState(session?.user?.name);
   const [attending, setAttendance] = useState(false);
+  const [eventStatus, setStatus] = useState(event.status);
+  const router = useRouter();
   useEffect(() => {
     setUser(session?.user?.name);
   }, [session]);
-
+  const changeEventStatus = (status: string) =>{
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: event.Name,
+        status: status
+      })
+    };
+    
+    fetch('/api/admin/changeOportunityStatus', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setStatus('Accepted');
+      })
+      .catch(error => console.error('Error:', error));
+  };
+  const reportOrganization = () =>{
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        revieweeEmail: event.organization.email,
+        reviewerEmail: session?.user?.email,
+      })
+    };
+    
+    fetch('/api/review', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error('Error:', error));
+  };
   const renderButtons = () => {
     switch (user) {
       case UserType.ADMIN:
         return (
           <Group justify="flex-end">
             <Button
+              onClick={()=>{changeEventStatus('Accepted')}}
               color="black"
               mt="md"
               radius="xl"
               style={{ paddingInline: 25 }}
+              disabled= {eventStatus=='Accepted'? true:false}
             >
               Approve
             </Button>
             <Button
+              onClick={()=>{changeEventStatus('Rejected')}}
               color="black"
               mt="md"
               radius="xl"
               style={{ paddingInline: 25 }}
+              disabled= {eventStatus=='Rejected'? true:false}
             >
               Reject
             </Button>
@@ -64,6 +107,7 @@ const VolunteerEventCard = ({ event }) => {
               mt="md"
               radius="xl"
               style={{ paddingInline: 25 }}
+              onClick={()=>{CreateOpportunityModal()}}
             >
               Edit
             </Button>
@@ -85,6 +129,7 @@ const VolunteerEventCard = ({ event }) => {
                   mt="md"
                   radius="xl"
                   style={{ paddingInline: 25 }}
+                  onClick={()=>{reportOrganization()}}
                 >
                   Report
                 </Button>
@@ -99,6 +144,7 @@ const VolunteerEventCard = ({ event }) => {
                 mt="md"
                 radius="xl"
                 style={{ paddingInline: 25 }}
+                onClick={()=>{VolunteerModal()}}
               >
                 Volunteer
               </Button>
@@ -108,6 +154,7 @@ const VolunteerEventCard = ({ event }) => {
         return (
           <Group justify="flex-end">
             <Button
+              onClick={()=>{router.push('/login')}}
               color="black"
               mt="md"
               radius="xl"

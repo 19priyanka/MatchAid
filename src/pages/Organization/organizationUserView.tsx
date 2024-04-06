@@ -6,12 +6,12 @@ import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { UserType } from "../../CustomTypes/UserType";
 
-function organizationUserView() {
+export default function organizationUserView() {
   return (
     <div>
       <div>
         <Layout>
-          <SearchInput tabs={[]} />
+          <SearchInput setTab={null} selected={null} tabs={[]} />
           <UsersStack />
         </Layout>
       </div>

@@ -1,6 +1,21 @@
-import { Group, Stack, Button, Card, Image, Text } from '@mantine/core';
+import { 
+  Group, 
+  Stack, 
+  Button, 
+  Card, 
+  Image, 
+  Text, 
+  Menu, 
+  ActionIcon,
+  rem,
+  } from '@mantine/core';
 import { useState } from "react";
 import { UserType } from "../../CustomTypes/UserType";
+import {
+  IconTrash,
+  IconDots,
+  IconMail,
+} from '@tabler/icons-react';
 
 // example for the input
   // const volunteerEvents = [
@@ -34,7 +49,39 @@ const VolunteerEventCard= ( {organization}) => {
         <Text  mt="sm" size="sm" c="dimmed">{organization.Description}</Text>
 
         <Group justify='flex-end'>
-            <Button color="black" mt="md" radius="xl" style={{paddingInline: 25}}>More details</Button>
+          <Text>
+              Reported by: {organization.reporter.name}
+          </Text>
+          <Group gap={0} justify="flex-end">
+            <Menu
+              transitionProps={{ transition: 'pop' }}
+              withArrow
+              position="bottom-end"
+              withinPortal
+            >
+              <Menu.Target>
+                <ActionIcon variant="subtle" color="gray">
+                  <IconDots style={{ width: rem(24), height: rem(16) }} stroke={1.5} />
+                  
+                </ActionIcon>
+              </Menu.Target>
+              <Menu.Dropdown>
+               <Menu.Item
+                  leftSection={
+                    <IconMail style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                  }
+                >
+                  {organization.reporter.email}
+                </Menu.Item>
+                <Menu.Item
+                  leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+                  color="red"
+                >
+                  Delete Account
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Group>
         </Group>
     </Card>
 
