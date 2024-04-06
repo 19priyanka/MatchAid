@@ -20,53 +20,39 @@ import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
+
 export default function Profile() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const { data: session } = useSession();
-  const [user, setUser] = useState(session?.user?.name);
+  const [profileData, setProfileData] = useState({
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    accountType: "",
+  });
+  
   useEffect(() => {
-    setUser(session?.user?.name);
-    // retrieveProfileData();
+    const retrieveProfileData = async () => {
+    if (session?.user?.email) {
+   
+    const response = await axios.post("/api/profile", { email: session?.user?.email});
+    setProfileData(
+      {
+        fullName: response.data.fullName,
+        email: response.data.email,
+        phoneNumber: 'HardCoded',
+        password: 'test',
+        accountType: response.data.userType,
+      }
+    )
+    };
+  }
+    retrieveProfileData();
   }, [session]);
 
-  useEffect(() => {
-    setProfileData({
-      ...profileData,
-      accountType: accountType(),
-    });
-    
-  }, [user]);
-
-  // console.log(session?.user?.name);
-
-  const retrieveProfileData = async () => {
-    const response = await axios.post("/api/profile", { email: session?.user?.email});
-    
-    console.log(response.data);
-  }
-
-
-  const accountType = () => {
-    switch (user) {
-      case UserType.ADMIN:
-        return "Admin";
-      case UserType.ORGANIZATION:
-        return "Organization";
-      default:
-        return "Volunteer";
-    }
-  };
-
-
-
-  const [profileData, setProfileData] = useState({
-    fullName: "Charitable Organization",
-    email: "johndoe@gmail.com",
-    phoneNumber: "123-456-7890",
-    password: "password",
-    accountType: accountType(),
-  });
+  
 
   useEffect(() => {
     const checkMobileView = () => {
@@ -99,7 +85,6 @@ export default function Profile() {
         console.error("Error signing up");
         return;
       }
-
    
   
   };
