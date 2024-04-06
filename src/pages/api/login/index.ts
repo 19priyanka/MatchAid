@@ -29,9 +29,13 @@ export default async function handler(
     }
     await connectMongooseClient();
 
-    const loginInfo: SafeUser = await login(username, password);
+    const loginInfo = await login(username, password);
 
-    res.status(200).json(loginInfo);
+    if ("success" in loginInfo && loginInfo.success === false) {
+      res.status(401).json({ message: loginInfo.msg });
+    }
+
+    res.status(200).json(loginInfo as Data);
   } catch (error) {
     console.error("Server error:", error);
   }

@@ -4,18 +4,21 @@ import { UserModel } from "../../src/models/users";
 import { SafeUser, User, UserType } from "../types/User";
 
 const saltRounds = 9;
-const login = async (email: string, password: string): Promise<SafeUser> => {
+const login = async (
+  email: string,
+  password: string
+): Promise<SafeUser | { success: boolean; msg: string }> => {
   const user = await UserModel.findOne({
     email,
   });
 
   if (!user) {
-    throw new Error("Invalid credentials");
+    return { success: false, msg: "User not found" };
   }
 
   const passwordsMatch = await bcrypt.compare(password, user.password);
   if (!passwordsMatch) {
-    throw new Error("Invalid credentials");
+    return { success: false, msg: "Invalid Password" };
   }
 
   return {
