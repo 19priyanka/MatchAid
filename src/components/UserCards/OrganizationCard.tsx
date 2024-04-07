@@ -30,7 +30,7 @@ import {
         // </Group>
   //   </Layout>
 
-const VolunteerEventCard= ( {organization}) => {
+const VolunteerEventCard= ( {organization, report}) => {
 
   return (
     <Card shadow="lg" padding="lg" radius="md" withBorder>
@@ -43,15 +43,17 @@ const VolunteerEventCard= ( {organization}) => {
         </Card.Section>
 
         <Stack mt="md" mb="md" >
-            <Text fw={500} size="md">{organization.Name}</Text>            
+            <Text fw={500} size="md">{organization.fullName}</Text>            
         </Stack>
 
-        <Text  mt="sm" size="sm" c="dimmed">{organization.Description}</Text>
+        <Text  mt="sm" size="sm" c="dimmed">{organization.email}</Text>
 
         <Group justify='flex-end'>
+          {report && 
           <Text>
-              Reported by: {organization.reporter.name}
+              Reported by: {report.reviewer.fullName}
           </Text>
+          }
           <Group gap={0} justify="flex-end">
             <Menu
               transitionProps={{ transition: 'pop' }}
@@ -66,13 +68,15 @@ const VolunteerEventCard= ( {organization}) => {
                 </ActionIcon>
               </Menu.Target>
               <Menu.Dropdown>
-               <Menu.Item
-                  leftSection={
-                    <IconMail style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-                  }
-                >
-                  {organization.reporter.email}
-                </Menu.Item>
+                {report && 
+                <Menu.Item
+                    leftSection={
+                      <IconMail style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    }
+                  >
+                    {report.reviewer.email}
+                  </Menu.Item>
+                }
                 <Menu.Item
                   leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
                   color="red"

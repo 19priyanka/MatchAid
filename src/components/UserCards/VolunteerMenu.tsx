@@ -24,17 +24,15 @@ const volunteer = [
       start: "2:30pm",
       end: "4:00pm",
     }];
-function VolunteerMenu() {
+function VolunteerMenu(opportunityId) {
   const [volunteers, setVolunteers] = useState(volunteer);
 
   useEffect(() => {
     // fetch user list for event 
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
+    const url = new URL('/api/someEndpoint', window.location.origin);
+    url.searchParams.append("opportunityId", opportunityId);
     
-    fetch('/api/oportunities/getAllUsers', requestOptions)
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         console.log(data);
