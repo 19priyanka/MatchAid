@@ -28,30 +28,46 @@ import VolunteerModal from "../Modal/VolunteerModal";
 // </Group>
 //   </Layout>
 
-const VolunteerEventCard = ({ event }) => {
+const VolunteerEventCard = ({ event, attending }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState(session?.user?.name);
-  const [attending, setAttendance] = useState(false);
   const [eventStatus, setStatus] = useState(event.status);
+  const [time, setTime] = useState("");
   const router = useRouter();
   useEffect(() => {
     setUser(session?.user?.name);
+    console.log("Event status is: ", event.status);
+    const date = new Date(event.time);
+    const month = date.toLocaleString('default', { month: 'short' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0 hours)
+    let end = hours + event.duration;
+    end = end % 12;
+    const endampm = end > hours? 'pm' : 'am';
+
+    setTime(`${month} ${day}, ${year} ${hours}:${minutes}${ampm} - ${end}:${minutes}${endampm}`);
   }, [session]);
   const changeEventStatus = (status: string) =>{
+    console.log(status);
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: event.Name,
+        name: event.name,
         status: status
       })
     };
-    
-    fetch('/api/admin/changeOportunityStatus', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setStatus('Accepted');
+    console.log(requestOptions);
+    fetch('/api/admin/updateOpportunityStatus', requestOptions)
+      .then(response => {
+        response.json()
+        setStatus(status);
+        console.log("updated status: ", response);
       })
       .catch(error => console.error('Error:', error));
   };
@@ -88,12 +104,12 @@ const VolunteerEventCard = ({ event }) => {
               Approve
             </Button>
             <Button
-              onClick={()=>{changeEventStatus('Rejected')}}
+              onClick={()=>{changeEventStatus('Declined')}}
               color="black"
               mt="md"
               radius="xl"
               style={{ paddingInline: 25 }}
-              disabled= {eventStatus=='Rejected'? true:false}
+              disabled= {eventStatus=='Declined'? true:false}
             >
               Reject
             </Button>
@@ -102,6 +118,7 @@ const VolunteerEventCard = ({ event }) => {
       case UserType.ORGANIZATION:
         return (
           <Group justify="flex-end">
+            <Text>Event status: {event.status}</Text>
             <Button
               color="black"
               mt="md"
@@ -181,26 +198,26 @@ const VolunteerEventCard = ({ event }) => {
         {user == UserType.ORGANIZATION ? (
           <Group>
             <Text fw={500} size="md">
-              {event.Name}
+              {event.name}
             </Text>
-            <VolunteerMenu />
+            <VolunteerMenu opportunityId={event.opportunityId}/>
           </Group>
         ) : (
           <Text fw={500} size="md">
-            {event.Name}
+            {event.name}
           </Text>
         )}
 
         <Group>
           <Text size="xs">
-            Date: {event.Date}, {event.times}
+            Date: {time}
           </Text>
-          <Text size="xs">{event.VolCount} volunteers wanted</Text>
+          <Text size="xs">{event.volunteersNeeded} volunteers wanted</Text>
         </Group>
       </Stack>
 
       <Text mt="lg" size="sm" c="dimmed">
-        {event.Description}
+        {event.description}
       </Text>
 
       {renderButtons()}

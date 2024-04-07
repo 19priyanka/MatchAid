@@ -12,165 +12,84 @@ export default function homePage() {
   const [tabs, settabs] = useState([]);
   const { data: session } = useSession();
   const [user, setUser] = useState(session?.user?.name);
-  const [attending, setAttendance] = useState(false);
-  const [currentTab, setCurrentTab] = useState(
-    user == UserType.GUEST || user == UserType.VOLUNTEER ? -1 : 0
-  );
-  const [volunteerEvents, setVolunteerEvents] = useState<
-    {
-      Name: string;
-      VolCount: number;
-      Date: string;
-      times: string;
-      Description: string;
-    }[]
-  >([]);
-
+  const [currentTab, setCurrentTab] = useState(0);
+  const [volunteerEvents, setVolunteerEvents] = useState([]);
+  const [tab0, setTab0] = useState([]);
+  const [tab1, setTab1] = useState([]);
+  const [tab2, setTab2] = useState([]);
+  
   useEffect(() => {
     setUser(session?.user?.name);
-    let URL = []; // this will be a string with the URL of the endpoint we want to fetch from later instead of the array of data
-    switch (currentTab) {
-      case 0:
-        if (user == UserType.ADMIN) {
-          URL = [
-            {
-              Name: "Soup Kitchen ADMIN TAB 0",
-              VolCount: currentTab,
-              Date: "April 14",
-              times: "8:30am-12:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-            {
-              Name: "Homeless Shelter",
-              VolCount: 10,
-              Date: "April 15",
-              times: "2:30pm-9:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-          ];
-        } else if (user == UserType.ORGANIZATION) {
-          URL = [
-            {
-              Name: "Soup Kitchen ORG TAB 0",
-              VolCount: currentTab,
-              Date: "April 14",
-              times: "8:30am-12:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-            {
-              Name: "Homeless Shelter",
-              VolCount: 10,
-              Date: "April 15",
-              times: "2:30pm-9:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-          ];
+    console.log("user is: ",user);
+    console.log("session is: ",session);
+    console.log("email is: ",session?.user?.email);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: session?.user?.email,
+        userType: session?.user?.name,
+      })
+    };
+    console.log(requestOptions);
+    fetch('/api/opportunities', requestOptions)
+      .then(response => response.json())
+      .then(responseData =>{
+        console.log("opportunities: ", responseData);
+        if(responseData.message){
+          console.log("got message response back")
+          return;
         }
+        const currentDate = new Date();
+        console.log("date is: ", currentDate);
+        switch(user){
+          case UserType.ADMIN:
+            console.log("userType is amdin, splitting data");
+            setTab0(responseData.filter(event => {
+              return (event.status == 'Pending'); // Filter events with time greater than current time
+            }));
+            console.log(tab0);
+            setTab1(responseData.filter(event => {
+              const eventDate = new Date(event.time);
+              return eventDate > currentDate && event.status == 'Accepted'; // Filter events with time greater than current time
+            }));
+            console.log(tab1);
+            setTab2(responseData.filter(event => {
+              const eventDate = new Date(event.time);
+              return eventDate <= currentDate && event.status == 'Accepted'; // Filter events with time greater than current time
+            }));
+            console.log(tab2);
+            break;  
+          case UserType.ORGANIZATION:
+            
+            setTab0(responseData.filter(event => {
+              const eventDate = new Date(event.time);
+              return eventDate > currentDate ; // Filter events with time greater than current time
+            }));
+            setTab1(responseData.filter(event => {
+              const eventDate = new Date(event.time);
+              return eventDate <= currentDate ; // Filter events with time greater than current time
+            }));
+            break;
+          default:
+            setTab0(responseData);
+            break;
+        }
+        console.log("setting events = to tab0: ", tab0);
+        setVolunteerEvents(tab0);
+      })
+      .catch(error => console.error('Error:', error));
+  }, [ session]); // Dependency array ensures the effect runs when selectedTab changes
 
-        break;
-      case 1:
-        if (user == UserType.ADMIN) {
-          URL = [
-            {
-              Name: "Soup Kitchen ADMIN TAB 1",
-              VolCount: currentTab,
-              Date: "April 14",
-              times: "8:30am-12:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-            {
-              Name: "Homeless Shelter",
-              VolCount: 10,
-              Date: "April 15",
-              times: "2:30pm-9:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-          ];
-        } else if (user == UserType.ORGANIZATION) {
-          URL = [
-            {
-              Name: "Soup Kitchen ORG TAB 1",
-              VolCount: currentTab,
-              Date: "April 14",
-              times: "8:30am-12:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-            {
-              Name: "Homeless Shelter",
-              VolCount: 10,
-              Date: "April 15",
-              times: "2:30pm-9:00pm",
-              Description:
-                "This is a description of the event that's going to take place.",
-            },
-          ];
-        }
-        break;
-      case 2:
-        URL = [
-          {
-            Name: "Soup Kitchen ADMIN TAB 2",
-            VolCount: currentTab,
-            Date: "April 14",
-            times: "8:30am-12:00pm",
-            Description:
-              "This is a description of the event that's going to take place.",
-          },
-          {
-            Name: "Homeless Shelter",
-            VolCount: 10,
-            Date: "April 15",
-            times: "2:30pm-9:00pm",
-            Description:
-              "This is a description of the event that's going to take place.",
-          },
-        ];
-        break;
-      default:
-        URL = [
-          {
-            Name: "Soup Kitchen GENERAL TAB -1",
-            VolCount: currentTab,
-            Date: "April 14",
-            times: "8:30am-12:00pm",
-            Description:
-              "This is a description of the event that's going to take place.",
-          },
-          {
-            Name: "Homeless Shelter",
-            VolCount: 10,
-            Date: "April 15",
-            times: "2:30pm-9:00pm",
-            Description:
-              "This is a description of the event that's going to take place.",
-          },
-        ];
-        break;
+  useEffect(() => {
+    if(currentTab == 1){
+      setVolunteerEvents(tab1);
+    }else if(currentTab == 2){
+      setVolunteerEvents(tab2);
+    }else{
+      setVolunteerEvents(tab0);
     }
-
-    // fetchData(URL)
-    //   .then((data) => {
-    //     // Update volunteerEvents with the fetched data
-    setVolunteerEvents(URL); // change URL to data after connection
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error fetching data:', error);
-    //   });
-  }, [currentTab, session]); // Dependency array ensures the effect runs when selectedTab changes
-
-  // Function to fetch data based on the selected tab
-  // const fetchData = async (URL) => {
-  //   // const response = await fetch(URL);
-  //   // const data = await response.json();
-  //   return URL;
-  // };
+  }, [currentTab, tab0, tab1, tab2]);
 
   const renderTabs = () => {
     switch (user) {
@@ -192,9 +111,12 @@ export default function homePage() {
       />
 
       <Group justify="space-evenly" style={{ margin: 25 }}>
-        {volunteerEvents.map((event, index) => {
-          return <VolunteerEventCard key={index} event={event} />;
-        })}
+        {volunteerEvents.length >0? (
+        volunteerEvents?.map((event, index) => {
+          return <VolunteerEventCard attending={false} key={index} event={event} />;
+        })) : (
+          <div>No Events found</div>
+        )}
       </Group>
     </Layout>
   );

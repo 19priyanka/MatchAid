@@ -1,52 +1,52 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/shared/layout";
 import SearchInput from "../../components/SearchBar/SearchInput";
 import VolunteerEventCard from "../../components/UserCards/VolunteerEventCard";
 import { Group } from "@mantine/core";
 import { getSession } from "next-auth/react";
 import { UserType } from "../../CustomTypes/UserType";
+import { useSession } from "next-auth/react";
 
-const upcomingEvents = [
-  {
-    Name: "Soup Kitchen",
-    VolCount: 4,
-    Date: "April 14",
-    times: "8:30am-12:00pm",
-    Description:
-      "This is a description of the event that's going to take place.",
-  },
-  {
-    Name: "Homeless Shelter",
-    VolCount: 10,
-    Date: "April 15",
-    times: "2:30pm-9:00pm",
-    Description:
-      "This is a description of the event that's going to take place.",
-  },
-];
-const pastEvents = [
-  {
-    Name: "Soup Kitchen",
-    VolCount: 15,
-    Date: "April 1",
-    times: "8:30am-12:00pm",
-    Description:
-      "This is a description of the event that's going to take place.",
-  },
-  {
-    Name: "Retirement Home",
-    VolCount: 11,
-    Date: "March 15",
-    times: "2:30pm-9:00pm",
-    Description:
-      "This is a description of the event that's going to take place.",
-  },
-];
-
-export default function homePage() {
+export default function myEvents() {
   const [tabs, settabs] = useState(["Upcoming", "Past Events"]);
   const [currentTab, setCurrentTab] = useState(0);
+  const { data: session } = useSession();
+  const [upcomingEvents, setUpcoming] = useState([]);
+  const [pastEvents, setPast] = useState([]);
+
+  useEffect(() => {
+    console.log("session.user is: ",session?.user?.name);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: "user1@example.com",
+      })
+    };
+    console.log(requestOptions);
+    fetch('/api/opportunities/myEvents', requestOptions)
+      .then(response => response.json())
+      .then(responseData =>{
+        console.log("updated status: ", responseData);
+        const currentDate = new Date(); // Get the current date and time
+
+        setUpcoming( responseData.filter(event => {
+          const eventDate = new Date(event._doc.time);
+          return eventDate > currentDate; // Filter events with time greater than current time
+        }));
+        console.log(upcomingEvents);
+
+        setPast( responseData.filter(event => {
+          const eventDate = new Date(event._doc.time);
+          return eventDate <= currentDate; // Filter events with time less than or equal to current time
+        }));
+        console.log(pastEvents);
+
+      })
+      .catch(error => console.error('Error:', error));
+
+  }, []);
 
   return (
     <Layout>
@@ -55,15 +55,19 @@ export default function homePage() {
       
         {currentTab==0? (
           <Group justify="space-evenly" style={{ margin: 25 }}>
-          {upcomingEvents.map((event, index) => {
+          {upcomingEvents.length > 0 ? (upcomingEvents.map((event, index) => {
             return <VolunteerEventCard key={index} event={event} />;
-          })}
+          })) : (
+            <div>You're not registered for any upcoming events</div>
+          )}
           </Group>
         ):(
           <Group justify="space-evenly" style={{ margin: 25 }}>
-          {pastEvents.map((event, index) => {
+          {pastEvents.length > 0 ? (pastEvents.map((event, index) => {
             return <VolunteerEventCard key={index} event={event} />;
-          })}
+          })) : (
+            <div>You have no past events</div>
+          )}
           </Group>
         )}
     </Layout>

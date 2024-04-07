@@ -5,41 +5,73 @@ import { UserType } from "../../CustomTypes/UserType";
 import OrganizationCard from "../../components/UserCards/OrganizationCard";
 import { Group } from "@mantine/core";
 import { getSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function homePage() {
   const tabs = ["All Organizations", "Reported Organizations"];
   const [currentTab, setCurrentTab] = useState(0);
-  const organizations = [
-    {
-      Name: "Soup Kitchen",
-      Description:
-        "This is a description of the event that's going to take place.",
-      reporter:{
-        email: "user1@example.com",
-        name: "volunteer 1",
-      }
-    },
-    {
-      Name: "Homeless Shelter",
-      Description:
-        "This is a description of the event that's going to take place.",
-        reporter:{
-          email: "user3@example.com",
-          name: "volunteer 3",
-        }
-    },
-  ];
+  const [organizations, setOrganizations] = useState([]);
+  const [allOrganizations, setAll] = useState([]);
+  const [reportedOrganizations, setReported] = useState([]);
+    
+  useEffect(() => {
+       
+    fetch('/api/admin/reviews')
+      .then(response => response.json())
+      .then(responseData =>{
+        console.log("reviews are: ", responseData);
+        setReported( responseData.filter(event => {
+          return event.review.revieweeType != 'Volunteer'; // Filter events with time greater than current time
+        }));
+        console.log(reportedOrganizations);
+
+      })
+      .catch(error => console.error('Error:', error));
+      
+      fetch('/api/admin/organizations')
+      .then(response => response.json())
+      .then(responseData =>{
+        console.log("all organizations are: ", responseData);
+        setAll( responseData);
+        console.log(allOrganizations);
+        setOrganizations(allOrganizations);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+  
+  useEffect(() => {
+    if(currentTab == 1){
+      setOrganizations(reportedOrganizations);
+    }
+    else{
+      setOrganizations(allOrganizations);
+    }
+  }, [currentTab]);
 
   return (
     <Layout>
       <SearchInput selected={currentTab} setTab={setCurrentTab} tabs={tabs} />
-
-      <Group justify="space-evenly" style={{ margin: 25 }}>
-        {organizations.map((organization, index) => {
-          return <OrganizationCard key={index} organization={organization} />;
-        })}
+      {currentTab == 1? (
+        <Group justify="space-evenly" style={{ margin: 25 }}>
+        {reportedOrganizations.length > 0 ? (
+          reportedOrganizations.map((reported, index) => {
+          return <OrganizationCard key={index} organization={reported.reviewee} report={reported} />;
+        })) : (
+          <div>No organizations found</div>
+        )}
       </Group>
+      ):(
+        <Group justify="space-evenly" style={{ margin: 25 }}>
+        {allOrganizations.length > 0 ? (
+          allOrganizations.map((organization, index) => (
+            <OrganizationCard key={index} organization={organization} report={null} />
+          ))
+        ) : (
+          <div>No organizations found</div>
+        )}
+      </Group>
+      )}
+      
     </Layout>
   );
 }
