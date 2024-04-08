@@ -4,9 +4,11 @@ import Layout from "../components/shared/layout";
 import SearchInput from "../components/SearchBar/SearchInput";
 import { UserType } from "../CustomTypes/UserType";
 import VolunteerEventCard from "../components/UserCards/VolunteerEventCard";
-import { Group } from "@mantine/core";
+import { Group, ThemeIcon, rem } from "@mantine/core";
 import { getSession, signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { IconPlus } from "@tabler/icons-react";
+import CreateOpportunityModal from "../components/Modal/CreateOpportunityModal";
 
 export default function Home() {
   const [tabs, settabs] = useState([]);
@@ -118,6 +120,12 @@ export default function Home() {
           <div>No Events found</div>
         )}
       </Group>
+      {user == UserType.ORGANIZATION && 
+      <Group style={{position:"fixed",zIndex:2, bottom: rem(30), right: rem(30)}}>
+        <CreateOpportunityModal />
+      </Group>
+      }
+      
     </Layout>
   );
 }

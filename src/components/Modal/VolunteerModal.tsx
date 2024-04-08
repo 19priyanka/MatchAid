@@ -43,7 +43,14 @@ export function VolunteerModal() {
          
          </Modal>
     
-          <Button color = "black" onClick={open}>Volunteer</Button>
+          <Button color="black"
+                  mt="md"
+                  radius="xl"
+                  style={{ paddingInline: 25 }} 
+                  onClick={open}
+          >
+            Volunteer
+          </Button>
           
         </>
   );
