@@ -164,8 +164,8 @@ const VolunteerEventCard = ({ event, attending }) => {
                 onClick={()=>{VolunteerModal()}}
               >
                 Volunteer
-              </Button> */}
-              <VolunteerModal/>
+          </Button>*/ }
+              VolunteerModal(event)
             </Group>
           );
       default:

@@ -6,54 +6,42 @@ import {
   IconMail,
 } from '@tabler/icons-react';
 import cx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 
-const data = [
-  {
-    name: 'Robert Wolfkisser',
-    ocurrences: '3x Volunteer',
-    email: 'rob_wolf@gmail.com',
-  },
-  {
-    name: 'Jill Jailbreaker',
-    ocurrences: '2x Volunteer',
-    email: 'jj@breaker.com',
-  },
-  {
-    name: 'Henry Silkeater',
-    ocurrences: '2x Volunteer',
-    email: 'henry@silkeater.io',
-  },
-  {
-    name: 'Bill Horsefighter',
-    ocurrences: '1x Volunteer',
-    email: 'bhorsefighter@gmail.com',
-  },
-  {
-    name: 'Jeremy Footviewer',
-    ocurrences: '5x Volunteer',
-    email: 'jeremy@foot.dev',
-  },
-];
+
   
   
-const UsersStack = () => {
+const UsersStack = (searchTerm) => {
     const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-
-  const rows = data.map((item) => (
-    <Table.Tr key={item.name}>
+  const [volunteers, setVolunteers] = useState([]);
+  const [allVolunteers, setAll] = useState([]);
+  const [reportedVolunteers, setReported] = useState([]);
+  
+  useEffect(() => {
+      fetch('/api/admin/volunteers')
+      .then(response => response.json())
+      .then(responseData =>{
+        console.log("all volunteers are: ", responseData);
+        setAll( responseData);
+        console.log(allVolunteers);
+        setVolunteers(allVolunteers);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+  const rows = allVolunteers.map((item) => (
+    <Table.Tr key={item._id}>
       <Table.Td>
         <Group >
             <IconUserCircle style={{ width: rem(50), height: rem(50) }}/>
           <div>
             <Text fz="sm" fw={500}>
-              {item.name}
+              {item.fullName}
             </Text>
             <Text c="dimmed" fz="xs">
-              {item.ocurrences}
+              {item.noOfTimesVolunteered}x Volunteer
             </Text>
           </div>
         </Group>

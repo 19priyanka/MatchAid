@@ -1,4 +1,4 @@
-import { Avatar, Container,  Tabs,  useMantineTheme, Table, Group, Text, ActionIcon, Menu, rem } from '@mantine/core';
+import { Avatar, Container,  Tabs, useMantineTheme, Table, Group, Text, ActionIcon, Menu, rem } from '@mantine/core';
 import {
   IconUserCircle,
   IconTrash,
@@ -8,45 +8,58 @@ import {
 import cx from 'clsx';
 import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { ModalsProvider, modals } from '@mantine/modals';
+import type { GetServerSideProps } from "next";
+  
+const deleteUser = (user) => {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      _id: user._id,
+    }),
+  };
 
-const data = [
-  {
-    name: 'Robert Wolfkisser',
-    ocurrences: '3x Volunteer',
-    email: 'rob_wolf@gmail.com',
-    reported_by: "Organization 1",
-  },
-  {
-    name: 'Jill Jailbreaker',
-    ocurrences: '2x Volunteer',
-    email: 'jj@breaker.com',
-    reported_by: "Organization 2",
-  },
-  {
-    name: 'Henry Silkeater',
-    ocurrences: '2x Volunteer',
-    email: 'henry@silkeater.io',
-    reported_by: "Organization 1",
-  },
-];
-  
-  
+  fetch("/api/admin/volunteers/", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => console.error('Error:', error));
+
+}
 const UsersStack = (searchTerm) => {
     const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [volunteers, setVolunteers] = useState([]);
+  const [allVolunteers, setAll] = useState([]);
+  const [reportedVolunteers, setReported] = useState([]);
 
-  const rows = data.map((item) => (
-    <Table.Tr key={item.name}>
+
+  fetch('/api/admin/reviews')
+  .then(response => response.json())
+  .then(responseData =>{
+    console.log("reviews are: ", responseData);
+    setReported( responseData.filter(event => {
+      return event.review.revieweeType != 'Organization'; 
+    }));
+    console.log(reportedVolunteers);
+
+  })
+  .catch(error => console.error('Error:', error));
+
+  const rows = reportedVolunteers.map((item) => (
+    <Table.Tr key={item._id}>
       <Table.Td>
         <Group >
         <IconUserCircle style={{ width: rem(50), height: rem(50) }}/>
           <div>
             <Text fz="sm" fw={500}>
-              {item.name}
+              {item.reviewee.fullName}
             </Text>
             <Text c="dimmed" fz="xs">
-              {item.ocurrences}
+              {item.reviewee.noOfTimesVolunteered}x Volunteer
             </Text>
           </div>
         </Group>
@@ -54,7 +67,7 @@ const UsersStack = (searchTerm) => {
       <Table.Td>
       <Group>
             <Text>
-                Reported by: {item.reported_by}
+                Reported by: {item.reviewer.fullName}
             </Text>
         </Group>
       </Table.Td>
@@ -78,16 +91,16 @@ const UsersStack = (searchTerm) => {
                   <IconMail style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                 }
               >
-                {item.email}
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-                color="red"
+                color="red" onClick={()=>{deleteUser(item.reviewee)}}
               >
                 Delete Account
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
+
         </Group>
       </Table.Td>
     </Table.Tr>
