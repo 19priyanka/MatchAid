@@ -43,15 +43,15 @@ const VolunteerEventCard= ( {organization, report}) => {
         </Card.Section>
 
         <Stack mt="md" mb="md" >
-            <Text fw={500} size="md">{organization.fullName}</Text>            
+            <Text fw={500} size="md">{organization?.fullName}</Text>            
         </Stack>
 
-        <Text  mt="sm" size="sm" c="dimmed">{organization.email}</Text>
+        <Text  mt="sm" size="sm" c="dimmed">{organization?.email}</Text>
 
         <Group justify='flex-end'>
           {report && 
           <Text>
-              Reported by: {report.reviewer.fullName}
+              Reported by: {report.fullName}
           </Text>
           }
           <Group gap={0} justify="flex-end">
@@ -74,7 +74,7 @@ const VolunteerEventCard= ( {organization, report}) => {
                       <IconMail style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     }
                   >
-                    {report.reviewer.email}
+                    {report.email}
                   </Menu.Item>
                 }
                 <Menu.Item

@@ -40,7 +40,7 @@ export function VolunteerModal(eid) {
     const vemail = session?.user?.email;
     const why = selectedOption;
     const oppId = eid._id;
-  
+    
     const handleRadioChange = (value) => {
       setSelectedOption(value);
       if (value !== 'other') {
@@ -55,7 +55,7 @@ export function VolunteerModal(eid) {
 
   return (
         <>
-          <Modal opened={opened} onClose={close} title={eid.organization.fullName}>
+          <Modal opened={opened} onClose={close} title={eid.organization?.name}>
           <Radio.Group label= "Reason for Volunteering" withAsterisk
                         description="Why are you interested in volunteering for this organization?"
                         value={selectedOption} onChange={handleRadioChange}>

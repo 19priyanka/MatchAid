@@ -165,7 +165,7 @@ const VolunteerEventCard = ({ event, attending }) => {
               >
                 Volunteer
           </Button>*/ }
-              VolunteerModal(event)
+              <VolunteerModal eid={event}/>
             </Group>
           );
       default:
