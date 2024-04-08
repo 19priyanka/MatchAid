@@ -175,12 +175,57 @@ async function seedDatabase() {
         UserModel.collection.drop(),
       ]);
 
-      console.log("Seeding data...");
-      await Promise.all([
-        UserModel.insertMany(usersData),
-        OpportunityModel.insertMany(opportunitiesData),
-        ReviewModel.insertMany(reviewsData),
-      ]);
+      console.log("Seeding users data...");
+      const createdUsers = await UserModel.insertMany(usersData);
+
+      const userEmailToIdMap = {};
+      createdUsers.forEach((user) => {
+        userEmailToIdMap[user.email] = user._id;
+      });
+
+      console.log("Seeding opportunities data...");
+      const opportunities = opportunitiesData.map((opportunity) => {
+        const volunteerUsers = createdUsers.filter(user => user.userType === "Volunteer");
+        const signedUpUsers = volunteerUsers.map(user => ({
+          fullName: user.fullName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          reason: "Wanted to help out!",
+          hoursOfAvailability: 1
+        }));
+        if (opportunity.name == "Tutoring Program 1")
+        {
+          return {
+            ...opportunity,
+            signedUpUsers: signedUpUsers,
+          };
+        }
+        else
+        {
+          const randomVolunteerIndex = Math.floor(Math.random() * volunteerUsers.length);
+          const randomVolunteer = signedUpUsers[randomVolunteerIndex];
+
+          return {
+            ...opportunity,
+            signedUpUsers: randomVolunteer,
+          };
+        }
+      });
+      await OpportunityModel.insertMany(opportunities);
+
+      console.log("Seeding reviews data...");
+      const reviews = reviewsData.map((review) => {
+        const randomUserIndex1 = Math.floor(Math.random() * createdUsers.length);
+        const randomUserIndex2 = randomUserIndex1 == 0 ? randomUserIndex1 + 1 : randomUserIndex1 - 1;
+        const randomUser1 = createdUsers[randomUserIndex1];
+        const randomUser2 = createdUsers[randomUserIndex2];
+        return {
+          ...review,
+          revieweeId: randomUser1._id,
+          reviewerId: randomUser2._id,
+        };
+      });
+      await ReviewModel.insertMany(reviews);
 
       console.log("Database seeded successfully");
     } catch (error) {

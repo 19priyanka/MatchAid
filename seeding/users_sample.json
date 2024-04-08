@@ -12,7 +12,7 @@
     "email": "user2@example.com",
     "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Organization",
-    "fullName": "Charity Foundation",
+    "fullName": "Charity Group",
     "createdAt": "2023-02-20T10:30:00Z",
     "noOfTimesVolunteered": 0
   },
@@ -30,8 +30,32 @@
     "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Admin",
     "phoneNumber": "987-654-3210",
-    "fullName": "Alice Smith",
+    "fullName": "Admin Smith",
     "noOfTimesVolunteered": 1,
     "createdAt": "2023-03-10T08:45:00Z"
+  },
+  {
+    "email": "charity@gmail.com",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
+    "userType": "Organization",
+    "fullName": "Charity Foundation",
+    "createdAt": "2023-02-20T10:30:00Z",
+    "noOfTimesVolunteered": 0
+  },
+  {
+    "email": "community@gmail.com",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
+    "userType": "Organization",
+    "fullName": "Community Outreach",
+    "createdAt": "2023-02-20T10:30:00Z",
+    "noOfTimesVolunteered": 0
+  },
+  {
+    "email": "animal_rescue@gmail.com",
+    "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
+    "userType": "Organization",
+    "fullName": "Animal Rescue Society",
+    "createdAt": "2023-02-20T10:30:00Z",
+    "noOfTimesVolunteered": 0
   }
 ]
