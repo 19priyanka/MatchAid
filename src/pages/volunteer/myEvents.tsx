@@ -17,33 +17,36 @@ export default function myEvents() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    console.log("session.user is: ",session?.user?.name);
+    console.log("session.user is: ",session?.user?.email);
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: "user1@example.com",
+        // email: session?.user?.email,
+        email: "user1@example.com"
       })
     };
     console.log(requestOptions);
     fetch('/api/opportunities/myEvents', requestOptions)
       .then(response => response.json())
       .then(responseData =>{
-        console.log("updated status: ", responseData);
+        console.log("events: ", responseData);
         const currentDate = new Date(); // Get the current date and time
 
         setUpcoming( responseData.filter(event => {
-          const eventDate = new Date(event._doc.time);
-          return eventDate > currentDate; // Filter events with time greater than current time
+          const eventDate = new Date(event.time);
+          console.log("upcoming date check: ",eventDate > currentDate);
+          return (eventDate > currentDate); // Filter events with time greater than current time
         }));
-        console.log(upcomingEvents);
-        setEvents(upcomingEvents);
+        console.log("upcoming is: ",upcomingEvents);
+       
 
         setPast( responseData.filter(event => {
-          const eventDate = new Date(event._doc.time);
-          return eventDate <= currentDate; // Filter events with time less than or equal to current time
+          const eventDate = new Date(event.time);
+          return (eventDate <= currentDate); // Filter events with time less than or equal to current time
         }));
         console.log(pastEvents);
+        setEvents(upcomingEvents);
 
       })
       .catch(error => console.error('Error:', error));

@@ -22,9 +22,7 @@ export default function Home() {
   
   useEffect(() => {
     setUser(session?.user?.name);
-    console.log("user is: ",user);
-    console.log("session is: ",session);
-    console.log("email is: ",session?.user?.email);
+    
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
