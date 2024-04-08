@@ -8,9 +8,12 @@ import SearchInput from "../../components/SearchBar/SearchInput";
 import { UsersStack } from "../../components/UserTable/OrganizationUserTable";
 
 function AdminUserView() {
-  const [search, setSearch] = useState('');
-  const searchBy=(search:string )=>{
-    setSearch(search);
+  const [search, setSearch] = useState('J');
+  const searchBy=(searchTerm )=>{
+    console.log("search starts at ",search);
+    setSearch(searchTerm);
+    console.log("set search in view to ",search);
+    console.log("searchTerm is ", searchTerm)
   }
   return (
     <div>
