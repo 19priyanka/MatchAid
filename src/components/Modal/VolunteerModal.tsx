@@ -6,41 +6,43 @@ import { NumberInput, NumberInputHandlers, Group, Badge, Radio, ActionIcon, Text
 import { TimeInput } from '@mantine/dates';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, rem } from '@mantine/core';
+import { Opportunity } from '../../../backend/types/Opportunity';
 
-const register = (vemail, oppId, why, hours) =>{
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: vemail,
-      opportunityId: oppId,
-      reason: why,
-      hoursOfAvailability: hours,
-    })
-  };
-  
-  fetch('/api/opportunities/signUp', requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => console.error('Error:', error));
 
-  close();
-  }
 
-export function VolunteerModal(eid) {
+
+export function VolunteerModal(eid: Opportunity) {
     const [opened, { open, close }] = useDisclosure(false);
     const { data: session } = useSession();
     const [checked, setChecked] = useState(false); 
     const handlersRef = useRef<NumberInputHandlers>(null);
     const [selectedOption, setSelectedOption] = useState('');
     const [customOption, setCustomOption] = useState('');
-    const [hours, setHours] = useState(0);
-    const vemail = session?.user?.email;
-    const why = selectedOption;
-    const oppId = eid._id;
+    const [hoursOfAvailability, setHours] = useState<string | number>("");
+    const email = session?.user?.email;
+    const reason = selectedOption;
+    const opportunityId = eid._id;
+
+    const register = async (email, opportunityId, reason, hoursOfAvailability) =>{
+      const response = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email, 
+          opportunityId,
+          reason,
+          hoursOfAvailability,
+        }),
+      };
+      fetch("/api/opportunities/signUp", response)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => console.error("Error:", error));
     
+      close();
+    };
     const handleRadioChange = (value) => {
       setSelectedOption(value);
       if (value !== 'other') {
@@ -55,9 +57,9 @@ export function VolunteerModal(eid) {
 
   return (
         <>
-          <Modal opened={opened} onClose={close} title={eid.organization?.name}>
+          <Modal opened={opened} onClose={close} title={eid.name}>
           <Radio.Group label= "Reason for Volunteering" withAsterisk
-                        description="Why are you interested in volunteering for this organization?"
+                        description="Why are you interested in volunteering for this opportunity?"
                         value={selectedOption} onChange={handleRadioChange}>
             <Group mt= "xs">
                 <Radio value= "This is an event I feel passionately about" label= "This is an event I feel passionately about"/>
@@ -78,11 +80,11 @@ export function VolunteerModal(eid) {
       )}
             <Group>            
             <NumberInput label="Hours of Availability" withAsterisk description = "Please indicate how many hours you think you’d be available to help out. It’s not mandatory to stay for the entire event time"
-            value={hours} onChange={(event) => setHours(event.value)} 
+            value={hoursOfAvailability} onChange={setHours} 
             leftSection={<IconClock/>}/>
             </Group>
             <Group mt="xs">
-            <Button color = "black"radius="md" style={{ flex: 1 }} onClick={register(vemail, oppId, why, hours)}>
+            <Button onClick={() => register(email, opportunityId, reason, hoursOfAvailability)} color = "black"radius="md" style={{ flex: 1 }}>
               Register to Volunteer
             </Button>
             
