@@ -21,7 +21,7 @@ export default function homePage() {
       .then(responseData =>{
         console.log("reviews are: ", responseData);
         setReported( responseData.filter(event => {
-          return event.review.revieweeType == 'Volunteer'; // Filter events with time greater than current time
+          return event.review.revieweeType == 'Organization'; // Filter events with time greater than current time
         }));
         console.log(reportedOrganizations);
 

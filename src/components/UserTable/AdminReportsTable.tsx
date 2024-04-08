@@ -39,7 +39,7 @@ const UsersStack = (searchTerm) => {
         console.log("reviews are: ", responseData);
         setReported(
           responseData.filter((event) => {
-            return (event.review.revieweeType == "Organization");
+            return (event.review.revieweeType == "Volunteer");
           })
         );
         console.log(allReports);
