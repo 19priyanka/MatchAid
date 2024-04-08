@@ -2,7 +2,7 @@ import { TextInput, Group, rem, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import classes from './SearchBar.module.css';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 
 // example for the input
   // const [currentTab, setCurrentTab] = useState(0);
@@ -36,6 +36,16 @@ import { ReactNode, useState } from 'react';
       {tab}
     </Button>
   ));
+  const [isMobileView, setIsMobileView] = useState(false);
+  useEffect(() => {
+    const checkMobileView = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    checkMobileView();
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
+  }, []);
 
   return (
       <Group style={{ marginBottom: 40}}>
@@ -43,8 +53,6 @@ import { ReactNode, useState } from 'react';
           className={classes.search}
           placeholder="Search..."
           leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-          // data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-          visibleFrom="xs"
           radius = {30}
           variant = "filled"
           onSubmit={()=>{searchBy(value), console.log("submitting search with value: ", value)}}
