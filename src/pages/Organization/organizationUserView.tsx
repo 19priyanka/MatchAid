@@ -9,10 +9,8 @@ import { UserType } from "../../CustomTypes/UserType";
 export default function organizationUserView() {
   const [search, setSearch] = useState('');
   const searchBy=(searchTerm )=>{
-    console.log("search starts at ",search);
     setSearch(searchTerm);
-    console.log("set search in view to ",search);
-    console.log("searchTerm is ", searchTerm)
+  
   }
   return (
     <div>

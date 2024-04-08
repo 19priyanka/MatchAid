@@ -99,7 +99,7 @@ const UsersStack = (searchTerm) => {
   ));
   useEffect(()=>{
     setVolunteers(allVolunteers.filter(volunteer => {
-      return volunteer.fullName.includes(searchTerm.searchTerm);
+      return volunteer.fullName.toLowerCase().includes(searchTerm.searchTerm.toLowerCase());
     }));
     console.log(volunteers);
   }, [searchTerm]);

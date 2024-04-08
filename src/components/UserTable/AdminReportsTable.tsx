@@ -54,12 +54,8 @@ const UsersStack = (searchTerm) => {
   }, []);
   
   useEffect(()=>{
-    console.log("searchTerm changed to ",searchTerm)
     setReported(allReports.filter(report => {
-      console.log("searchTermmmm is ",searchTerm);
-      console.log("report is ",report.reviewee.fullName);
-      console.log("boolean is ", report.reviewee.fullName.includes(searchTerm.searchTerm));
-      return report.reviewee.fullName.includes(searchTerm.searchTerm);
+      return report.reviewee.fullName.toLowerCase().includes(searchTerm.searchTerm.toLowerCase());
     }));
   }, [searchTerm]);
 

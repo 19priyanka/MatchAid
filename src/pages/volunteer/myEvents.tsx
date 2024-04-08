@@ -31,35 +31,40 @@ export default function myEvents() {
       .then(response => response.json())
         .then((responseData) => {
           const currentDate = new Date();
-          const upcoming = responseData.filter(
+          setUpcoming( responseData.filter(
             (event) => new Date(event.time) > currentDate
-          );
-          const past = responseData.filter(
+          ));
+          setPast( responseData.filter(
             (event) => new Date(event.time) <= currentDate
-          );
-          setUpcoming(upcoming);
+          ));
+          // setUpcoming(upcoming);
           
-          setPast(past);
-         
+          // setPast(past);
+          setEvents(responseData.filter(
+            (event) => new Date(event.time) > currentDate
+          ));
        
         })
         .catch((error) => console.error("Error:", error));
     
+  }, []);
+  useEffect(() => {
+    setEvents( currentTab === 1? pastEvents : upcomingEvents);
   }, [currentTab]);
-  
 
   const filterData = (search: string) => {
-    const filteredEvents =
+    // console.log()
+    setEvents(
       currentTab === 1
-        ? upcomingEvents.filter((event) =>
+        ? pastEvents.filter((event) =>
             event.name.toLowerCase().includes(search.toLowerCase())
            
           )
-        : pastEvents.filter((event) =>
+        : upcomingEvents.filter((event) =>
             event.name.toLowerCase().includes(search.toLowerCase())
-          );
-          console.log("filteredEvents: ", filteredEvents);
-    setEvents(filteredEvents);
+          ));
+          // console.log("filteredEvents: ", filteredEvents);
+    // setEvents(filteredEvents);
   };
   
 
@@ -71,8 +76,8 @@ export default function myEvents() {
       <Group justify="space-evenly" style={{ margin: 25 }}>
       {currentTab === 0 ? (
         <>
-          {upcomingEvents.length > 0 ? (
-            upcomingEvents.map((event, index) => (
+          {events.length > 0 ? (
+            events.map((event, index) => (
               <VolunteerEventCard attending={true} key={index} event={event} />
             ))
           ) : (
@@ -81,8 +86,8 @@ export default function myEvents() {
         </>
       ) : (
         <>
-          {pastEvents.length > 0 ? (
-            pastEvents.map((event, index) => (
+          {events.length > 0 ? (
+            events.map((event, index) => (
               <VolunteerEventCard attending={true} key={index} event={event} />
             ))
           ) : (
