@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Layout from "../../components/shared/layout";
 import SearchInput from "../../components/SearchBar/SearchInput";
 import { UsersStack } from "../../components/UserTable/OrganizationUserTable";
@@ -7,12 +7,16 @@ import { GetServerSideProps } from "next";
 import { UserType } from "../../CustomTypes/UserType";
 
 export default function organizationUserView() {
+  const [search, setSearch] = useState('');
+  const searchBy=(search:string )=>{
+    setSearch(search);
+  }
   return (
     <div>
       <div>
         <Layout>
-          <SearchInput setTab={null} selected={null} tabs={[]} />
-          <UsersStack />
+          <SearchInput searchBy={searchBy} setTab={null} selected={null} tabs={[]} />
+          <UsersStack searchTerm={search}/>
         </Layout>
       </div>
     </div>

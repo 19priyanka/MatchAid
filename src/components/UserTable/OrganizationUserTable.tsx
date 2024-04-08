@@ -26,7 +26,7 @@ const data = [
   },
 ];
 
-export function UsersStack() {
+export function UsersStack(searchTerm) {
   const rows = data.map((item) => (
     <Table.Tr key={item.name}>
       <Table.Td>

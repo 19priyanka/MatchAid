@@ -32,9 +32,9 @@ export default function homePage() {
       .then(response => response.json())
       .then(responseData =>{
         console.log("all organizations are: ", responseData);
-        setAll( responseData);
+        setAll(responseData);
         console.log(allOrganizations);
-        setOrganizations(allOrganizations);
+        setOrganizations(responseData);
       })
       .catch(error => console.error('Error:', error));
   }, []);
@@ -48,13 +48,26 @@ export default function homePage() {
     }
   }, [currentTab]);
 
+  const filterData = (search: string)=>{
+    if(currentTab == 1){
+      setOrganizations(reportedOrganizations.filter(event => {
+        return event.reviewee.fullName.includes(search) ;
+      }));
+    }
+    else{
+      setOrganizations(allOrganizations.filter(event => {
+        return event.fullName.includes(search) ; 
+      }));
+    }
+  }
+
   return (
     <Layout>
-      <SearchInput selected={currentTab} setTab={setCurrentTab} tabs={tabs} />
+      <SearchInput searchBy={filterData} selected={currentTab} setTab={setCurrentTab} tabs={tabs} />
       {currentTab == 1? (
         <Group justify="space-evenly" style={{ margin: 25 }}>
-        {reportedOrganizations.length > 0 ? (
-          reportedOrganizations.map((reported, index) => {
+        {organizations.length > 0 ? (
+          organizations.map((reported, index) => {
           return <OrganizationCard key={index} organization={reported.reviewee} report={reported} />;
         })) : (
           <div>No organizations found</div>
@@ -62,8 +75,8 @@ export default function homePage() {
       </Group>
       ):(
         <Group justify="space-evenly" style={{ margin: 25 }}>
-        {allOrganizations.length > 0 ? (
-          allOrganizations.map((organization, index) => (
+        {organizations.length > 0 ? (
+          organizations.map((organization, index) => (
             <OrganizationCard key={index} organization={organization} report={null} />
           ))
         ) : (

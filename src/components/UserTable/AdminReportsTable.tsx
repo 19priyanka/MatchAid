@@ -31,7 +31,7 @@ const data = [
 ];
   
   
-const UsersStack = () => {
+const UsersStack = (searchTerm) => {
     const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);

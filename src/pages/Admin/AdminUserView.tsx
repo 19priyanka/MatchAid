@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
@@ -8,13 +8,17 @@ import SearchInput from "../../components/SearchBar/SearchInput";
 import { UsersStack } from "../../components/UserTable/OrganizationUserTable";
 
 function AdminUserView() {
+  const [search, setSearch] = useState('');
+  const searchBy=(search:string )=>{
+    setSearch(search);
+  }
   return (
     <div>
       <div>
         <main>
           <Layout>
-            <SearchInput tabs={["Volunteers", "New Reports"]} selected={0} />
-            <UsersStack />
+            <SearchInput searchBy={searchBy} setTab={null} tabs={["Volunteers", "New Reports"]} selected={0} />
+            <UsersStack searchTerm={search}/>
           </Layout>
         </main>
       </div>

@@ -14,6 +14,7 @@ export default function myEvents() {
   const { data: session } = useSession();
   const [upcomingEvents, setUpcoming] = useState([]);
   const [pastEvents, setPast] = useState([]);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     console.log("session.user is: ",session?.user?.name);
@@ -36,6 +37,7 @@ export default function myEvents() {
           return eventDate > currentDate; // Filter events with time greater than current time
         }));
         console.log(upcomingEvents);
+        setEvents(upcomingEvents);
 
         setPast( responseData.filter(event => {
           const eventDate = new Date(event._doc.time);
@@ -47,24 +49,35 @@ export default function myEvents() {
       .catch(error => console.error('Error:', error));
 
   }, []);
-
+  const filterData = (search: string)=>{
+    if(currentTab == 1){
+      setEvents(pastEvents.filter(event => {
+        return event.fullName.includes(search) ;
+      }));
+    }
+    else{
+      setEvents(upcomingEvents.filter(event => {
+        return event.fullName.includes(search) ; 
+      }));
+    }
+  }
   return (
     <Layout>
-      <SearchInput selected={currentTab} setTab={setCurrentTab} tabs={tabs} />
+      <SearchInput searchBy={filterData} selected={currentTab} setTab={setCurrentTab} tabs={tabs} />
 
       
         {currentTab==0? (
           <Group justify="space-evenly" style={{ margin: 25 }}>
-          {upcomingEvents.length > 0 ? (upcomingEvents.map((event, index) => {
-            return <VolunteerEventCard key={index} event={event} />;
+          {events.length > 0 ? (events.map((event, index) => {
+            return <VolunteerEventCard attending={true} key={index} event={event} />;
           })) : (
             <div>You're not registered for any upcoming events</div>
           )}
           </Group>
         ):(
           <Group justify="space-evenly" style={{ margin: 25 }}>
-          {pastEvents.length > 0 ? (pastEvents.map((event, index) => {
-            return <VolunteerEventCard key={index} event={event} />;
+          {events.length > 0 ? (events.map((event, index) => {
+            return <VolunteerEventCard  attending={true} key={index} event={event} />;
           })) : (
             <div>You have no past events</div>
           )}

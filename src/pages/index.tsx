@@ -104,12 +104,31 @@ export default function Home() {
     }
   };
 
+  const filterData = (search: string)=>{
+    if(currentTab == 1){
+      setVolunteerEvents(tab1.filter(event => {
+        return event.fullName.includes(search) ;
+      }));
+    }
+    else if(currentTab == 2){
+      setVolunteerEvents(tab2.filter(event => {
+        return event.fullName.includes(search) ;
+      }));
+    }
+    else{
+      setVolunteerEvents(tab0.filter(event => {
+        return event.fullName.includes(search) ;
+      }));
+    }
+  }
+
   return (
     <Layout>
       <SearchInput
         selected={currentTab}
         tabs={renderTabs()}
         setTab={setCurrentTab}
+        searchBy={filterData}
       />
 
       <Group justify="space-evenly" style={{ margin: 25 }}>
