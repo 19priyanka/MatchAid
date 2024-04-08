@@ -125,10 +125,8 @@ const updatePassword = async (
     return { success: false, msg: "User not found" };
   }
 
-  console.log("user", user);
-  console.log("oldPassword", oldPassword);
   const passwordsMatch = await bcrypt.compare(oldPassword, user.password);
-  // console.log("passwordsMatch", passwordsMatch);
+
   if (!passwordsMatch) {
     return { success: false, msg: "Old password is incorrect" };
   }
@@ -145,6 +143,22 @@ const updatePassword = async (
   return { success: true, msg: "Password updated successfully" };
 };
 
+const deleteAccount = async (id: string, userType: UserType) => {
+  const user = await UserModel.findOne({ _id: new Object(id) }).exec();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (user.userType !== userType) {
+    throw new Error("User type does not match");
+  }
+
+  await UserModel.deleteOne({ _id: new Object(id) }).exec();
+
+  return { success: true, msg: "Account deleted successfully" };
+};
+
 export {
   login,
   signup,
@@ -153,4 +167,5 @@ export {
   getAllOrganizations,
   getAllVolunteers,
   updatePassword,
+  deleteAccount,
 };

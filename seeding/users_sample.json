@@ -1,5 +1,6 @@
 [
   {
+    "_id": "65ea3a9ca520d21a8d9439b2",
     "email": "user1@example.com",
     "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Volunteer",
@@ -43,6 +44,7 @@
     "noOfTimesVolunteered": 0
   },
   {
+    "_id": "65ea3a9ca520d21a8d9439b1",
     "email": "community@gmail.com",
     "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Organization",
@@ -51,6 +53,7 @@
     "noOfTimesVolunteered": 0
   },
   {
+    "_id": "65ea3a9ca520d21a8d9439b3",
     "email": "animal_rescue@gmail.com",
     "password": "$2a$09$pmCdXnqX0sxbcbA.n6yFIeaMgAAATfWy0j7E7CV5JPx/8BKh7kp0m",
     "userType": "Organization",
