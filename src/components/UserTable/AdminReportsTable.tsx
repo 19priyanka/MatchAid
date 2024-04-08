@@ -37,16 +37,14 @@ const UsersStack = (searchTerm) => {
       .then((response) => response.json())
       .then((responseData) => {
         console.log("reviews are: ", responseData);
-        setAll(
+        setReported(
           responseData.filter((event) => {
-            return event.review.revieweeType != "Organization";
+            return (event.review.revieweeType == "Organization");
           })
         );
         console.log(allReports);
-        setReported(
-          responseData.filter((event) => {
-            return event.review.revieweeType != "Organization";
-          })
+        setAll(
+          responseData
         );
       })
       .catch((error) => console.error("Error:", error));
