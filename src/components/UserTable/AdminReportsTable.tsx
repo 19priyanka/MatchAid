@@ -6,7 +6,7 @@ import {
   IconMail,
 } from '@tabler/icons-react';
 import cx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { ModalsProvider, modals } from '@mantine/modals';
 import type { GetServerSideProps } from "next";
@@ -33,21 +33,35 @@ const UsersStack = (searchTerm) => {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [volunteers, setVolunteers] = useState([]);
-  const [allVolunteers, setAll] = useState([]);
   const [reportedVolunteers, setReported] = useState([]);
+  const [allReports, setAll] = useState([]);
 
-
-  fetch('/api/admin/reviews')
-  .then(response => response.json())
-  .then(responseData =>{
-    console.log("reviews are: ", responseData);
-    setReported( responseData.filter(event => {
-      return event.review.revieweeType != 'Organization'; 
+  useEffect(()=>{
+    fetch('/api/admin/reviews')
+    .then(response => response.json())
+    .then(responseData =>{
+      console.log("reviews are: ", responseData);
+      setAll( responseData.filter(event => {
+        return event.review.revieweeType != 'Organization'; 
+      }));
+      console.log(allReports);
+      setReported(responseData.filter(event => {
+        return event.review.revieweeType != 'Organization'; 
+      }));
+      
+    })
+    .catch(error => console.error('Error:', error));
+  }, []);
+  
+  useEffect(()=>{
+    console.log("searchTerm changed to ",searchTerm)
+    setReported(allReports.filter(report => {
+      console.log("searchTermmmm is ",searchTerm);
+      console.log("report is ",report.reviewee.fullName);
+      console.log("boolean is ", report.reviewee.fullName.includes(searchTerm.searchTerm));
+      return report.reviewee.fullName.includes(searchTerm.searchTerm);
     }));
-    console.log(reportedVolunteers);
-
-  })
-  .catch(error => console.error('Error:', error));
+  }, [searchTerm]);
 
   const rows = reportedVolunteers.map((item) => (
     <Table.Tr key={item._id}>

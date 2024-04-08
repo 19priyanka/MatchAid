@@ -68,7 +68,7 @@ export default function homePage() {
         <Group justify="space-evenly" style={{ margin: 25 }}>
         {organizations.length > 0 ? (
           organizations.map((reported, index) => {
-          return <OrganizationCard key={index} organization={reported.reviewee} report={reported} />;
+          return <OrganizationCard key={index} organization={reported.reviewee} report={reported.reviewer} />;
         })) : (
           <div>No organizations found</div>
         )}

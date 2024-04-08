@@ -19,9 +19,12 @@ function AdminViewReports(){
     const [allVolunteers, setAll] = useState([]);
     const [reportedVolunteers, setReported] = useState([]);
     const [search, setSearch] = useState('');
-    const searchBy=(search:string )=>{
-      setSearch(search);
-    }
+    const searchBy=(searchTerm )=>{
+      console.log("search starts at ",search);
+      setSearch(searchTerm);
+      console.log("set search in view to ",search);
+      console.log("searchTerm is ", searchTerm)
+    };
 
     var type = 0;
     
@@ -35,21 +38,16 @@ function AdminViewReports(){
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-      useEffect(() => {
-        switch(currentTab){
-            case 0:
-                type = 0;
-                break;
-
-            case 1:
-                type = 1;
-                break;
-        }
-
-                
-
-
-    });
+  // useEffect(() => {
+  //   switch(currentTab){
+  //       case 0:
+  //           type = 0;
+  //           break;
+  //       case 1:
+  //           type = 1;
+  //           break;
+  //   }
+  // }, [currentTab]);
 
     const renderTabs = () => {
             return   ["Volunteers", "New Reports"];
@@ -58,11 +56,11 @@ function AdminViewReports(){
     const tableType = ()=> {
         switch(currentTab){
             case 0:
-                return <UsersStack />;
+                return <UsersStack searchTerm={search}/>;
             case 1:
-                return <UsersStackReports />;
+                return <UsersStackReports searchTerm={search}/>;
         }
-    }
+    };
     return(
         <div>
         <div >

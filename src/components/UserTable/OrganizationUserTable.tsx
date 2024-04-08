@@ -62,7 +62,12 @@ export function UsersStack(searchTerm) {
       })
       .catch(error => console.error('Error:', error));
   }, []);
-  const rows = allVolunteers.map((item) => (
+  useEffect(()=>{
+    setVolunteers(allVolunteers.filter(volunteer => {
+      return volunteer.fullName.includes(searchTerm.searchTerm);
+    }));
+  }, [searchTerm]);
+  const rows = volunteers.map((item) => (
     <Table.Tr key={item._id}>
       <Table.Td>
         <Group gap="sm">

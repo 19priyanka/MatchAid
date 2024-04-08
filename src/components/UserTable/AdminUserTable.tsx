@@ -43,11 +43,11 @@ const UsersStack = (searchTerm) => {
         console.log("all volunteers are: ", responseData);
         setAll( responseData);
         console.log(allVolunteers);
-        setVolunteers(allVolunteers);
+        setVolunteers(responseData);
       })
       .catch(error => console.error('Error:', error));
   }, []);
-  const rows = allVolunteers.map((item) => (
+  const rows = volunteers.map((item) => (
     <Table.Tr key={item._id}>
       <Table.Td>
         <Group >
@@ -97,7 +97,12 @@ const UsersStack = (searchTerm) => {
       </Table.Td>
     </Table.Tr>
   ));
-
+  useEffect(()=>{
+    setVolunteers(allVolunteers.filter(volunteer => {
+      return volunteer.fullName.includes(searchTerm.searchTerm);
+    }));
+    console.log(volunteers);
+  }, [searchTerm]);
   return (
     <div>
     <Table.ScrollContainer minWidth={800}>
