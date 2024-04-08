@@ -45,7 +45,7 @@ const getOpportunities = async (
       time: { $gte: new Date() },
     }).exec()) as Opportunity[];
   } else {
-    throw new Error("Invalid user type");
+    throw new Error("Invalid user type: " + userType);
   }
 
   return opportunities;
