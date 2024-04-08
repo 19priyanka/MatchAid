@@ -156,7 +156,7 @@ const VolunteerEventCard = ({ event, attending }) => {
         } else
           return (
             <Group justify="flex-end">
-              <Button
+              {/* <Button
                 color="black"
                 mt="md"
                 radius="xl"
@@ -164,7 +164,8 @@ const VolunteerEventCard = ({ event, attending }) => {
                 onClick={()=>{VolunteerModal()}}
               >
                 Volunteer
-              </Button>
+              </Button> */}
+              <VolunteerModal/>
             </Group>
           );
       default:
