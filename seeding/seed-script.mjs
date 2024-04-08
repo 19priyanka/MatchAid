@@ -223,6 +223,7 @@ async function seedDatabase() {
           ...review,
           revieweeId: randomUser1._id,
           reviewerId: randomUser2._id,
+          revieweeType: randomUser1.userType
         };
       });
       await ReviewModel.insertMany(reviews);
