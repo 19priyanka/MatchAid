@@ -9,7 +9,23 @@ import cx from 'clsx';
 import { useState, useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 
+const deleteUser = (user) => {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      _id: user._id,
+    }),
+  };
+  fetch("/api/admin/volunteers/", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => console.error('Error:', error));
 
+
+}
   
   
 const UsersStack = (searchTerm) => {
@@ -71,7 +87,7 @@ const UsersStack = (searchTerm) => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-                color="red"
+                color="red" onClick={()=>{deleteUser(item.reviewee)}}
               >
                 Delete Account
               </Menu.Item>

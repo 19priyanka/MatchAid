@@ -19,7 +19,7 @@ const deleteUser = (user) => {
       _id: user._id,
     }),
   };
-
+    if (user.userType == "volunteer"){
   fetch("/api/admin/volunteers/", requestOptions)
     .then(response => response.json())
     .then(data => {
@@ -27,6 +27,16 @@ const deleteUser = (user) => {
     })
     .catch(error => console.error('Error:', error));
 
+}
+else if (user.userType == "organization"){
+  fetch("/api/admin/organizations/", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => console.error('Error:', error));
+
+}
 }
 const UsersStack = (searchTerm) => {
     const theme = useMantineTheme();
@@ -42,7 +52,7 @@ const UsersStack = (searchTerm) => {
   .then(responseData =>{
     console.log("reviews are: ", responseData);
     setReported( responseData.filter(event => {
-      return event.review.revieweeType != 'Organization'; 
+      return event.review; 
     }));
     console.log(reportedVolunteers);
 
@@ -91,6 +101,7 @@ const UsersStack = (searchTerm) => {
                   <IconMail style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                 }
               >
+              {item.reviewee.email}
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}

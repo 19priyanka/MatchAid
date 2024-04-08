@@ -73,12 +73,13 @@ export function VolunteerModal(eid) {
         <TextInput
           value={customOption}
           onChange={handleCustomInputChange}
-          placeholder="Enter your custom answer"
+          placeholder="Other"
         />
       )}
             <Group>            
-            <NumberInput label="Hours of Availability" withAsterisk description = "For how many hours are you available?"
-            value={hours} onChange={(event) => setHours(event.value)} />
+            <NumberInput label="Hours of Availability" withAsterisk description = "Please indicate how many hours you think you’d be available to help out. It’s not mandatory to stay for the entire event time"
+            value={hours} onChange={(event) => setHours(event.value)} 
+            leftSection={<IconClock/>}/>
             </Group>
             <Group mt="xs">
             <Button color = "black"radius="md" style={{ flex: 1 }} onClick={register(vemail, oppId, why, hours)}>
