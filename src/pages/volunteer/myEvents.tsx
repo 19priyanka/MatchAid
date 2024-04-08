@@ -29,63 +29,68 @@ export default function myEvents() {
     console.log(requestOptions);
     fetch('/api/opportunities/myEvents', requestOptions)
       .then(response => response.json())
-      .then(responseData =>{
-        console.log("events: ", responseData);
-        const currentDate = new Date(); // Get the current date and time
-
-        setUpcoming( responseData.filter(event => {
-          const eventDate = new Date(event.time);
-          console.log("upcoming date check: ",eventDate > currentDate);
-          return (eventDate > currentDate); // Filter events with time greater than current time
-        }));
-        console.log("upcoming is: ",upcomingEvents);
+        .then((responseData) => {
+          const currentDate = new Date();
+          const upcoming = responseData.filter(
+            (event) => new Date(event.time) > currentDate
+          );
+          const past = responseData.filter(
+            (event) => new Date(event.time) <= currentDate
+          );
+          setUpcoming(upcoming);
+          
+          setPast(past);
+         
        
+        })
+        .catch((error) => console.error("Error:", error));
+    
+  }, [currentTab]);
+  
 
-        setPast( responseData.filter(event => {
-          const eventDate = new Date(event.time);
-          return (eventDate <= currentDate); // Filter events with time less than or equal to current time
-        }));
-        console.log(pastEvents);
-        setEvents(upcomingEvents);
+  const filterData = (search: string) => {
+    const filteredEvents =
+      currentTab === 1
+        ? upcomingEvents.filter((event) =>
+            event.name.toLowerCase().includes(search.toLowerCase())
+           
+          )
+        : pastEvents.filter((event) =>
+            event.name.toLowerCase().includes(search.toLowerCase())
+          );
+          console.log("filteredEvents: ", filteredEvents);
+    setEvents(filteredEvents);
+  };
+  
 
-      })
-      .catch(error => console.error('Error:', error));
-
-  }, []);
-  const filterData = (search: string)=>{
-    if(currentTab == 1){
-      setEvents(pastEvents.filter(event => {
-        return event.fullName.includes(search) ;
-      }));
-    }
-    else{
-      setEvents(upcomingEvents.filter(event => {
-        return event.fullName.includes(search) ; 
-      }));
-    }
-  }
   return (
     <Layout>
       <SearchInput searchBy={filterData} selected={currentTab} setTab={setCurrentTab} tabs={tabs} />
 
       
-        {currentTab==0? (
-          <Group justify="space-evenly" style={{ margin: 25 }}>
-          {events.length > 0 ? (events.map((event, index) => {
-            return <VolunteerEventCard attending={true} key={index} event={event} />;
-          })) : (
+      <Group justify="space-evenly" style={{ margin: 25 }}>
+      {currentTab === 0 ? (
+        <>
+          {upcomingEvents.length > 0 ? (
+            upcomingEvents.map((event, index) => (
+              <VolunteerEventCard attending={true} key={index} event={event} />
+            ))
+          ) : (
             <div>You're not registered for any upcoming events</div>
           )}
-          </Group>
-        ):(
-          <Group justify="space-evenly" style={{ margin: 25 }}>
-          {events.length > 0 ? (events.map((event, index) => {
-            return <VolunteerEventCard  attending={true} key={index} event={event} />;
-          })) : (
+        </>
+      ) : (
+        <>
+          {pastEvents.length > 0 ? (
+            pastEvents.map((event, index) => (
+              <VolunteerEventCard attending={true} key={index} event={event} />
+            ))
+          ) : (
             <div>You have no past events</div>
           )}
-          </Group>
-        )}
+        </>
+      )}
+    </Group>
     </Layout>
   );
 }
