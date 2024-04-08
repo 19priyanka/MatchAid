@@ -143,8 +143,8 @@ const updatePassword = async (
   return { success: true, msg: "Password updated successfully" };
 };
 
-const deleteAccount = async (id: string, userType: UserType) => {
-  const user = await UserModel.findOne({ _id: new Object(id) }).exec();
+const deleteAccount = async (email: string, userType: UserType) => {
+  const user = await UserModel.findOne({ email }).exec();
 
   if (!user) {
     throw new Error("User not found");
@@ -154,7 +154,7 @@ const deleteAccount = async (id: string, userType: UserType) => {
     throw new Error("User type does not match");
   }
 
-  await UserModel.deleteOne({ _id: new Object(id) }).exec();
+  await UserModel.deleteOne({ email }).exec();
 
   return { success: true, msg: "Account deleted successfully" };
 };
