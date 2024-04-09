@@ -39,13 +39,11 @@ const getOpportunities = async (
     }).exec()) as Opportunity[];
   } else if (userType === UserType.Admin) {
     opportunities = (await OpportunityModel.find({}).exec()) as Opportunity[];
-  } else if (userType === UserType.Guest) {
+  } else {
     opportunities = (await OpportunityModel.find({
       status: Status.Accepted,
       time: { $gte: new Date() },
     }).exec()) as Opportunity[];
-  } else {
-    throw new Error("Invalid user type");
   }
 
   return opportunities;

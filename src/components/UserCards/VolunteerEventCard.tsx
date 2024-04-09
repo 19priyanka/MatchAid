@@ -14,6 +14,7 @@ import VolunteerMenu from "./VolunteerMenu";
 import { useRouter } from "next/router";
 import CreateOpportunityModal from "../Modal/CreateOpportunityModal";
 import VolunteerModal from "../Modal/VolunteerModal";
+import { Opportunity } from "../../../backend/types/Opportunity";
 
 // example for the input
 // const volunteerEvents = [
@@ -36,6 +37,10 @@ const VolunteerEventCard = ({ event, attending }) => {
   const router = useRouter();
   useEffect(() => {
     setUser(session?.user?.name);
+  }, [session]);
+
+  useEffect(() => {
+    setUser(session?.user?.name);
     console.log("Event status is: ", event.status);
     const date = new Date(event.time);
     const month = date.toLocaleString('default', { month: 'short' });
@@ -50,8 +55,10 @@ const VolunteerEventCard = ({ event, attending }) => {
     end = end % 12;
     const endampm = end > hours? 'pm' : 'am';
 
+    setStatus(event.status);
     setTime(`${month} ${day}, ${year} ${hours}:${minutes}${ampm} - ${end}:${minutes}${endampm}`);
-  }, [session]);
+  }, [event]);
+
   const changeEventStatus = (status: string) =>{
     console.log(status);
     const requestOptions = {
@@ -165,7 +172,7 @@ const VolunteerEventCard = ({ event, attending }) => {
               >
                 Volunteer
           </Button>*/ }
-              <VolunteerModal eid={event}/>
+              <VolunteerModal eid={event._id as string}/>
             </Group>
           );
       default:
