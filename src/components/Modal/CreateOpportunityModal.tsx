@@ -11,13 +11,14 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { TimeInput, DateTimePicker } from "@mantine/dates";
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, useSession } from "next-auth/react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, rem } from "@mantine/core";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { UserType } from "../../CustomTypes/UserType";
+import { set } from "mongoose";
 
 export function CreateOpportunityModal() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -27,15 +28,17 @@ export function CreateOpportunityModal() {
   const [name, setName] = useState("");
   const [time, setTime] = useState<Date | null>(null);
   const [description, setDescription] = useState("");
-  const [volunteersNeeded, setVolunteersNeeded] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [volunteersNeeded, setVolunteersNeeded] = useState<string | number>("");
+  const [duration, setDuration] = useState<string | number>("");
   const [location, setLocation] = useState("");
   const email = session?.user?.email;
 
   const handleCreate = async () => {
+    console.log("duration" + duration);
+    console.log("volunteersNeeded" + volunteersNeeded);
     const response = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
         time,
@@ -44,14 +47,14 @@ export function CreateOpportunityModal() {
         duration,
         location,
         email,
-    })
-};
-fetch('/api/opportunities/postOpportunity', response)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-        })
-        .catch(error => console.error('Error:', error));
+      }),
+    };
+    fetch("/api/opportunities/postOpportunity", response)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.error("Error:", error));
 
     close();
   };
@@ -71,10 +74,13 @@ fetch('/api/opportunities/postOpportunity', response)
           label="Date/Time"
           withAsterisk
           description="Date and start time of opportunity"
-          onChange={(event)=> setTime(event)}
+          onChange={(event) => setTime(event)}
         />
-        <NumberInput withAsterisk description="How long is the opportunity? (in hours)" 
-        onChange={(event)=> setDuration(event.value)}/>
+        <NumberInput
+          withAsterisk
+          description="How long is the opportunity? (in hours)"
+          onChange={setDuration}
+        />
         <TextInput
           label="Location"
           withAsterisk
@@ -86,7 +92,7 @@ fetch('/api/opportunities/postOpportunity', response)
           withAsterisk
           placeholder="Enter number here"
           min={1}
-          onChange={(event) => setVolunteersNeeded(event.value)}
+          onChange={setVolunteersNeeded}
         />
         <TextInput
           label="Description"
@@ -95,7 +101,12 @@ fetch('/api/opportunities/postOpportunity', response)
           onChange={(event) => setDescription(event.target.value)}
         />
         <Group mt="xs">
-          <Button color="black" radius="md" style={{ flex: 1 }} onClick={handleCreate}>
+          <Button
+            color="black"
+            radius="md"
+            style={{ flex: 1 }}
+            onClick={handleCreate}
+          >
             Submit for Approval
           </Button>
         </Group>
