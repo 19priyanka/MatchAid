@@ -62,14 +62,15 @@ export default function Home() {
             break;  
           case UserType.ORGANIZATION:
             
-            setTab0(responseData.filter(event => {
-              const eventDate = new Date(event.time);
-              return eventDate > currentDate ; // Filter events with time greater than current time
-            }));
-            setTab1(responseData.filter(event => {
-              const eventDate = new Date(event.time);
-              return eventDate <= currentDate ; // Filter events with time greater than current time
-            }));
+            setTab0(responseData.filter(
+              (event) => new Date(event.time) > currentDate
+            ));
+            setVolunteerEvents(responseData.filter(
+              (event) => new Date(event.time) > currentDate
+            ));
+            setTab1(responseData.filter(
+              (event) => new Date(event.time) <= currentDate
+            ));
             break;
           default:
             setTab0(responseData);
@@ -105,17 +106,17 @@ export default function Home() {
   const filterData = (search: string)=>{
     if(currentTab == 1){
       setVolunteerEvents(tab1.filter(event => {
-        return event.name.includes(search) ;
+        return event.name.toLowerCase().includes(search.toLowerCase()) ;
       }));
     }
     else if(currentTab == 2){
       setVolunteerEvents(tab2.filter(event => {
-        return event.name.includes(search) ;
+        return event.name.toLowerCase().includes(search.toLowerCase()) ;
       }));
     }
     else{
       setVolunteerEvents(tab0.filter(event => {
-        return event.name.includes(search) ;
+        return event.name.toLowerCase().includes(search.toLowerCase()) ;
       }));
     }
   }

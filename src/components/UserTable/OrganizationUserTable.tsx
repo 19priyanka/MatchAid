@@ -58,13 +58,13 @@ export function UsersStack(searchTerm) {
         console.log("all volunteers are: ", responseData);
         setAll( responseData);
         console.log(allVolunteers);
-        setVolunteers(allVolunteers);
+        setVolunteers(responseData);
       })
       .catch(error => console.error('Error:', error));
   }, []);
   useEffect(()=>{
     setVolunteers(allVolunteers.filter(volunteer => {
-      return volunteer.fullName.includes(searchTerm.searchTerm);
+      return volunteer.fullName.toLowerCase().includes(searchTerm.searchTerm.toLowerCase());
     }));
   }, [searchTerm]);
   const rows = volunteers.map((item) => (
