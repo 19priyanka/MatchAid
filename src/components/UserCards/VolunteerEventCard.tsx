@@ -14,6 +14,7 @@ import VolunteerMenu from "./VolunteerMenu";
 import { useRouter } from "next/router";
 import CreateOpportunityModal from "../Modal/CreateOpportunityModal";
 import VolunteerModal from "../Modal/VolunteerModal";
+import { Opportunity } from "../../../backend/types/Opportunity";
 
 // example for the input
 // const volunteerEvents = [
@@ -171,7 +172,7 @@ const VolunteerEventCard = ({ event, attending }) => {
               >
                 Volunteer
           </Button>*/ }
-              <VolunteerModal eid={event}/>
+              <VolunteerModal eid={event._id as string}/>
             </Group>
           );
       default:

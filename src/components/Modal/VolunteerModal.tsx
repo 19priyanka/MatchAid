@@ -11,7 +11,7 @@ import { Opportunity } from '../../../backend/types/Opportunity';
 
 
 
-export function VolunteerModal(eid: Opportunity) {
+export function VolunteerModal(eid) {
     const [opened, { open, close }] = useDisclosure(false);
     const { data: session } = useSession();
     const [checked, setChecked] = useState(false); 
@@ -21,7 +21,7 @@ export function VolunteerModal(eid: Opportunity) {
     const [hoursOfAvailability, setHours] = useState<string | number>("");
     const email = session?.user?.email;
     const reason = selectedOption;
-    const opportunityId = eid._id;
+    const opportunityId = eid;
 
     const register = async (email, opportunityId, reason, hoursOfAvailability) =>{
       const response = {
@@ -34,6 +34,10 @@ export function VolunteerModal(eid: Opportunity) {
           hoursOfAvailability,
         }),
       };
+      console.log(email);
+      console.log(opportunityId);
+      console.log(reason);
+      console.log(hoursOfAvailability);
       fetch("/api/opportunities/signUp", response)
         .then((response) => response.json())
         .then((data) => {
@@ -57,7 +61,7 @@ export function VolunteerModal(eid: Opportunity) {
 
   return (
         <>
-          <Modal opened={opened} onClose={close} title={eid.name}>
+          <Modal opened={opened} onClose={close} title={"Register to Volunteer"}>
           <Radio.Group label= "Reason for Volunteering" withAsterisk
                         description="Why are you interested in volunteering for this opportunity?"
                         value={selectedOption} onChange={handleRadioChange}>
