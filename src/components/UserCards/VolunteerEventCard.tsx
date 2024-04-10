@@ -208,7 +208,7 @@ const VolunteerEventCard = ({ event, attending }) => {
             <Text fw={500} size="md">
               {event.name}
             </Text>
-            <VolunteerMenu opportunityId={event.opportunityId}/>
+            <VolunteerMenu volunteers={event.signedUpUsers}/>
           </Group>
         ) : (
           <Text fw={500} size="md">
