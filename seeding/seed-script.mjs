@@ -177,15 +177,11 @@ async function seedDatabase() {
 
       console.log("Seeding users data...");
       const createdUsers = await UserModel.insertMany(usersData);
-
-      const userEmailToIdMap = {};
-      createdUsers.forEach((user) => {
-        userEmailToIdMap[user.email] = user._id;
-      });
+      const volunteerUsers = createdUsers.filter(user => user.userType === "Volunteer");
+      const organizationUsers = createdUsers.filter(user => user.userType === "Organization");
 
       console.log("Seeding opportunities data...");
       const opportunities = opportunitiesData.map((opportunity) => {
-        const volunteerUsers = createdUsers.filter(user => user.userType === "Volunteer");
         const signedUpUsers = volunteerUsers.map(user => ({
           fullName: user.fullName,
           email: user.email,
@@ -215,15 +211,16 @@ async function seedDatabase() {
 
       console.log("Seeding reviews data...");
       const reviews = reviewsData.map((review) => {
-        const randomUserIndex1 = Math.floor(Math.random() * createdUsers.length);
-        const randomUserIndex2 = randomUserIndex1 == 0 ? randomUserIndex1 + 1 : randomUserIndex1 - 1;
-        const randomUser1 = createdUsers[randomUserIndex1];
-        const randomUser2 = createdUsers[randomUserIndex2];
+        const randomVolunteerIndex = Math.floor(Math.random() * volunteerUsers.length);
+        const randomOrganizationIndex = Math.floor(Math.random() * organizationUsers.length);
+        const randomVolunteer = volunteerUsers[randomVolunteerIndex];
+        const randomOrganization = organizationUsers[randomOrganizationIndex];
+        const random = Math.random();
         return {
           ...review,
-          revieweeId: randomUser1._id,
-          reviewerId: randomUser2._id,
-          revieweeType: randomUser1.userType
+          revieweeId: random < 0.5 ? randomVolunteer._id : randomOrganization._id,
+          reviewerId: random < 0.5 ? randomOrganization._id : randomVolunteer._id,
+          revieweeType: random < 0.5 ? "Volunteer" : "Organization"
         };
       });
       await ReviewModel.insertMany(reviews);
