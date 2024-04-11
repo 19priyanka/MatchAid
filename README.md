@@ -25,6 +25,8 @@ Before running the application, ensure that you have Docker and Docker Compose i
 
    For `NEXT_AUTH_SECRET`, run this command `openssl rand -base64 32` and copy-paste the result as the value.
 
+   **NOTE:** If openssl does not work on your machine you can use the following website: https://www.cryptool.org/en/cto/openssl to use the command.
+
 3. Run the following command in the root directory of the project:
 
    ```
