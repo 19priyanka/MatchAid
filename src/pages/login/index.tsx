@@ -83,21 +83,21 @@ export default function Login() {
 
       <Container
         size={350}
-        mt={20}
+        mt={60}
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Group
           style={{
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "12%",
+         
           }}
         >
           <Image src={logo} alt="logo" width={100} height={100} />
           <Title
             ta="center"
             className={classes.title}
-            style={{ marginBottom: 10 }}
+          
           >
             Match Aid
           </Title>
@@ -162,9 +162,9 @@ export default function Login() {
             <Anchor size="sm" component="button" onClick={handleSignUp}>
               Sign Up
             </Anchor>
-          </Text>
+          </Text > 
 
-          <Text mt={5}>
+          <Text>
             Or{" "}
             <Anchor size="sm" component="button" onClick={handleGuestSignIn}>
               Continue as Guest
