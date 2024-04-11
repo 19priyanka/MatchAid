@@ -74,7 +74,7 @@ export default function AdminNavBar() {
   });
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={classes.navbar} style={{height: 175}}>
       <div className={classes.navbarMain}>{links}</div>
 
       <button

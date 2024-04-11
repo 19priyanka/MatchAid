@@ -51,7 +51,7 @@ export default function GuestNavBar() {
   });
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={classes.navbar} style={{height: 75}}>
       <div className={classes.navbarMain}>{links}</div>
       <button onClick={() => router.push('/login')} className="absolute bottom-0">
         <div className={classes.link}>

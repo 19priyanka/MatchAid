@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import CreateOpportunityModal from "../Modal/CreateOpportunityModal";
 import VolunteerModal from "../Modal/VolunteerModal";
 import { Opportunity } from "../../../backend/types/Opportunity";
+import { requestToBodyStream } from "next/dist/server/body-streams";
 
 // example for the input
 // const volunteerEvents = [
@@ -40,8 +41,7 @@ const VolunteerEventCard = ({ event, attending }) => {
   }, [session]);
 
   useEffect(() => {
-    setUser(session?.user?.name);
-    console.log("Event status is: ", event.status);
+    
     const date = new Date(event.time);
     const month = date.toLocaleString('default', { month: 'short' });
     const day = date.getDate();
@@ -52,11 +52,11 @@ const VolunteerEventCard = ({ event, attending }) => {
     hours = hours % 12;
     hours = hours ? hours : 12; // Handle midnight (0 hours)
     let end = hours + event.duration;
-    end = end % 12;
-    const endampm = end > hours? 'pm' : 'am';
+    let end2 = end % 12;
+    const endampm = end > end2 && ampm =='am' ? 'pm' : 'am';
 
     setStatus(event.status);
-    setTime(`${month} ${day}, ${year} ${hours}:${minutes}${ampm} - ${end}:${minutes}${endampm}`);
+    setTime(`${month} ${day}, ${year} ${hours}:${minutes}${ampm} - ${end2}:${minutes}${endampm}`);
   }, [event]);
 
   const changeEventStatus = (status: string) =>{
@@ -85,9 +85,11 @@ const VolunteerEventCard = ({ event, attending }) => {
       body: JSON.stringify({
         revieweeEmail: event.organization.email,
         reviewerEmail: session?.user?.email,
+        description: "An organization is reported",
+        rating: 1,
       })
     };
-    
+    console.log(requestOptions);
     fetch('/api/review', requestOptions)
       .then(response => response.json())
       .then(data => {
