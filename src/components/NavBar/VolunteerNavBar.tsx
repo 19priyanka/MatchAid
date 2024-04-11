@@ -65,7 +65,7 @@ export default function VolunteerNavBar() {
   });
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={classes.navbar} style={{height: 175}}>
       <div className={classes.navbarMain}>{links}</div>
 
       <button
@@ -74,7 +74,7 @@ export default function VolunteerNavBar() {
             callbackUrl: "/login",
           })
         }
-        className="absolute bottom-0"
+        className="absolute bottom--5"
       >
         <div className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
