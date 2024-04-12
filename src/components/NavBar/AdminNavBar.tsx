@@ -83,8 +83,7 @@ export default function AdminNavBar() {
             callbackUrl: "/login",
           })
         }
-        className="absolute bottom-0"
-      >
+        className="absolute bottom-0">
         <div className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
